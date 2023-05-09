@@ -4,8 +4,6 @@ kind: Ingress
 metadata:
   name: proxmox
   namespace: default
-  annotations:
-    external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
 spec:
   ingressClassName: nginx
   rules:
