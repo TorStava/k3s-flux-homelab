@@ -36,7 +36,7 @@ My cluster is [k3s](https://k3s.io/) provisioned on VM's running Ubuntu Server u
 | Raspberry Pi 4       | 1     |              |                               | 8 GB   |                  |
 | Raspberry Pi 4       | 1     |              |                               | 4 GB   |                  |
 | Raspberry Pi 4       | 1     |              |                               | 4 GB   |                  |
-| IBM Disk Bay         | 1     |              | 2x10 TB SATA, 2x14 TB SATA    |        |                  |
+| IBM EXP3000          | 1     |              | 2x10 TB SATA, 2x14 TB SATA    |        |                  |
 | HP 24-port switch    | 1     |              |                               |        |                  |
 | Brother Laserprinter | 1     |              |                               |        |                  |
 | WIFI6 mesh AP        | 2     |              |                               |        |                  |
