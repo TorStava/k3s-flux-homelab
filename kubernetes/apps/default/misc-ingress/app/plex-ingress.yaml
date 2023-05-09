@@ -33,7 +33,7 @@ subsets:
   - addresses:
       - ip: ${PLEX_IP}
     ports:
-      - name: https
+      - name: http
         port: 32400
         protocol: TCP
 
