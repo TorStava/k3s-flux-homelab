@@ -32,9 +32,9 @@ metadata:
   namespace: default
 subsets:
   - addresses:
-      - ip: 192.168.1.72
+      - ip: ${{ PLEX_IP }}
     ports:
-      - name: http
+      - name: https
         port: 32400
         protocol: TCP
 
