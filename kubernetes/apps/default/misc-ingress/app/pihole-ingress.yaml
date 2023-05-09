@@ -16,7 +16,7 @@ spec:
               service:
                 name: pihole
                 port:
-                  number: 32400
+                  number: 80
   tls:
     - hosts:
         - *host
