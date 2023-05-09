@@ -4,9 +4,6 @@ kind: Ingress
 metadata:
   name: plex
   namespace: default
-  annotations:
-    external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
-    hajimari.io/enable: "true"
 spec:
   ingressClassName: nginx
   rules:
@@ -46,7 +43,6 @@ metadata:
   namespace: default
 spec:
   type: ClusterIP
-  clusterIP: None
   ports:
     - name: http
       port: 32400
