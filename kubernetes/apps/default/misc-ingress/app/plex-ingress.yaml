@@ -4,11 +4,8 @@ kind: Ingress
 metadata:
   name: plex
   namespace: default
-  annotations:
-    external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
 spec:
   ingressClassName: nginx
-
   rules:
     - host: &host "plex.${SECRET_DOMAIN}"
       http:
