@@ -29,7 +29,7 @@ metadata:
   namespace: default
 subsets:
   - addresses:
-      - ip: ${{ PLEX_IP }}
+      - ip: ${PLEX_IP}
     ports:
       - name: https
         port: 32400
