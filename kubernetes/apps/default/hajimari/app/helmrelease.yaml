@@ -115,8 +115,8 @@ spec:
           bookmarks:
             - name: k8s-at-home
               url: 'https://nanne.dev/k8s-at-home-search/'
-            - name: k3s-home-cluster
-              url: 'https://github.com/TorStava/k3s-home-cluster'
+            - name: k3s-flux-homelab
+              url: 'https://github.com/TorStava/k3s-flux-homelab'
 
     ingress:
       main:
