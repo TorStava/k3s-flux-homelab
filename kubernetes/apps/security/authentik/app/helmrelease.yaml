@@ -45,7 +45,7 @@ spec:
         password: "${SECRET_AUTHENTIK_SMTP_PASSWORD}"
         use_ssl: true
         from: id@${SECRET_DOMAIN}
-      secret_key: ${AUTHENTIK_KEY}
+      secret_key: "${AUTHENTIK_KEY}"
       log_level: debug
 
       outposts:
