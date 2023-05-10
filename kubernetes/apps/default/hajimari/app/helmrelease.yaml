@@ -30,26 +30,105 @@ spec:
       title: Apps
       darkTheme: espresso
       alwaysTargetBlank: true
-      showGreeting: false
-      showAppGroups: false
-      showAppStatus: false
-      showBookmarkGroups: false
+      showGreeting: true
+      showAppGroups: true
+      showAppStatus: true
+      showAppInfo: true
+      defaultAppIcon: mdi:application
+      showBookmarkGroups: true
       showGlobalBookmarks: false
       showAppUrls: false
       defaultEnable: true
+      defaultSearchProvider: DuckDuckGo
       namespaceSelector:
         matchNames:
           - default
+          # - downloads
+          # - flux-system
+          # - media
+          - monitoring
+          - networking
+          - storage
+          # - security
+      searchProviders:
+        - name: Google
+          token: g
+          icon: simple-icons:google
+          searchUrl: https://www.google.com/search?q={query}
+          url: https://www.google.com
+        - name: DuckDuckGo
+          token: d
+          icon: simple-icons:duckduckgo
+          searchUrl: https://duckduckgo.com/?q={query}
+          url: https://duckduckgo.com
+        - name: IMDB
+          token: i
+          icon: simple-icons:imdb
+          searchUrl: https://www.imdb.com/find?q={query}
+          url: https://www.imdb.com
+        - name: Reddit
+          token: r
+          icon: simple-icons:reddit
+          searchUrl: https://www.reddit.com/search?q={query}
+          url: https://www.reddit.com
+        - name: YouTube
+          token: 'y'
+          icon: simple-icons:youtube
+          searchUrl: https://www.youtube.com/results?search_query={query}
+          url: https://www.youtube.com
+        - name: Spotify
+          token: s
+          icon: simple-icons:spotify
+          searchUrl: hhttps://open.spotify.com/search/{query}
+          url: https://open.spotify.com
+      customApps:
+        - group: media
+          apps:
+            - name: Plex
+              url: 'https://app.plex.tv'
+              icon: mdi:plex
+              info: Plex Media Player
+      globalBookmarks:
+        - group: Communicate
+          bookmarks:
+            - name: Discord
+              url: 'https://discord.com/app'
+            - name: Gmail
+              url: 'http://gmail.com'
+            - name: Google Calendar
+              url: 'https://calendar.google.com/calendar/u/0/r/week'
+            - name: Outlook
+              url: 'https://outlook.com'
+        - group: Media
+          bookmarks:
+            - name: YouTube
+              url: 'https://youtube.com/feed/subscriptions'
+            - name: Spotify
+              url: 'http://open.spotify.com'
+            - name: Youtube Music
+              url: 'https://music.youtube.com'
+        - group: Reading
+          bookmarks:
+            - name: Reddit
+              url: 'https://reddit.com'
+        - group: Git
+          bookmarks:
+            - name: k8s-at-home
+              url: 'https://nanne.dev/k8s-at-home-search/'
+            - name: k3s-home-cluster
+              url: 'https://github.com/TorStava/k3s-home-cluster'
+
     ingress:
       main:
         enabled: true
         ingressClassName: nginx
         annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           nginx.ingress.kubernetes.io/whitelist-source-range: |
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "hajimari.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
