@@ -38,15 +38,15 @@ spec:
     geoip:
       enabled: false
     authentik:
+      log_level: debug
+      secret_key: ${AUTHENTIK_KEY}
       email:
         host: smtp.gmail.com
         port: 465
-        username: ${SECRET_EMAIL}
+        username: ${SECRET_AUTHENTIK_EMAIL}
         password: "${SECRET_AUTHENTIK_SMTP_PASSWORD}"
         use_ssl: true
         from: id@${SECRET_DOMAIN}
-      secret_key: "${AUTHENTIK_KEY}"
-      log_level: debug
 
       outposts:
         docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
