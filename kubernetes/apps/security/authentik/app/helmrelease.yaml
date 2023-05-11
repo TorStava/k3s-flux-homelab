@@ -34,7 +34,6 @@ spec:
       tls:
         - hosts:
             - *host
-          secretName: *host
     geoip:
       enabled: false
     authentik:
