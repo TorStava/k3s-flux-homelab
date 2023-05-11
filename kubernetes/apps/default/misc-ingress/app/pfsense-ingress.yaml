@@ -18,7 +18,7 @@ spec:
               service:
                 name: pfsense
                 port:
-                  number: 443
+                  number: 10443
   tls:
     - hosts:
         - *host
@@ -34,7 +34,7 @@ subsets:
       - ip: ${FIREWALL_IP}
     ports:
       - name: https
-        port: 443
+        port: 10443
         protocol: TCP
 
 ---
@@ -47,4 +47,4 @@ spec:
   type: ClusterIP
   ports:
     - name: http
-      port: 443
+      port: 10443
