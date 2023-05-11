@@ -113,10 +113,18 @@ spec:
               url: 'https://reddit.com'
         - group: Git
           bookmarks:
-            - name: k8s-at-home
-              url: 'https://nanne.dev/k8s-at-home-search/'
             - name: k3s-flux-homelab
               url: 'https://github.com/TorStava/k3s-flux-homelab'
+            - name: k8s-at-home-search
+              url: 'https://nanne.dev/k8s-at-home-search/'
+            - name: onedr0p/home-ops
+              url: 'https://github.com/onedr0p/home-ops'
+            - name: LDS/k3s-home-cluster
+              url: 'https://github.com/LilDrunkenSmurf/k3s-home-cluster'
+            - name: szinn/k8s-homelab
+              url: 'https://github.com/szinn/k8s-homelab'
+            - name: haraldkoch/kochhaus-home
+              url: 'https://github.com/haraldkoch/kochhaus-home/tree/main'
 
     ingress:
       main:
