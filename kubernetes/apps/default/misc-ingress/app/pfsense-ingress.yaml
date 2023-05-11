@@ -4,6 +4,8 @@ kind: Ingress
 metadata:
   name: pfsense
   namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: https
 spec:
   ingressClassName: nginx
   rules:
