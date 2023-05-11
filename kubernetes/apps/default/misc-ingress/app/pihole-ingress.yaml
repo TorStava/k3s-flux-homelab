@@ -4,6 +4,8 @@ kind: Ingress
 metadata:
   name: pihole
   namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/app-root: /admin
 spec:
   ingressClassName: nginx
   rules:
