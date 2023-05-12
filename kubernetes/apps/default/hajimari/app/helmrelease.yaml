@@ -125,6 +125,8 @@ spec:
               url: 'https://github.com/szinn/k8s-homelab'
             - name: haraldkoch/kochhaus-home
               url: 'https://github.com/haraldkoch/kochhaus-home/tree/main'
+            - name: filipweilid/k3s-homelab
+              url: 'https://github.com/filipweilid/k3s-homelab'
 
     ingress:
       main:
