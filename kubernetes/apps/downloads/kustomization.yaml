@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./downloads-pvc.yaml
+  - ./radarr/ks.yaml
