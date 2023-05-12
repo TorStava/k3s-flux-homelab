@@ -30,12 +30,16 @@ spec:
         env:
           - name: VPN_SERVICE_PROVIDER
             value: purevpn
-          - name: VPN_INTERFACE
-            value: tun0
           - name: OPENVPN_VERBOSITY
             value: 5
           - name: SERVER_COUNTRIES
             value: Netherlands
+          - name: VPN_INTERFACE
+            value: wg0
+          - name: FIREWALL
+            value: "off"
+          - name: DOT
+            value: "off"
         envFrom:
           - secretRef:
               name: downloads-gateway-vpnconfig
@@ -66,7 +70,7 @@ spec:
     settings:
       NOT_ROUTED_TO_GATEWAY_CIDRS: 10.0.0.0/8 192.168.0.0/16
       VPN_BLOCK_OTHER_TRAFFIC: true
-      VPN_INTERFACE: tun0
+      VPN_INTERFACE: wg0
       VPN_LOCAL_CIDRS: 10.0.0.0/8 192.168.0.0/16
       VPN_TRAFFIC_PORT: "51820"
       VXLAN_ID: 43
