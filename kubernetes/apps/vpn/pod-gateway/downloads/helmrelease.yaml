@@ -29,11 +29,9 @@ spec:
           tag: v3.33.0
         env:
           - name: VPN_SERVICE_PROVIDER
-            value: purevpn
-          - name: OPENVPN_VERBOSITY
-            value: 5
-          - name: SERVER_COUNTRIES
-            value: Netherlands
+            value: mullvad
+          - name: VPN_TYPE
+            value: wireguard
           - name: VPN_INTERFACE
             value: wg0
           - name: FIREWALL
