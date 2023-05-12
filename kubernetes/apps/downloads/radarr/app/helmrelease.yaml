@@ -96,5 +96,5 @@ spec:
     persistence:
       media:
         enabled: true
-        existingClaim: downloads
+        existingClaim: media
         mountPath: /data
