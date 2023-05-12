@@ -6,6 +6,7 @@ resources:
   - ./helmrelease.yaml
   - ./network-policy.yaml
   - ./secret.sops.yaml
+  - ./configmap.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: pod-gateway

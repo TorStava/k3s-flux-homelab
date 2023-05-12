@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: downloads-gateway-ovpn-config
+  namespace: vpn
+data:
+  purvpn-udp.ovpn: |
+    client
+    dev tun
+    proto udp
+    resolv-retry infinite
+    nobind
+    persist-key
+    cipher AES-256-CBC
+    comp-lzo
+    tun-mtu 1500
+    verb 1
+    mute 20
+    auth-retry interact
+    explicit-exit-notify 2
+    ifconfig-nowarn
+    auth-nocache
+    keepalive 10 30

@@ -36,9 +36,14 @@ spec:
             value: "off"
           - name: DNS
             value: 9.9.9.9
+          - name: OPENVPN_VERBOSITY
+            value: 5
         envFrom:
           - secretRef:
               name: downloads-gateway-vpnconfig
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/openvpn/target.ovpn
         securityContext:
           capabilities:
             add:
@@ -46,6 +51,13 @@ spec:
 
       netshoot:
         enabled: true
+
+    volumes:
+      - name: config-volume
+        configMap:
+          name: downloads-gateway-ovpn-config
+          items:
+            - key: purvpn-udp.ovpn
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: pod-gateway-downloads
