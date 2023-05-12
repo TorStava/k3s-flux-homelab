@@ -28,10 +28,14 @@ spec:
           repository: qmcgaw/gluetun
           tag: v3.33.0
         env:
+          - name: VPN_SERVICE_PROVIDER
+            value: purevpn
           - name: VPN_INTERFACE
             value: tun0
           - name: OPENVPN_VERBOSITY
             value: 5
+          - name: SERVER_COUNTRIES
+            value: Netherlands
         envFrom:
           - secretRef:
               name: downloads-gateway-vpnconfig
