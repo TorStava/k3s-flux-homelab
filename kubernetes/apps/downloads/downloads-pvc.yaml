@@ -22,8 +22,6 @@ spec:
     - nconnect=8
     - rsize=131072
     - wsize=131072
-  claimRef:
-    name: media
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
