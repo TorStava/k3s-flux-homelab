@@ -43,13 +43,13 @@ spec:
       namespaceSelector:
         matchNames:
           - default
-          # - downloads
+          - downloads
           # - flux-system
           # - media
           - monitoring
           - networking
           - storage
-          # - security
+          - security
       searchProviders:
         - name: Google
           token: g
