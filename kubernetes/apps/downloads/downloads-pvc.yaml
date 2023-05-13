@@ -12,6 +12,7 @@ spec:
     server: ${NAS_IP}
     path: ${SECRET_NFS_DATA}
   mountOptions:
+    - nfsvers=4.1
     - tcp
     - intr
     - hard
