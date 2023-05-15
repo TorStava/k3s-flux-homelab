@@ -12,15 +12,15 @@ spec:
     server: ${NAS_IP}
     path: ${SECRET_NFS_DATA}
   mountOptions:
-    - nfsvers=4.1
-    - tcp
-    - intr
     - hard
-    - relatime
-    - nocto
-    - noacl
+    - intr
     - nconnect=8
+    - nfsvers=4.1
+    - noacl
+    - nocto
+    - relatime
     - rsize=131072
+    - tcp
     - wsize=131072
 ---
 apiVersion: v1
