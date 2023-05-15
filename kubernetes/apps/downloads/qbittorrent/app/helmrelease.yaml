@@ -84,7 +84,7 @@ spec:
       media:
         enabled: true
         existingClaim: media
-        mountPath: /media
+        mountPath: /downloads
         subPath: torrents
     resources:
       requests:
