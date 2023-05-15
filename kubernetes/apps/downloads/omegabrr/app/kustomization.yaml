@@ -5,7 +5,7 @@ namespace: downloads
 resources:
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: omegabrr-secret
+  - name: omegabrr-configmap
     files:
       - ./configs/config.yaml
 generatorOptions:
