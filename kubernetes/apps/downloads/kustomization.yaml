@@ -5,6 +5,7 @@ resources:
   - ./namespace.yaml
   - ./downloads-pvc.yaml
   - ./autobrr/ks.yaml
+  - ./bazarr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./radarr/ks.yaml
