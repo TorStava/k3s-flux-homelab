@@ -97,4 +97,5 @@ spec:
       media:
         enabled: true
         existingClaim: data
+        namespace: downloads
         mountPath: /data
