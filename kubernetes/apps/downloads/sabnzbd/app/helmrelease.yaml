@@ -81,9 +81,8 @@ spec:
     persistence:
       media:
         enabled: true
-        existingClaim: media
-        mountPath: /downloads
-        subPath: usenet
+        existingClaim: data
+        mountPath: /data
       incomplete:
         enabled: true
         type: emptyDir

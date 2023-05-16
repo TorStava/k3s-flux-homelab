@@ -93,9 +93,8 @@ spec:
     persistence:
       media:
         enabled: true
-        existingClaim: media
-        mountPath: /downloads
-        subPath: torrents
+        existingClaim: data
+        mountPath: /data
     resources:
       requests:
         cpu: 100m

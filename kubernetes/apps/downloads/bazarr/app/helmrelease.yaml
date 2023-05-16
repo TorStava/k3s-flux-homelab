@@ -82,7 +82,7 @@ spec:
     persistence:
       media:
         enabled: true
-        existingClaim: media
+        existingClaim: data
         mountPath: /data
       add-ons:
         enabled: true
