@@ -45,7 +45,7 @@ spec:
           - default
           - downloads
           # - flux-system
-          # - media
+          - media
           - monitoring
           - networking
           - storage
