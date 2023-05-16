@@ -5,6 +5,6 @@ resources:
   - ./homeassistant-ingress.yaml
   - ./pfsense-ingress.yaml
   - ./pihole-ingress.yaml
-  - ./plex-ingress.yaml
+  # - ./plex-ingress.yaml
   - ./proxmox-ingress.yaml
   - ./truenas-ingress.yaml
