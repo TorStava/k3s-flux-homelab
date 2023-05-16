@@ -90,7 +90,7 @@ data:
           hourCycle: h23
   services.yaml: |
     ---
-    # - Media:
+    - Media:
     #     - Plex Docker:
     #         href: https://plex-docker.${SECRET_DOMAIN}
     #         icon: plex.png
@@ -162,7 +162,7 @@ data:
     #           url: udp://${NAS_IP}:25567
   bookmarks.yaml: |
     ---
-        - Communitcate:
+        - Communicate:
             - Discord:
                 - icon: discord.png
                   href: 'https://discord.com/app'
