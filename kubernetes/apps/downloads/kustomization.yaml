@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./data-pvc.yaml
-  - ./downloads-pvc.yaml
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
   - ./omegabrr/ks.yaml
