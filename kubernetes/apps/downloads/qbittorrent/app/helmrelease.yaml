@@ -93,7 +93,7 @@ spec:
     persistence:
       media:
         enabled: true
-        existingClaim: data
+        existingClaim: downloads
         mountPath: /data
     resources:
       requests:
