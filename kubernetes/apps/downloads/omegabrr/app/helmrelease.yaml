@@ -35,18 +35,24 @@ spec:
       tag: v1.8.0
     env:
       TZ: "${TZ}"
-      PUID: "1000"
-      PGID: "1000"
+      # PUID: "1000"
+      # PGID: "1000"
     service:
       main:
         ports:
           http:
             port: 7441
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: omegabrr-configmap
-        subPath: config.yaml
-        mountPath: /config/config.yaml
-        readOnly: true
+    # persistence:
+    #   config:
+    #     enabled: true
+    #     type: configMap
+    #     name: omegabrr-configmap
+    #     subPath: config.yaml
+    #     mountPath: /config/config.yaml
+    #     readOnly: true
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
