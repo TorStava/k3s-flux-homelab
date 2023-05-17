@@ -42,8 +42,7 @@ spec:
     env:
       # See https://support.plex.tv/articles/201105343-advanced-hidden-server-settings/
       TZ: "${TZ}"
-      ADVERTISE_IP: "https://plex.${SECRET_DOMAIN},http://${PLEX_METALLB_IP}:32400"
-      CLAIM_TOKEN: claim-hSEpEroS3JMXrde8YRUN
+      ADVERTISE_IP: "https://plex.${SECRET_DOMAIN},http://${PLEX_METALLB_IP}:*port"
       # PLEX_UID: 0
       # PLEX_GID: 0
       # NVIDIA_VISIBLE_DEVICES: all
