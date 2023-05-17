@@ -4,6 +4,7 @@ kind: HelmRelease
 metadata:
   name: plex
   namespace: media
+  # Also see https://github.com/axeII/home-ops/blob/b7696d99c007ebb9a2b371118a181284e44098d5/kubernetes/apps/media/plex/app/helmrelease.yaml
 spec:
   interval: 15m
   chart:
@@ -14,6 +15,11 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  dependsOn:
+    # - name: nvidia-device-plugin
+    #   namespace: kube-system
+    - name: longhorn
+      namespace: storage
   maxHistory: 3
   install:
     createNamespace: true
@@ -34,15 +40,21 @@ spec:
       repository: ghcr.io/onedr0p/plex
       tag: 1.32.1.6999-91e1e2e2c@sha256:fa9bbdbd8a73d110c703839619b9e1cc13524187b00662955235c02e07cef50c
     env:
+      # See https://support.plex.tv/articles/201105343-advanced-hidden-server-settings/
       TZ: "${TZ}"
+      ADVERTISE_IP: "https://plex.${SECRET_DOMAIN},http://${PLEX_METALLB_IP}:32400"
+      # PLEX_UID: 0
+      # PLEX_GID: 0
+      # NVIDIA_VISIBLE_DEVICES: all
+      # NVIDIA_DRIVER_CAPABILITIES: all
     service:
       main:
         type: LoadBalancer
-        # externalTrafficPolicy: Local
-        # loadBalancerIP: "${SVC_PLEX_ADDR}"
+        externalTrafficPolicy: Local
+        loadBalancerIP: "${PLEX_METALLB_IP}"
         ports:
           http:
-            port: 32400
+            port: &port 32400
     ingress:
       main:
         enabled: true
@@ -53,11 +65,17 @@ spec:
           gethomepage.dev/name: Plex Kubernetes
           gethomepage.dev/group: Media
           gethomepage.dev/widget.type: plex
-          gethomepage.dev/widget.url: http://plex.media:32400
+          gethomepage.dev/widget.url: http://plex.media:*port
           gethomepage.dev/widget.key: ${PLEX_TOKEN}
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           hajimari.io/icon: mdi:plex
           hajimari.io/enable: "false"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            location = / {
+              if ($http_x_plex_device = ""){
+                return 301 $scheme://$host/web/index.html;
+              }
+            }
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
