@@ -117,3 +117,7 @@ spec:
         enabled: true
         existingClaim: media
         mountPath: /data
+      media-old:
+        enabled: true
+        existingClaim: media-old
+        mountPath: /media-old
