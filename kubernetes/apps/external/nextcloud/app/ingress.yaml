@@ -4,6 +4,16 @@ kind: Ingress
 metadata:
   name: nextcloud
   namespace: external
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: nextcloud.svg
+    gethomepage.dev/name: Nextcloud
+    gethomepage.dev/group: Storage
+    gethomepage.dev/widget.type: nextcloud
+    gethomepage.dev/widget.url: https://nextcloud.${SECRET_DOMAIN}
+    gethomepage.dev/widget.username: ${SECRET_NEXTCLOUD_USERNAME}
+    gethomepage.dev/widget.password: ${SECRET_NEXTCLOUD_PASSWORD}
+    external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
 spec:
   ingressClassName: nginx
   rules:
