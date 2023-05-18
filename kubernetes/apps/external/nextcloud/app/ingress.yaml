@@ -1,0 +1,38 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextcloud
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: https
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: &host "nextcloud.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: nextcloud
+                port:
+                  number: 32400
+  tls:
+    - hosts:
+        - *host
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: nextcloud
+  namespace: default
+subsets:
+  - addresses:
+      - ip: ${NEXTCLOUD_IP}
+    ports:
+      - name: http
+        port: 32400
+        protocol: TCP
