@@ -51,18 +51,20 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: qbittorrent.png
           gethomepage.dev/name: qBittorrent
+          gethomepage.dev/href: https://qbittorrent.${SECRET_DOMAIN}
           gethomepage.dev/group: Downloads
           gethomepage.dev/widget.type: qbittorrent
-          gethomepage.dev/widget.url: http://qbittorrent.downloads:8080
+          gethomepage.dev/widget.url: https://qbittorrent.${SECRET_DOMAIN}:443
+          # gethomepage.dev/widget.url: http://qbittorrent.downloads:8080
           gethomepage.dev/widget.username: ${QBITTORRENT_USERNAME}
           gethomepage.dev/widget.password: ${QBITTORRENT_PASSWORD}
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            proxy_hide_header "x-webkit-csp";
-            proxy_hide_header "content-security-policy";
-            proxy_hide_header "X-Frame-Options";
-            proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/qbittorrent/nord.css"></head>';
-            sub_filter_once on;
+          # nginx.ingress.kubernetes.io/configuration-snippet: |
+          #   proxy_hide_header "x-webkit-csp";
+          #   proxy_hide_header "content-security-policy";
+          #   proxy_hide_header "X-Frame-Options";
+          #   proxy_set_header Accept-Encoding "";
+          #   sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/qbittorrent/nord.css"></head>';
+          #   sub_filter_once on;
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
