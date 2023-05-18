@@ -4,8 +4,6 @@ kind: Ingress
 metadata:
   name: nextcloud
   namespace: external
-  annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: https
 spec:
   ingressClassName: nginx
   rules:
@@ -18,7 +16,7 @@ spec:
               service:
                 name: nextcloud
                 port:
-                  number: 32400
+                  number: 80
   tls:
     - hosts:
         - *host
@@ -34,5 +32,5 @@ subsets:
       - ip: ${NEXTCLOUD_IP}
     ports:
       - name: http
-        port: 32400
+        port: 80
         protocol: TCP
