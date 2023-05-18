@@ -24,7 +24,7 @@ data:
       Infrastructure:
         style: row
         columns: 3
-        icon: mdi-harddisk
+        icon: mdi-server-network
       Home:
         style: column
         rows: 2
@@ -41,6 +41,10 @@ data:
         style: row
         columns: 3
         icon: mdi-download-circle
+      Storage:
+        style: row
+        columns: 3
+        icon: mdi-harddisk
     providers:
       longhorn:
         url: http://longhorn-frontend.storage
