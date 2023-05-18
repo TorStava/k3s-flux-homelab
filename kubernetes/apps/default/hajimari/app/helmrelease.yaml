@@ -44,7 +44,7 @@ spec:
         matchNames:
           - default
           - downloads
-          # - flux-system
+          - external
           - media
           - monitoring
           - networking
@@ -81,13 +81,6 @@ spec:
           icon: simple-icons:spotify
           searchUrl: hhttps://open.spotify.com/search/{query}
           url: https://open.spotify.com
-      customApps:
-        - group: media
-          apps:
-            - name: Plex
-              url: 'https://app.plex.tv'
-              icon: mdi:plex
-              info: Plex Media Player
       globalBookmarks:
         - group: Communicate
           bookmarks:
