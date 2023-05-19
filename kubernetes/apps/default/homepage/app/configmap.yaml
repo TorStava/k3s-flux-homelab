@@ -12,7 +12,7 @@ data:
   settings.yaml: |
     ---
     title: Dashboard
-    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
+    favicon: https://github.com/walkxcode/dashboard-icons/blob/9300374084f5a01421c7822c8757e4742bd27f9a/png/homepage.png
     theme: dark
     color: slate
     headerStyle: clean
@@ -77,10 +77,10 @@ data:
         units: metric
         cache: 5
     - longhorn:
-        expanded: false
+        expanded: true
         total: true
         labels: true
-        nodes: false
+        nodes: true
     - datetime:
         text_size: l
         format:
