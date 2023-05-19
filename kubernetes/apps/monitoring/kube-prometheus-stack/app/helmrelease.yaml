@@ -62,7 +62,7 @@ spec:
         enabled: false
 
     grafana:
-      enabled: true
+      enabled: false
       fullnameOverride: grafana
       forceDeployDatasources: false
       forceDeployDashboards: false
