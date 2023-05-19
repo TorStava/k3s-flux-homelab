@@ -6,6 +6,7 @@ resources:
   - ./downloads-pvc.yaml
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
+  - ./flaresolverr/ks.yaml
   # - ./omegabrr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
