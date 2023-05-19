@@ -54,8 +54,8 @@ spec:
           gethomepage.dev/group: Downloads
           gethomepage.dev/widget.type: qbittorrent
           gethomepage.dev/widget.url: http://qbittorrent.downloads:8080
-          gethomepage.dev/widget.username: ${QBITTORRENT_USERNAME}
-          gethomepage.dev/widget.password: ${QBITTORRENT_PASSWORD}
+          gethomepage.dev/widget.username: ${SECRET_QBITTORRENT_USERNAME}
+          gethomepage.dev/widget.password: ${SECRET_QBITTORRENT_PASSWORD}
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_hide_header "x-webkit-csp";
             proxy_hide_header "content-security-policy";
