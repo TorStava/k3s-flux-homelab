@@ -84,10 +84,10 @@ spec:
           - secretName: grafana-tls
             hosts:
               - *host
-      admin:
-        existingSecret: grafana-admin-credentials
-        userKey: admin-user
-        passwordKey: admin-password
+      # admin:
+      #   existingSecret: grafana-admin-credentials
+      #   userKey: admin-user
+      #   passwordKey: admin-password
 
     kubeApiServer:
       enabled: true
