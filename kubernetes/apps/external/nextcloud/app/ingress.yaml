@@ -6,7 +6,7 @@ metadata:
   namespace: external
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: nextcloud.svg
+    gethomepage.dev/icon: nextcloud.png
     gethomepage.dev/name: Nextcloud
     gethomepage.dev/group: Storage
     gethomepage.dev/widget.type: nextcloud
