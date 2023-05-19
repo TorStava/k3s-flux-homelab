@@ -8,6 +8,7 @@ resources:
   - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./external-dns.yaml
+  - ./grafana.yaml
   - ./hajimari.yaml
   - ./homepage.yaml
   - ./ingress-nginx.yaml
