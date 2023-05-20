@@ -14,7 +14,7 @@ metadata:
     gethomepage.dev/widget.key: ${PLEX_TOKEN}
     external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
     hajimari.io/icon: mdi:plex
-    hajimari.io/enable: "false"
+    hajimari.io/enable: "true"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       location = / {
         if ($http_x_plex_device = ""){
