@@ -57,10 +57,26 @@ spec:
         prometheusOperator: true
 
     alertmanager:
-      fullnameOverride: alertmanager
-      enabled: true
       ingress:
-        enabled: false
+        enabled: true
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+        hosts:
+          - &host-alert-manager alert-manager.${SECRET_DOMAIN}
+        paths:
+          - /
+        pathType: Prefix
+        tls:
+          - hosts:
+              - *host-alert-manager
+      alertManagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn
+              resources:
+                requests:
+                  storage: 10Gi
 
     grafana:
       enabled: false
