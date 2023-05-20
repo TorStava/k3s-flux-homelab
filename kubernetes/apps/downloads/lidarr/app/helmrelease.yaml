@@ -35,7 +35,7 @@ spec:
       tag: 1.2.0.3183
     env:
       TZ: "${TZ}"
-      LIDARR__INSTANCE_NAME: Radarr
+      LIDARR__INSTANCE_NAME: Lidarr
       LIDARR__PORT: &port 80
       LIDARR__LOG_LEVEL: info
       LIDARR__API_KEY: ${LIDARR_TOKEN}
