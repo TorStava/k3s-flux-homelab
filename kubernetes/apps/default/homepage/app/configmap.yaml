@@ -49,15 +49,10 @@ data:
       longhorn:
         url: http://longhorn-frontend.storage
   widgets.yaml: |
-    - logo:
-        icon: https://raw.githubusercontent.com/LilDrunkenSmurf/k3s-home-cluster/main/icons/lds-transparent.png
     - search:
         provider: [duckduckgo, google]
         focus: false
         target: _blank
-    - greeting:
-        text_size: xl
-        text: "Howdy Hey!"
     - kubernetes:
         cluster:
           cpu: true
@@ -80,9 +75,9 @@ data:
         expanded: true
         total: true
         labels: true
-        nodes: true
+        nodes: false
     - datetime:
-        text_size: l
+        text_size: xl
         format:
           dateStyle: long
           timeStyle: short
