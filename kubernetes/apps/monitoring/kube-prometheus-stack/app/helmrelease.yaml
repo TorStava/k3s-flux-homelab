@@ -25,6 +25,7 @@ spec:
       retries: 5
   values:
     fullnameOverride: prometheus
+    cleanPrometheusOperatorObjectNames: true
 
     defaultRules:
       create: true
@@ -116,6 +117,8 @@ spec:
 
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
+      metricLabelsAllowlist:
+        - "persistentvolumeclaims=[*]"
       selfMonitor:
         enabled: true
       prometheus:
