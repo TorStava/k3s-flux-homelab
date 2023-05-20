@@ -1,0 +1,89 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tdarr
+  namespace: downloads
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      repository: ghcr.io/haveagitgat/tdarr_acc
+      tag: 2.00.20.1
+    env:
+      TZ: "${TZ}"
+      PUID: "568"
+      PGID: "569"
+      ffmpegPath: "/usr/local/bin/ffmpeg"
+    service:
+      main:
+        ports:
+          http:
+            port: 8265
+          server:
+            enabled: true
+            protocol: TCP
+            port: 8266
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: tdarr.png
+          gethomepage.dev/name: Tdarr
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/widget.type: tdarr
+          gethomepage.dev/widget.url: http://tdarr.downloads
+          hajimari.io/icon: clarity:media-changer-solid
+        hosts:
+          - host: &host tdarr.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      configs:
+        enabled: true
+        existingClaim: tdarr-configs
+        mountPath: /app/configs
+      cache:
+        enabled: true
+        existingClaim: tdarr-cache
+        mountPath: /temp
+      media:
+        enabled: true
+        existingClaim: downloads
+        mountPath: /data
+    podSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
+      capabilities:
+        add:
+          - CHOWN
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
