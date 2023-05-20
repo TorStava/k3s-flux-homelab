@@ -53,6 +53,11 @@ spec:
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
+      - name: cache
+        mountPath: /temp
+        accessMode: ReadWriteMany
+        size: 50Gi
+        storageClass: longhorn
     persistence:
       media:
         enabled: true
