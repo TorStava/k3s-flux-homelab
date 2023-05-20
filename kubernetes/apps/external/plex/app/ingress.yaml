@@ -1,0 +1,53 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: plex
+  namespace: external
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: plex.png
+    gethomepage.dev/name: plex
+    gethomepage.dev/group: Media
+    gethomepage.dev/widget.type: plex
+    gethomepage.dev/widget.url: http://plex.media:32400
+    gethomepage.dev/widget.key: ${PLEX_TOKEN}
+    external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+    hajimari.io/icon: mdi:plex
+    hajimari.io/enable: "false"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      location = / {
+        if ($http_x_plex_device = ""){
+          return 301 $scheme://$host/web/index.html;
+        }
+      }
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: &host "plex.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: plex
+                port:
+                  number: 32400
+  tls:
+    - hosts:
+        - *host
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: plex
+  namespace: external
+subsets:
+  - addresses:
+      - ip: ${PLEX_IP}
+    ports:
+      - name: http
+        port: 32400
+        protocol: TCP
