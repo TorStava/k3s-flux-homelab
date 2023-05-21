@@ -53,7 +53,7 @@ spec:
           gethomepage.dev/name: Tdarr
           gethomepage.dev/group: Downloads
           gethomepage.dev/widget.type: tdarr
-          gethomepage.dev/widget.url: http://tdarr.downloads:*port
+          gethomepage.dev/widget.url: http://tdarr.downloads
           hajimari.io/icon: clarity:media-changer-solid
         hosts:
           - host: &host tdarr.${SECRET_DOMAIN}
