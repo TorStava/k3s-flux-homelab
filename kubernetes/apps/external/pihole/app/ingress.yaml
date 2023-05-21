@@ -6,7 +6,7 @@ metadata:
   namespace: external
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: pihole.png
+    gethomepage.dev/icon: pi-hole.png
     gethomepage.dev/name: Pihole
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/widget.type: pihole
