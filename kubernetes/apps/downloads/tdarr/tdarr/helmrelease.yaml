@@ -66,12 +66,22 @@ spec:
     persistence:
       configs:
         enabled: true
-        existingClaim: tdarr-configs
+        type: pvc
+        accessMode: ReadWriteMany
+        size: 2Gi
         mountPath: /app/configs
+        storageClass: longhorn
+        retain: true
+        # existingClaim: tdarr-configs
       cache:
         enabled: true
-        existingClaim: tdarr-cache
+        type: pvc
+        accessMode: ReadWriteMany
+        size: 50Gi
         mountPath: /temp
+        storageClass: longhorn
+        retain: true
+        # existingClaim: tdarr-cache
       media:
         enabled: true
         existingClaim: downloads
