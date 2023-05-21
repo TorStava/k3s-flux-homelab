@@ -78,7 +78,7 @@ spec:
         type: pvc
         accessMode: ReadWriteMany
         size: 50Gi
-        mountPath: /temp
+        mountPath: /app/cache
         storageClass: longhorn
         retain: true
         # existingClaim: tdarr-cache
