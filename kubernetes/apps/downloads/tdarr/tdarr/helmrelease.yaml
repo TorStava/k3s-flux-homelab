@@ -64,24 +64,6 @@ spec:
           - hosts:
               - *host
     persistence:
-      configs:
-        enabled: true
-        type: pvc
-        accessMode: ReadWriteMany
-        size: 2Gi
-        mountPath: /app/configs
-        storageClass: longhorn
-        retain: true
-        # existingClaim: tdarr-configs
-      cache:
-        enabled: true
-        type: pvc
-        accessMode: ReadWriteMany
-        size: 50Gi
-        mountPath: /app/cache
-        storageClass: longhorn
-        retain: true
-        # existingClaim: tdarr-cache
       media:
         enabled: true
         existingClaim: downloads
