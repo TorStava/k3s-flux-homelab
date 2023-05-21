@@ -3,10 +3,19 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: pihole
-  namespace: default
+  namespace: external
   annotations:
-    nginx.ingress.kubernetes.io/app-root: /admin
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: pihole.png
+    gethomepage.dev/name: Pihole
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/widget.type: pihole
+    gethomepage.dev/widget.url: http://pihole.external
+    gethomepage.dev/widget.key: ${PIHOLE_TOKEN}
     external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+    nginx.ingress.kubernetes.io/app-root: /admin
+    hajimari.io/icon: mdi:pihole
+    hajimari.io/enable: "true"
 spec:
   ingressClassName: nginx
   rules:
@@ -29,7 +38,7 @@ apiVersion: v1
 kind: Endpoints
 metadata:
   name: pihole
-  namespace: default
+  namespace: external
 subsets:
   - addresses:
       - ip: ${PIHOLE_IP}
@@ -37,15 +46,3 @@ subsets:
       - name: http
         port: 80
         protocol: TCP
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: pihole
-  namespace: default
-spec:
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 80

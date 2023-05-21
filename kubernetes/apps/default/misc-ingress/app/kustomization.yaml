@@ -4,6 +4,5 @@ kind: Kustomization
 resources:
   - ./homeassistant-ingress.yaml
   - ./pfsense-ingress.yaml
-  - ./pihole-ingress.yaml
   - ./proxmox-ingress.yaml
   - ./truenas-ingress.yaml
