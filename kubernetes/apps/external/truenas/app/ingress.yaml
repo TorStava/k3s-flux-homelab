@@ -3,18 +3,28 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: truenas
-  namespace: default
+  namespace: external
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: truenas.png
+    gethomepage.dev/name: Truenas
+    gethomepage.dev/group: Storage
+    gethomepage.dev/widget.type: truenas
+    gethomepage.dev/widget.url: http://truenas.external
+    gethomepage.dev/widget.key: ${SECRET_TRUENAS_TOKEN}
+    hajimari.io/icon: mdi:truenas
+    hajimari.io/enable: "true"
 spec:
   ingressClassName: nginx
   rules:
-    - host: &host "truenas.${SECRET_DOMAIN}"
+    - host: &host "ph.${SECRET_DOMAIN}"
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: truenas
+                name: pihole
                 port:
                   number: 80
   tls:
@@ -26,7 +36,7 @@ apiVersion: v1
 kind: Endpoints
 metadata:
   name: truenas
-  namespace: default
+  namespace: external
 subsets:
   - addresses:
       - ip: ${NAS_IP}
@@ -34,15 +44,3 @@ subsets:
       - name: http
         port: 80
         protocol: TCP
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: truenas
-  namespace: default
-spec:
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 80
