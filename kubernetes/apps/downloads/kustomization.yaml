@@ -17,4 +17,3 @@ resources:
   - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
   - ./tdarr/ks.yaml
-  - ./tdarr-node/ks.yaml
