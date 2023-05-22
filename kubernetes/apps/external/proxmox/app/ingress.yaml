@@ -3,9 +3,19 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: proxmox
-  namespace: default
+  namespace: external
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: https
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: proxmox.png
+    gethomepage.dev/name: Proxmox
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/widget.type: proxmox
+    gethomepage.dev/widget.url: http://proxmox.external:*port
+    gethomepage.dev/widget.username: ${SECRET_PROXMOX_USERNAME}
+    gethomepage.dev/widget.password: ${SECRET_PROXMOX_TOKEN}
+    hajimari.io/icon: mdi:proxmox
+    hajimari.io/enable: "true"
 spec:
   ingressClassName: nginx
   rules:
@@ -18,7 +28,7 @@ spec:
               service:
                 name: proxmox
                 port:
-                  number: 8006
+                  number: &port 8006
   tls:
     - hosts:
         - *host
@@ -28,7 +38,7 @@ apiVersion: v1
 kind: Endpoints
 metadata:
   name: proxmox
-  namespace: default
+  namespace: external
 subsets:
   - addresses:
       - ip: ${PROXMOX_IP}
@@ -36,15 +46,3 @@ subsets:
       - name: http
         port: 8006
         protocol: TCP
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: proxmox
-  namespace: default
-spec:
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 8006

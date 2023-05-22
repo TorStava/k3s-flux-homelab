@@ -6,4 +6,5 @@ resources:
   - ./nextcloud/ks.yaml
   - ./pihole/ks.yaml
   - ./plex/ks.yaml
+  - ./proxmox/ks.yaml
   - ./truenas/ks.yaml
