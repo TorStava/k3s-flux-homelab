@@ -24,7 +24,7 @@ spec:
             path: "/"
             backend:
               service:
-                name: pihole
+                name: truenas
                 port:
                   number: 80
   tls:
