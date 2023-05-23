@@ -25,8 +25,8 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: immich-typesense
+  # dependsOn:
+  #   - name: immich-typesense
   values:
     initContainers:
       01-init-db:
