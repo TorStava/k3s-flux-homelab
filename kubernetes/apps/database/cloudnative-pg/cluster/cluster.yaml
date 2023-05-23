@@ -4,8 +4,8 @@ kind: Cluster
 metadata:
   name: postgres
   namespace: database
-  annotations:
-    kyverno.io/ignore: "true"
+  # annotations:
+  #   kyverno.io/ignore: "true"
 spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:14.7
@@ -24,22 +24,22 @@ spec:
       shared_buffers: 512MB
   monitoring:
     enablePodMonitor: true
-  backup:
-    retentionPolicy: 30d
-    barmanObjectStore:
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://postgresql/
-      endpointURL: http://s3.${SECRET_DOMAIN}
-      serverName: postgres-v3
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg-secret
-          key: aws-access-key-id
-        secretAccessKey:
-          name: cloudnative-pg-secret
-          key: aws-secret-access-key
+  # backup:
+  #   retentionPolicy: 30d
+  #   barmanObjectStore:
+  #     wal:
+  #       compression: bzip2
+  #       maxParallel: 8
+  #     destinationPath: s3://postgresql/
+  #     endpointURL: http://s3.${SECRET_DOMAIN}
+  #     serverName: postgres-v3
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: cloudnative-pg-secret
+  #         key: aws-access-key-id
+  #       secretAccessKey:
+  #         name: cloudnative-pg-secret
+  #         key: aws-secret-access-key
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
   #   - name: *previous-cluster
