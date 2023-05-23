@@ -9,6 +9,6 @@ resources:
   - ./immich-pvc.yaml
   # - ./machine-learning
   # - ./microservices
-  # - ./typesense
+  - ./typesense
   - ./server
   # - ./web
