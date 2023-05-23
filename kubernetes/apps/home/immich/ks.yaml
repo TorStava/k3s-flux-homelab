@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-immich
   namespace: flux-system
 spec:
-  depensOn:
+  dependsOn:
     - name: cluster-apps-cloudnative-pg
     - name: cluster-apps-redis
   path: ./kubernetes/apps/home/immich/app
