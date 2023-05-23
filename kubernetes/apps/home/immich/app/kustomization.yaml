@@ -7,8 +7,8 @@ resources:
   - ./configmap.yaml
   - ./secret.sops.yaml
   - ./immich-pvc.yaml
-  # - ./machine-learning
-  # - ./microservices
+  - ./machine-learning
+  - ./microservices
   - ./typesense
   - ./server
-  # - ./web
+  - ./web

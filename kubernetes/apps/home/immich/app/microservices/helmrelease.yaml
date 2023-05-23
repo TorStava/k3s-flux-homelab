@@ -1,8 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app immich-server
+  name: &app immich-microservices
   namespace: home
 spec:
   interval: 15m
@@ -28,13 +29,6 @@ spec:
   dependsOn:
     - name: immich-typesense
   values:
-    initContainers:
-      01-init-db:
-        image: ghcr.io/onedr0p/postgres-init:14.8
-        imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: immich-secret
     controller:
       replicas: 2
       strategy: RollingUpdate
@@ -46,7 +40,7 @@ spec:
       tag: v1.57.1
     command: /bin/sh
     args:
-      - ./start-server.sh
+      - ./start-microservices.sh
     envFrom:
       - configMapRef:
           name: *configmap
@@ -54,9 +48,7 @@ spec:
           name: *secret
     service:
       main:
-        ports:
-          http:
-            port: 3001
+        enabled: false
     persistence:
       library:
         enabled: true
