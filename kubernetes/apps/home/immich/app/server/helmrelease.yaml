@@ -61,6 +61,7 @@ spec:
       library:
         enabled: true
         existingClaim: immich-nfs
+        namespace: home
         mountPath: /usr/src/app/upload
     topologySpreadConstraints:
       - maxSkew: 1
