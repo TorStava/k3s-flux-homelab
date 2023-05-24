@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${NAS_IP}
-    path: /immich
+    path: ${SECRET_IMMICH_SHARE}
   # Note: The first two options are strictly for NFSv4.2
   mountOptions:
     - nfsvers=4.1
