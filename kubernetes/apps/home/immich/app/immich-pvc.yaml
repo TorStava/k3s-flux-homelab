@@ -7,13 +7,18 @@ spec:
   storageClassName: immich-nfs
   capacity:
     storage: 1Mi # Size does not matter
-  accessModes: ["ReadWriteMany"]
+  accessModes:
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${NAS_IP}
     path: /immich
   # Note: The first two options are strictly for NFSv4.2
-  mountOptions: ["nfsvers=4.2", "nconnect=8", "hard", "noatime"]
+  mountOptions:
+    - nfsvers=4.1
+    - nconnect=8
+    - hard
+    - noatime
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -21,8 +26,10 @@ metadata:
   name: immich-nfs
   namespace: home
 spec:
-  accessModes: ["ReadWriteMany"]
+  accessModes:
+    - ReadWriteMany
   storageClassName: immich-nfs
+  namespace: home
   resources:
     requests:
       storage: 1Mi # Size does not matter
