@@ -29,7 +29,6 @@ spec:
   accessModes:
     - ReadWriteMany
   storageClassName: immich-nfs
-  namespace: home
   resources:
     requests:
       storage: 1Mi # Size does not matter
