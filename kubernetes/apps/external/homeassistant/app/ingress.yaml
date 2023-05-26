@@ -2,27 +2,27 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: home-assistant
+  name: homeassistant
   namespace: external
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: home-assistant.png
+    gethomepage.dev/icon: homeassistant.png
     gethomepage.dev/name: Home Assistant
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/widget.type: homeassistant
-    gethomepage.dev/widget.url: https://home-assistant.${SECRET_DOMAIN}
+    gethomepage.dev/widget.url: https://homeassistant.${SECRET_DOMAIN}
     external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
 spec:
   ingressClassName: nginx
   rules:
-    - host: &host "home-assistant.${SECRET_DOMAIN}"
+    - host: &host "homeassistant.${SECRET_DOMAIN}"
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: home-assistant
+                name: homeassistant
                 port:
                   number: 8123
   tls:
@@ -33,7 +33,7 @@ spec:
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: home-assistant
+  name: homeassistant
   namespace: external
 subsets:
   - addresses:
