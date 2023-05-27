@@ -5,6 +5,7 @@ resources:
   - ./namespace.yaml
   # - ./media-pvc.yaml
   # - ./media-old-pvc.yaml
+  - ./jellyfin/ks.yaml
   - ./overseerr/ks.yaml
   # - ./plex/ks.yaml
   - ./tautulli/ks.yaml
