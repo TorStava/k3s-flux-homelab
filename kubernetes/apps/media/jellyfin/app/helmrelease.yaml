@@ -37,7 +37,7 @@ spec:
       main:
         type: LoadBalancer
         externalIPs:
-          - ${SECRET_JELLYFIN_LB_IP}
+          - ${JELLYFIN_METALLB_IP}
         externalTrafficPolicy: Local
         ports:
           http:
