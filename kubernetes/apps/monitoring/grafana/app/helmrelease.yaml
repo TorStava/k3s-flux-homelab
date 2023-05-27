@@ -21,8 +21,6 @@ spec:
     podAnnotations:
       configmap.reloader.stakater.com/reload: grafana
     resources:
-      limits:
-        memory: 219M
       requests:
         cpu: 23m
         memory: 127M

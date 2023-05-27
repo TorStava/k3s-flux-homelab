@@ -90,10 +90,6 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
-      # supplementalGroups:
-        # - 44
-        # - 109
-        # - 65539
 
     # nodeSelector:
     #   intel.feature.node.kubernetes.io/gpu: "true"
@@ -101,11 +97,7 @@ spec:
     resources:
       requests:
         cpu: 100m
-        # gpu.intel.com/i915: 1
         memory: 4282M
-      limits:
-        # gpu.intel.com/i915: 1
-        memory: 8G
     volumeClaimTemplates:
       - name: config
         mountPath: /config

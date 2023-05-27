@@ -210,8 +210,6 @@ spec:
         requests:
           memory: 512Mi
           cpu: 250m
-        limits:
-          memory: 2048Mi
 
     prometheusOperator:
       enabled: true
@@ -220,8 +218,6 @@ spec:
           requests:
             cpu: 200m
             memory: 50Mi
-          limits:
-            memory: 100Mi
 
     prometheus:
       enabled: true
