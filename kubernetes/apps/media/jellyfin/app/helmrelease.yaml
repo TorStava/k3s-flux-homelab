@@ -65,6 +65,14 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: jellyfin.png
+          gethomepage.dev/name: Jellyfin
+          gethomepage.dev/group: Media
+          gethomepage.dev/widget.type: jellyfin
+          gethomepage.dev/widget.url: http://jellyfin.media:*port
+          gethomepage.dev/widget.key: ${SECRET_JELLYFIN_TOKEN}
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           hajimari.io/icon: simple-icons:jellyfin
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
