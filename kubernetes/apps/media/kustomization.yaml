@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./media-pvc.yaml
+  - ./calibre-web/ks.yaml
   - ./jellyfin/ks.yaml
   - ./overseerr/ks.yaml
   - ./tautulli/ks.yaml

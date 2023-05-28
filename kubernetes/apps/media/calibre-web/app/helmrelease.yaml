@@ -1,0 +1,91 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: calibre-web
+  namespace: media
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  interval: 30m
+  values:
+    controller:
+      type: statefulset
+
+    image:
+      repository: ghcr.io/bjw-s/calibre-web
+      tag: 0.6.20@sha256:f3ee196be5304f7d2915d088c7591836bbb2642fcbea6ed84d2a8e64b71553e8
+
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+
+    enableServiceLinks: false
+
+    env:
+      CACHE_DIR: /cache
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8083
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: calibre.png
+          gethomepage.dev/name: Calibre Web
+          gethomepage.dev/group: Media
+          # nginx.ingress.kubernetes.io/auth-url: https://auth.bjw-s.dev/oauth2/auth?allowed_groups=calibre-web
+          # nginx.ingress.kubernetes.io/auth-signin: https://auth.bjw-s.dev/oauth2/start?rd=$scheme://$best_http_host$request_uri
+          # nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-email, x-auth-request-groups"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.bjw-s.dev/css/base/calibreweb/nord.css"></head>';
+            sub_filter_once on;
+        ingressClassName: nginx
+        hosts:
+          - host: &host calibre-web.${SECRET_DOMAIN}
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      media:
+        enabled: true
+        mountPath: /data
+        path: ${SECRET_NFS_DATA}
+        server: ${NAS_IP}
+        type: nfs
+      cache:
+        enabled: true
+        type: emptyDir
+        mountPath: /cache
+
+    resources:
+      requests:
+        cpu: 5m
+        memory: 470M
+      limits:
+        memory: 470M
+
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
