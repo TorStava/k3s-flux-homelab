@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: media-nfs
+  name: &name media-nfs
 spec:
-  storageClassName: media-nfs
+  storageClassName: *name
   capacity:
     storage: 24T
   accessModes:
@@ -32,8 +32,8 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  volumeName: media-nfs
-  storageClassName: ""
+  volumeName: &name media-nfs
+  storageClassName: *name
   resources:
     requests:
       storage: 24T
