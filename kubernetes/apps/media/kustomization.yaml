@@ -7,4 +7,5 @@ resources:
   - ./calibre-web/ks.yaml
   # - ./jellyfin/ks.yaml
   - ./overseerr/ks.yaml
+  - ./navidrome/ks.yaml
   - ./tautulli/ks.yaml
