@@ -6,6 +6,7 @@ resources:
   # - ./media-pvc.yaml
   - ./calibre-web/ks.yaml
   # - ./jellyfin/ks.yaml
+  - ./emby/ks.yaml
   - ./overseerr/ks.yaml
   - ./navidrome/ks.yaml
   - ./tautulli/ks.yaml

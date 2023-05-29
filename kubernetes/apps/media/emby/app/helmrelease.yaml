@@ -1,0 +1,81 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: emby
+  namespace: media
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      type: statefulset
+    image:
+      repository: ghcr.io/onedr0p/emby
+      tag: 4.7.12.0@sha256:c33983072dd78219aefd7727639a53e4a7aa55598d4bfd6048f76b07166a05af
+    service:
+      main:
+        ports:
+          http:
+            port: 8096
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: emby.png
+          gethomepage.dev/name: Emby
+          gethomepage.dev/group: Media
+          gethomepage.dev/widget.type: emby
+          gethomepage.dev/widget.url: http://emby.media
+          gethomepage.dev/widget.key: "${SECRET_EMBY_TOKEN}"
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+          hajimari.io/icon: simple-icons:emby
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 1234
+      fsGroupChangePolicy: "OnRootMismatch"
+    persistence:
+      media:
+        enabled: true
+        mountPath: /data
+        path: ${SECRET_NFS_DATA}
+        server: ${NAS_IP}
+        type: nfs
+        readOnly: true
+      config:
+        enabled: true
+        storageClass: longhorn
+        size: 20Gi
+    resources:
+      requests:
+        cpu: 100m
+        memory: 1000Mi
