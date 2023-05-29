@@ -3,8 +3,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./media-pvc.yaml
+  # - ./media-pvc.yaml
   - ./calibre-web/ks.yaml
-  - ./jellyfin/ks.yaml
+  # - ./jellyfin/ks.yaml
   - ./overseerr/ks.yaml
   - ./tautulli/ks.yaml
