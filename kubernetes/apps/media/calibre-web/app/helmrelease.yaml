@@ -78,9 +78,7 @@ spec:
 
     resources:
       requests:
-        cpu: 5m
-        memory: 470M
-      limits:
+        cpu: 50m
         memory: 470M
 
     volumeClaimTemplates:
