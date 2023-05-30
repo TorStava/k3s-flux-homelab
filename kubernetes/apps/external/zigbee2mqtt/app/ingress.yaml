@@ -1,0 +1,45 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zigbee2mqtt
+  namespace: external
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: zigbee2mqtt.png
+    gethomepage.dev/name: zigbee2mqtt
+    gethomepage.dev/group: Media
+    gethomepage.dev/widget.type: zigbee2mqtt
+    gethomepage.dev/widget.url: http://zigbee2mqtt.external
+    hajimari.io/icon: mdi:zigbee2mqtt
+    hajimari.io/enable: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: &host "zigbee2mqtt.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: zigbee2mqtt
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - *host
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: zigbee2mqtt
+  namespace: external
+subsets:
+  - addresses:
+      - ip: ${ZIGBEE2MQTT_IP}
+    ports:
+      - name: http
+        port: 8080
+        protocol: TCP
