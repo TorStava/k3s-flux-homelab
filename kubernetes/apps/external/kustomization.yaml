@@ -6,6 +6,7 @@ resources:
   - ./homeassistant/ks.yaml
   - ./nextcloud/ks.yaml
   - ./pihole/ks.yaml
+  - ./pfsense/ks.yaml
   - ./plex/ks.yaml
   - ./proxmox/ks.yaml
   - ./truenas/ks.yaml
