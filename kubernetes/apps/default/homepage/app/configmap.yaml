@@ -120,9 +120,30 @@ data:
             - k8s-at-home:
                 - icon: kubernetes-dashboard.png
                   href: 'https://nanne.dev/k8s-at-home-search/'
-            - k3s-home-cluster:
+            - LilDrunkenSmurf/k3s-home-cluster:
                 - icon: github.png
                   href: 'https://github.com/LilDrunkenSmurf/k3s-home-cluster'
+            - onedr0p/home-ops
+                - icon: github.png
+                  href: 'https://github.com/onedr0p/home-ops'
+            - bjw-s/home-ops
+                - icon: github.png
+                  href: 'https://github.com/bjw-s/home-ops'
+            - mchestr/home-cluster
+                - icon: github.png
+                  href: 'https://github.com/mchestr/home-cluster'
+            - binaryn3xus/HomeOps
+                - icon: github.png
+                  href: 'https://github.com/binaryn3xus/HomeOps'
+            - bo0tzz/kube
+                - icon: github.png
+                  href: 'https://github.com/bo0tzz/kube'
+            - axeII/home-ops
+                - icon: github.png
+                  href: 'https://github.com/axeII/home-ops'
+            - buroa/k8s-gitops
+                - icon: github.png
+                  href: 'https://github.com/buroa/k8s-gitops'
   docker.yaml: |
     ---
   kubernetes.yaml: |
