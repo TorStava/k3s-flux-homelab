@@ -33,6 +33,8 @@ spec:
       tag: 4.7.12.0@sha256:c33983072dd78219aefd7727639a53e4a7aa55598d4bfd6048f76b07166a05af
     service:
       main:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
         ports:
           http:
             port: 8096
