@@ -123,25 +123,25 @@ data:
             - LilDrunkenSmurf/k3s-home-cluster:
                 - icon: github.png
                   href: 'https://github.com/LilDrunkenSmurf/k3s-home-cluster'
-            - onedr0p/home-ops
+            - onedr0p/home-ops:
                 - icon: github.png
                   href: 'https://github.com/onedr0p/home-ops'
-            - bjw-s/home-ops
+            - bjw-s/home-ops:
                 - icon: github.png
                   href: 'https://github.com/bjw-s/home-ops'
-            - mchestr/home-cluster
+            - mchestr/home-cluster:
                 - icon: github.png
                   href: 'https://github.com/mchestr/home-cluster'
-            - binaryn3xus/HomeOps
+            - binaryn3xus/HomeOps:
                 - icon: github.png
                   href: 'https://github.com/binaryn3xus/HomeOps'
-            - bo0tzz/kube
+            - bo0tzz/kube:
                 - icon: github.png
                   href: 'https://github.com/bo0tzz/kube'
-            - axeII/home-ops
+            - axeII/home-ops:
                 - icon: github.png
                   href: 'https://github.com/axeII/home-ops'
-            - buroa/k8s-gitops
+            - buroa/k8s-gitops:
                 - icon: github.png
                   href: 'https://github.com/buroa/k8s-gitops'
   docker.yaml: |
