@@ -40,7 +40,7 @@ spec:
         enabled: true
         type: gluetun
         image:
-          repository: qmcgaw/gluetun
+          repository: ghcr.io/qdm12/gluetun
           tag: v3.34.2
         env:
           - name: VPN_SERVICE_PROVIDER
