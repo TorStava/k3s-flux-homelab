@@ -12,7 +12,7 @@ metadata:
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/href: https://proxmox.${SECRET_DOMAIN}
     gethomepage.dev/widget.type: proxmox
-    gethomepage.dev/widget.url: http://proxmox.external
+    gethomepage.dev/widget.url: http://proxmox.external:8006
     gethomepage.dev/widget.username: ${SECRET_PROXMOX_USERNAME}
     gethomepage.dev/widget.password: ${SECRET_PROXMOX_TOKEN}
     hajimari.io/icon: mdi:proxmox
