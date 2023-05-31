@@ -65,7 +65,7 @@ spec:
             value: debug
         envFrom:
           - secretRef:
-              name: pod-gateway-secret
+              name: pod-gateway-secret-privacy
         securityContext:
           capabilities:
             add:
