@@ -61,6 +61,8 @@ spec:
             value: ${SECRET_WIREGUARD_PUBLIC_KEY}
           - name: WIREGUARD_PRIVATE_KEY
             value: ${SECRET_WIREGUARD_PRIVATE_KEY}
+          - name: SERVER_COUNTRIES
+            value: Norway,Sweden,Denmark,Germany
           - name: LOG_LEVEL
             value: debug
         envFrom:
