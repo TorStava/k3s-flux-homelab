@@ -41,12 +41,8 @@ spec:
     service:
       main:
         ports:
-          desktop-http:
+          http:
             port: 8080
-          desktop-https:
-            port: 8181
-          webserver-gui:
-            port: 8081
 
     ingress:
       main:
@@ -61,8 +57,6 @@ spec:
           - host: &host calibre.${SECRET_DOMAIN}
             paths:
               - path: /
-                service:
-                  port: desktop-http
         tls:
           - hosts:
               - *host
