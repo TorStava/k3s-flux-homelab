@@ -23,30 +23,35 @@ spec:
       repository: lscr.io/linuxserver/calibre
       tag: 6.19.1
 
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 1234
-      fsGroup: 1234
-      fsGroupChangePolicy: "OnRootMismatch"
+    # podSecurityContext:
+    #   runAsUser: 568
+    #   runAsGroup: 1234
+    #   fsGroup: 1234
+    #   fsGroupChangePolicy: "OnRootMismatch"
 
-    enableServiceLinks: false
+    # enableServiceLinks: false
 
     env:
       TZ: "${TZ}"
       PUID: "568"
       PGID: "1234"
-      PASSWORD: "${SECRET_CALIBRE_PASSWORD}"
-      CACHE_DIR: /cache
+      # PASSWORD: "${SECRET_CALIBRE_PASSWORD}"
+      # CACHE_DIR: /cache
 
     service:
       main:
         ports:
           http:
             port: &port 8080
-          https:
-            port: 8181
+      webserver:
+        enabled: true
+        ports:
           webserver:
+            enabled: true
             port: 8081
+            protocol: TCP
+            targetPort: 8081
+        type: ClusterIP
 
     ingress:
       main:
@@ -61,6 +66,7 @@ spec:
           - host: &host calibre.${SECRET_DOMAIN}
             paths:
               - path: /
+                pathType: Prefix
         tls:
           - hosts:
               - *host
@@ -68,19 +74,10 @@ spec:
     persistence:
       media:
         enabled: true
-        mountPath: /data
+        mountPath: /ebooks
         path: ${SECRET_NFS_DATA}/ebooks
         server: ${NAS_IP}
         type: nfs
-      cache:
-        enabled: true
-        type: emptyDir
-        mountPath: /cache
-
-    resources:
-      requests:
-        cpu: 50m
-        memory: 470M
 
     volumeClaimTemplates:
       - name: config
@@ -104,3 +101,8 @@ spec:
       readiness: *probes
       startup:
         enabled: false
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 470M
