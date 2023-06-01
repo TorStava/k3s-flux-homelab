@@ -43,6 +43,10 @@ spec:
         ports:
           http:
             port: &port 8080
+          https:
+            port: 8181
+          webserver:
+            port: 8081
 
     ingress:
       main:
