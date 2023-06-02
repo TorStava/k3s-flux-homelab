@@ -5,6 +5,7 @@ metadata:
   name: pfsense
   namespace: external
   annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: https
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: pfsense.png
     gethomepage.dev/name: pfsense
