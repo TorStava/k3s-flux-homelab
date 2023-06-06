@@ -43,6 +43,7 @@ spec:
         ingressClassName: nginx
         annotations:
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+          authentik.home.arpa/enabled: "true"
         hosts:
           - host: &host "home.${SECRET_DOMAIN}"
             paths:
