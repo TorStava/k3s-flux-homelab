@@ -37,6 +37,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
+          authentik.home.arpa/enabled: "true"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: etcd.png
           gethomepage.dev/name: Goldilocks
