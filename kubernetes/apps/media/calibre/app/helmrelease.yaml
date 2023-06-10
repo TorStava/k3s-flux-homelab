@@ -21,7 +21,7 @@ spec:
 
     image:
       repository: lscr.io/linuxserver/calibre
-      tag: 6.19.1
+      tag: 6.20.0
 
     # podSecurityContext:
     #   runAsUser: 568
