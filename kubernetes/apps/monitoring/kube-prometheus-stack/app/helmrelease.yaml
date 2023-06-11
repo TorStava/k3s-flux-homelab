@@ -271,8 +271,6 @@ spec:
             honor_timestamps: true
             static_configs:
               - targets: ["${PROXMOX_IP}:9100"]
-            labels:
-              alias: proxmox
 
     thanosRuler:
       enabled: false
