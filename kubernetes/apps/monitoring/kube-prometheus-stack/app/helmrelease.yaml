@@ -265,6 +265,14 @@ spec:
             honor_timestamps: true
             static_configs:
               - targets: ["kube-prometheus-stack-prometheus-node-exporter.monitoring.svc.cluster.local:9100"]
+          - job_name: dell-server
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
+            static_configs:
+              - targets: ["${PROXMOX_IP}:9100"]
+            labels:
+              alias: proxmox
 
     thanosRuler:
       enabled: false
