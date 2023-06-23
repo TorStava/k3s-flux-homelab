@@ -27,11 +27,11 @@ spec:
   values:
     controller:
       type: statefulset
-      # annotations:
-      #   reloader.stakater.com/auto: "true"
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/qbittorrent
-      tag: 4.5.3
+      tag: 4.5.4
     env:
       TZ: "${TZ}"
       QBITTORRENT__PORT: &port 8080
@@ -97,5 +97,5 @@ spec:
         mountPath: /data
     resources:
       requests:
-        cpu: 100m
-        memory: 400Mi
+        cpu: 25m
+        memory: 1G
