@@ -27,7 +27,6 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-cloudnative-pg
-    - name: cluster-apps-local-path-provisioner
   path: ./kubernetes/apps/database/cloudnative-pg/cluster
   prune: true
   sourceRef:

@@ -4,15 +4,15 @@ kind: Cluster
 metadata:
   name: postgres
   namespace: database
-  # annotations:
-  #   kyverno.io/ignore: "true"
+  annotations:
+    kyverno.io/ignore: "true"
 spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:14.7
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 20Gi
-    storageClass: local-path
+    size: 8Gi
+    storageClass: longhorn
   superuserSecret:
     name: cloudnative-pg-secret
   # bootstrap:
