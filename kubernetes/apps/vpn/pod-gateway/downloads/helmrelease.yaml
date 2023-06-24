@@ -58,6 +58,8 @@ spec:
             value: 146.70.122.3
           - name: VPN_ENDPOINT_PORT
             value: 51820
+          - name: DNS_ADDRESS
+            value: 1.1.1.1
           - name: LOG_LEVEL
             value: debug
         envFrom:
