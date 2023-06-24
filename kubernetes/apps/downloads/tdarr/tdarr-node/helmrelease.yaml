@@ -54,9 +54,12 @@ spec:
         enabled: true
         existingClaim: downloads
         mountPath: /data
-      configs:
-        enabled: true
+    volumeClaimTemplates:
+      - name: configs
         mountPath: /app/configs
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
     podSecurityContext:
       runAsUser: 0
       runAsGroup: 0
