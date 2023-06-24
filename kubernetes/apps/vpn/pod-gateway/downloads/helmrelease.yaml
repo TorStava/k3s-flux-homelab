@@ -54,6 +54,8 @@ spec:
             value: "off"
           - name: DOT
             value: "off"
+          - name: VPN_ENDPOINT_IP
+            value: 146.70.122.3
           - name: VPN_ENDPOINT_PORT
             value: 51820
           - name: LOG_LEVEL
