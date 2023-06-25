@@ -35,6 +35,9 @@ spec:
       tag: release-1.3.0
     env:
       TZ: "${TZ}"
+      PUID: 568
+      PGID: 568
+      UMASK: 002
     service:
       main:
         ports:
