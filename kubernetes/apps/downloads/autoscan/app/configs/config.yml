@@ -1,0 +1,27 @@
+# port for Autoscan webhooks to listen on
+port: 3030
+
+triggers:
+  lidarr:
+    - name: lidarr   # /triggers/lidarr
+      priority: 3
+
+  radarr:
+    - name: radarr   # /triggers/radarr
+      priority: 1
+
+  readarr:
+    - name: readarr  # /triggers/readarr
+      priority: 4
+
+  sonarr:
+    - name: sonarr # /triggers/sonarr
+      priority: 2
+
+targets:
+  plex:
+    - url: https://plex.${SECRET_DOMAIN} # URL of your Plex server
+      token: ${PLEX_TOKEN} # Plex API Token
+      rewrite:
+        - from: /data/ # local file system
+          to: /mnt/data/ # path accessible by the Plex docker container (if applicable)
