@@ -8,6 +8,9 @@ configMapGenerator:
   - name: autoscan-configmap
     files:
       - ./configs/config.yml
+  - name: autoscan-plex-token
+    files:
+      - ./configs/plex.token
 generatorOptions:
   disableNameSuffixHash: true
 labels:
