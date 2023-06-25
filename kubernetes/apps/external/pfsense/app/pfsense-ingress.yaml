@@ -1,0 +1,50 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pfsense
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: https
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: &host "pfsense.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: pfsense
+                port:
+                  number: 10443
+  tls:
+    - hosts:
+        - *host
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: pfsense
+  namespace: default
+subsets:
+  - addresses:
+      - ip: ${FIREWALL_IP}
+    ports:
+      - name: https
+        port: 10443
+        protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pfsense
+  namespace: default
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 10443
