@@ -84,23 +84,7 @@ spec:
         subPath: config.yml
         mountPath: /config/config.yml
         readOnly: true
-      add-ons:
-        enabled: true
-        type: emptyDir
-        mountPath: /add-ons
     resources:
       requests:
         cpu: 10m
         memory: 250Mi
-    sidecars:
-      tdarr-inform:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.6
-        imagePullPolicy: IfNotPresent
-        args:
-          - --repo=https://github.com/deathbybandaid/tdarr_inform.git
-          - --branch=master
-          - --depth=1
-          - --wait=21600 # 6 hours
-          - --root=/add-ons/tdarr-inform
-        volumeMounts:
-          - { name: add-ons, mountPath: /add-ons }
