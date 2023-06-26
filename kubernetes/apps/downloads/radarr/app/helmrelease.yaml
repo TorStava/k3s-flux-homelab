@@ -99,19 +99,19 @@ spec:
         enabled: true
         existingClaim: downloads
         mountPath: /data
-      add-ons:
-        enabled: true
-        type: emptyDir
-        mountPath: /add-ons
-    sidecars:
-      tdarr-inform:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.7
-        imagePullPolicy: IfNotPresent
-        args:
-          - --repo=https://github.com/deathbybandaid/tdarr_inform.git
-          - --branch=master
-          - --depth=1
-          - --wait=21600 # 6 hours
-          - --root=/add-ons/tdarr-inform
-        volumeMounts:
-          - { name: add-ons, mountPath: /add-ons }
+    #   add-ons:
+    #     enabled: true
+    #     type: emptyDir
+    #     mountPath: /add-ons
+    # sidecars:
+    #   tdarr-inform:
+    #     image: registry.k8s.io/git-sync/git-sync:v3.6.7
+    #     imagePullPolicy: IfNotPresent
+    #     args:
+    #       - --repo=https://github.com/deathbybandaid/tdarr_inform.git
+    #       - --branch=master
+    #       - --depth=1
+    #       - --wait=21600 # 6 hours
+    #       - --root=/add-ons/tdarr-inform
+    #     volumeMounts:
+    #       - { name: add-ons, mountPath: /add-ons }
