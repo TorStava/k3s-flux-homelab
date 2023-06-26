@@ -1,0 +1,15 @@
+---
+# ref: https://github.com/onedr0p/home-ops/blob/main/kubernetes/apps/default/frigate/app/config/config.yaml
+
+mqtt:
+  enabled: false
+
+cameras:
+  garage:
+    ffmpeg:
+      inputs:
+        - path: rtsp://192.168.1.101:554/rtsp
+          roles:
+            - detect
+    detect:
+      enabled: false
