@@ -35,8 +35,8 @@ spec:
       tag: 0.12.1
     env:
       TZ: ${TZ}
-      SECRET_IMOU_USERNAME: ${SECRET_IMOU_USERNAME}
-      SECRET_IMOU_CAM1_PASSWORD: ${SECRET_IMOU_CAM1_PASSWORD}
+      FRIGATE_RTSP_USER: ${SECRET_IMOU_USERNAME}
+      FRIGATE_RTSP_PASSWORD: ${SECRET_IMOU_CAM1_PASSWORD}
     # envFrom:
     #   - secretRef:
     #       name: frigate-secret
