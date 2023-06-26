@@ -76,7 +76,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          authentik.home.arpa/enabled: "true"
+          # authentik.home.arpa/enabled: "true"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: frigate.png
           gethomepage.dev/name: frigate
@@ -84,7 +84,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           hajimari.io/icon: mdi:align-vertical-top
         hosts:
-          - host: &host "{{ .Release.Name }}.devbu.io"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
