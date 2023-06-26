@@ -35,16 +35,8 @@ spec:
       tag: 0.12.1
     env:
       TZ: ${TZ}
-      # FRIGATE_MQTT_USERNAME:
-      #   valueFrom:
-      #     secretKeyRef:
-      #       name: mosquitto-secret
-      #       key: username
-      # FRIGATE_MQTT_PASSWORD:
-      #   valueFrom:
-      #     secretKeyRef:
-      #       name: mosquitto-secret
-      #       key: password
+      FRIGATE_MQTT_USERNAME: ${SECRET_IMOU_USERNAME}
+      FRIGATE_MQTT_PASSWORD: ${SECRET_IMOU_CAM1_PASSWORD}
     # envFrom:
     #   - secretRef:
     #       name: frigate-secret
