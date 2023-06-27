@@ -4,21 +4,27 @@
 mqtt:
   enabled: false
 
+go2rtc:
+  streams:
+    frigate_garage_lq: rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.101:554/cam/realmonitor?channel=1&subtype=1
+    frigate_garage_hq: rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.101:554/cam/realmonitor?channel=1&subtype=0
+
 cameras:
   garage:
     enabled: true
     ffmpeg:
       inputs:
-        - path: rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.101:554/cam/realmonitor?channel=1&subtype=1
+        - path: rtsp://localhost:8554/frigate_garage_lq
           roles:
             - detect
-        - path: rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.101:554/cam/realmonitor?channel=1&subtype=0
+        - path: rtsp://localhost:8554/frigate_garage_hq
           roles:
             - record
     detect:
       enabled: true
       width: 640
       height: 360
+      fps: 10
 
 detectors:
   cpu1:
@@ -35,10 +41,20 @@ detectors:
 
 record:
   enabled: true
+  retain:
+    days: 7
+    mode: all
   events:
     retain:
-      default: 10
+      default: 7
 
 birdseye:
   enabled: true
   mode: continuous
+
+snapshots:
+  enabled: true
+  timestamp: false
+  bounding_box: true
+  retain:
+    default: 5
