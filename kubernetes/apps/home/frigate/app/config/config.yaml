@@ -6,10 +6,39 @@ mqtt:
 
 cameras:
   garage:
+    enabled: true
     ffmpeg:
       inputs:
-        - path: rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.101:554/cam/realmonitor?channel=1&subtype=0
+        - path: rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.101:554/cam/realmonitor?channel=1&subtype=1
           roles:
             - detect
+        - path: rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.101:554/cam/realmonitor?channel=1&subtype=0
+          roles:
+            - record
     detect:
-      enabled: false
+      enabled: true
+      width: 1280
+      height: 720
+
+detectors:
+  cpu1:
+    type: cpu
+    num_threads: 3
+    model:
+      path: /cpu_model.tflite
+  # coral1:
+  #   type: edgetpu
+  #   device: pci:0
+  # coral2:
+  #   type: edgetpu
+  #   device: pci:1
+
+record:
+  enabled: true
+  events:
+    retain:
+      default: 10
+
+birdseye:
+  enabled: true
+  mode: continuous
