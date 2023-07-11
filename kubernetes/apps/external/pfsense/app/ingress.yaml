@@ -10,8 +10,8 @@ metadata:
     gethomepage.dev/icon: pfsense.png
     gethomepage.dev/name: pfsense
     gethomepage.dev/group: Infrastructure
-    gethomepage.dev/widget.type: pfsense
-    gethomepage.dev/widget.url: http://pfsense.external
+    # gethomepage.dev/widget.type: pfsense
+    # gethomepage.dev/widget.url: http://pfsense.external
     hajimari.io/icon: mdi:pfsense
     hajimari.io/enable: "true"
 spec:
