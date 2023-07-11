@@ -61,7 +61,7 @@ spec:
           gethomepage.dev/name: Immich
           gethomepage.dev/group: Media
           gethomepage.dev/widget.type: immich
-          gethomepage.dev/widget.url: http://immich.home
+          gethomepage.dev/widget.url: http://immich.home:3001
           gethomepage.dev/widget.key: ${SECRET_IMMICH_TOKEN}
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           # nginx.ingress.kubernetes.io/configuration-snippet: |
