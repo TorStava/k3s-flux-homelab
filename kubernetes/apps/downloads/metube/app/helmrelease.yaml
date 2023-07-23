@@ -1,0 +1,75 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: metube
+  namespace: downloads
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      repository: ghcr.io/alexta69/metube
+      tag: 2023-07-12
+    env:
+      TZ: "${TZ}"
+      DOWNLOAD_DIR: "/data/youtube"
+      STATE_DIR: "/data/youtube/.metube"
+    service:
+      main:
+        ports:
+          http:
+            port: 8081
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: bazarr.png
+          gethomepage.dev/name: MeTube
+          gethomepage.dev/group: Downloads
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+          authentik.home.arpa/enabled: "true"
+          hajimari.io/icon: "simple-icons:youtube"
+          hajimari.io/group: "downloads"
+        hosts:
+          - host: &host "metube.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+    persistence:
+      media:
+        enabled: true
+        existingClaim: downloads
+        mountPath: /data
