@@ -32,7 +32,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/alexta69/metube
-      tag: 2023-07-12
+      tag: "2023-07-12"
     env:
       TZ: "${TZ}"
       DOWNLOAD_DIR: "/data/youtube"
