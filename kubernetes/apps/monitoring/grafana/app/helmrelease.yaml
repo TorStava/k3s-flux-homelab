@@ -185,6 +185,7 @@ spec:
         gethomepage.dev/widget.username: ${SECRET_GRAFANA_USERNAME}
         gethomepage.dev/widget.password: ${SECRET_GRAFANA_PASSWORD}
         external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+        authentik.home.arpa/enabled: "true"
         hajimari.io/icon: simple-icons:grafana
         # nginx.ingress.kubernetes.io/whitelist-source-range: |
         #   10.0.0.0/8,172.16.0.0/12,192.168.0.0/16

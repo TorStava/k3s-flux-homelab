@@ -61,6 +61,8 @@ spec:
           gethomepage.dev/icon: calibre.png
           gethomepage.dev/name: Calibre
           gethomepage.dev/group: Media
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+          authentik.home.arpa/enabled: "true"
         ingressClassName: nginx
         hosts:
           - host: &host calibre.${SECRET_DOMAIN}

@@ -60,6 +60,8 @@ spec:
           gethomepage.dev/widget.type: tdarr
           gethomepage.dev/widget.url: http://tdarr.downloads.svc.cluster.local:8265
           hajimari.io/icon: clarity:media-changer-solid
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+          authentik.home.arpa/enabled: "true"
         hosts:
           - host: &host tdarr.${SECRET_DOMAIN}
             paths:
