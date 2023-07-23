@@ -78,8 +78,10 @@ spec:
     persistence:
       media:
         enabled: true
-        existingClaim: downloads
-        mountPath: /data
+        mountPath: /audiobooks
+        path: ${SECRET_NFS_DATA}/audiobooks
+        server: ${NAS_IP}
+        type: nfs
       cache:
         enabled: true
         mountPath: /.npm
