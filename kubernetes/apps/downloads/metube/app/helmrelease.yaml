@@ -35,8 +35,9 @@ spec:
       tag: 2023-07-12@sha256:84588424a33548dcd8910b687ba93b4454f599765332b9c1199e6984bf748537
     env:
       TZ: "${TZ}"
-      DOWNLOAD_DIR: "/data/youtube"
-      STATE_DIR: "/data/youtube/.metube"
+      DARK_MODE: "true"
+      DOWNLOAD_DIR: "/downloads"
+      STATE_DIR: "/downloads/.metube"
     service:
       main:
         ports:
@@ -71,5 +72,7 @@ spec:
     persistence:
       media:
         enabled: true
-        existingClaim: downloads
-        mountPath: /data
+        mountPath: /downloads
+        path: ${SECRET_NFS_DATA}/youtube
+        server: ${NAS_IP}
+        type: nfs
