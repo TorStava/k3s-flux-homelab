@@ -63,9 +63,9 @@ spec:
         enabled: true
         interval: 1m
       resources:
-      requests:
-        cpu: 23m
-        memory: 24M
-      limits:
-        cpu: 23m
-        memory: 24M
+        requests:
+          cpu: 23m
+          memory: 24M
+        limits:
+          cpu: 23m
+          memory: 24M
