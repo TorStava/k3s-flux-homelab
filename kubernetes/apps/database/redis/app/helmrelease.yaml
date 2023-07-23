@@ -32,16 +32,23 @@ spec:
     master:
       persistence:
         enabled: false
+      resources:
+        requests:
+          cpu: 49m
+          memory: 50M
+        limits:
+          cpu: 49m
+          memory: 50M
     replica:
       persistence:
         enabled: false
-    resources:
-      requests:
-        cpu: 49m
-        memory: 50M
-      limits:
-        cpu: 49m
-        memory: 50M
+      resources:
+        requests:
+          cpu: 49m
+          memory: 50M
+        limits:
+          cpu: 49m
+          memory: 50M
     sentinel:
       enabled: true
       masterSet: redis-master
