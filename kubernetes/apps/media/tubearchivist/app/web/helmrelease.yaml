@@ -72,11 +72,8 @@ spec:
               - *host
     podSecurityContext:
       runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 1234
-      capabilities:
-        add:
-          - CHOWN
+      runAsGroup: 0
+      fsGroup: 0
     volumeClaimTemplates:
       - name: config
         mountPath: /cache
