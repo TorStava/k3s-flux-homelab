@@ -56,8 +56,8 @@ spec:
         ingressClassName: nginx
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: tubearchivist.png
-          gethomepage.dev/name: Tubearchivist
+          gethomepage.dev/icon: tube-archivist.png
+          gethomepage.dev/name: Tube Archivist
           gethomepage.dev/group: Media
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
         hosts:
