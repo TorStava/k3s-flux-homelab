@@ -34,8 +34,8 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: docker.io/bbilly1/tubearchivist
-      tag: v0.3.2
+      repository: bbilly1/tubearchivist
+      tag: v0.3.6
     env:
       TZ: "${TZ}"
       ES_URL: http://tubearchivist-elasticsearch.default.svc.cluster.local:9200
