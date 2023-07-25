@@ -45,6 +45,10 @@ spec:
         ports:
           http:
             port: 9200
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 0
+      fsGroup: 0
     volumeClaimTemplates:
       - name: config
         mountPath: /usr/share/elasticsearch/data
