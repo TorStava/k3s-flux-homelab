@@ -84,10 +84,12 @@ spec:
         size: 1Gi
         storageClass: longhorn
     persistence:
-      library:
+      media:
         enabled: true
-        existingClaim: tubearchivist-nfs
         mountPath: /youtube
+        path: ${SECRET_NFS_DATA}/youtube
+        server: ${NAS_IP}
+        type: nfs
     resources:
       requests:
         cpu: 100m
