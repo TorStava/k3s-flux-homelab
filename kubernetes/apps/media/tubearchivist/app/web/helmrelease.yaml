@@ -71,9 +71,9 @@ spec:
           - hosts:
               - *host
     podSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 1234
       capabilities:
         add:
           - CHOWN
