@@ -58,8 +58,6 @@ spec:
       requests:
         cpu: 15m
         memory: 80M
-      limits:
-        memory: 256M
     volumeClaimTemplates:
       - name: config
         mountPath: /data
