@@ -81,6 +81,3 @@ spec:
       requests:
         cpu: 15m
         memory: 4G
-      limits:
-        cpu: 1500m
-        memory: 16G
