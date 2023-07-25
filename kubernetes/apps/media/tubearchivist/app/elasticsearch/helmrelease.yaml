@@ -50,11 +50,6 @@ spec:
         ports:
           http:
             port: 9200
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: OnRootMismatch
     volumeClaimTemplates:
       - name: config
         mountPath: /usr/share/elasticsearch/data
