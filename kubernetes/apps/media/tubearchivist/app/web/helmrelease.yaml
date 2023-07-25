@@ -72,6 +72,9 @@ spec:
               - *host
     securityContext:
       privileged: true
+      capabilities:
+        add:
+          - CHOWN
     volumeClaimTemplates:
       - name: config
         mountPath: /cache
