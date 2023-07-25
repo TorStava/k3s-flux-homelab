@@ -70,11 +70,11 @@ spec:
         tls:
           - hosts:
               - *host
-    securityContext:
-      privileged: true
-      capabilities:
-        add:
-          - CHOWN
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 1234
+      fsGroup: 1234
+      fsGroupChangePolicy: OnRootMismatch
     volumeClaimTemplates:
       - name: config
         mountPath: /cache
