@@ -110,4 +110,4 @@ spec:
         memory: 411M
       limits:
         cpu: 15m
-        memory: 411M
+        memory: 441M
