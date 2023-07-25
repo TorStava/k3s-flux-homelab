@@ -70,10 +70,8 @@ spec:
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 0
-      fsGroup: 0
+    securityContext:
+      privileged: true
     volumeClaimTemplates:
       - name: config
         mountPath: /cache
