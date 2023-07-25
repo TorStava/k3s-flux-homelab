@@ -58,7 +58,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          authentik.home.arpa/enabled: "true"
+          # authentik.home.arpa/enabled: "true"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: tube-archivist.png
           gethomepage.dev/name: Tube Archivist
