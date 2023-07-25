@@ -78,14 +78,17 @@ spec:
         type: emptyDir
         mountPath: /cache
 
-    resources:
-      requests:
-        cpu: 50m
-        memory: 470M
-
     volumeClaimTemplates:
       - name: config
         mountPath: /config
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
+
+    resources:
+      requests:
+        cpu: 15m
+        memory: 145M
+      limits:
+        cpu: 15m
+        memory: 145M
