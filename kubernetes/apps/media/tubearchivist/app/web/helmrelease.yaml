@@ -44,8 +44,6 @@ spec:
       HOST_GID: 1000
       TA_HOST: &host tubearchivist.${SECRET_DOMAIN}
       TA_USERNAME: admin
-      TA_PASSWORD: "${TA_PASSWORD}"
-      ELASTIC_PASSWORD: "${ELASTIC_PASSWORD}"
     envFrom:
       - secretRef:
           name: tubearchivist-secret
