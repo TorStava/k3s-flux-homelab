@@ -86,3 +86,10 @@ spec:
         enabled: true
         mountPath: /.npm
         type: emptyDir
+    resources:
+      requests:
+        cpu: 15m
+        memory: 79M
+      limits:
+        cpu: 15m
+        memory: 79M
