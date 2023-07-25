@@ -5,6 +5,7 @@ namespace: media
 resources:
   - ./secret.sops.yaml
   - ./elasticsearch
+  - ./redis
 labels:
   - pairs:
       app.kubernetes.io/name: tubearchivist
