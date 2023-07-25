@@ -26,6 +26,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  valuesFrom:
+    - targetPath: env.ELASTIC_PASSWORD
+      kind: Secret
+      name: tubearchivist-secret
+      valuesKey: ELASTIC_PASSWORD
   values:
     controller:
       type: statefulset
@@ -40,9 +45,6 @@ spec:
       xpack.security.enabled: "true"
       discovery.type: single-node
       path.repo: /usr/share/elasticsearch/data/snapshot
-    envFrom:
-      - secretRef:
-          name: tubearchivist-secret
     service:
       main:
         ports:
