@@ -29,7 +29,7 @@ spec:
     controller:
       resources:
         requests:
-          cpu: 35m
+          cpu: 25m
           memory: 64M
     dashboard:
       replicaCount: 1
