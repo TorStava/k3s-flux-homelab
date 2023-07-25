@@ -94,7 +94,8 @@ spec:
         type: nfs
     resources:
       requests:
-        cpu: 100m
-        memory: 250Mi
+        cpu: 1168m
+        memory: 1039M
       limits:
-        memory: 2000Mi
+        cpu: 1168m
+        memory: 1039M
