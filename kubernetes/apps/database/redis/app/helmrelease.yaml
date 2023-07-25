@@ -36,9 +36,6 @@ spec:
         requests:
           cpu: 49m
           memory: 50M
-        limits:
-          cpu: 49m
-          memory: 50M
     replica:
       persistence:
         enabled: false
@@ -46,22 +43,16 @@ spec:
         requests:
           cpu: 49m
           memory: 50M
-        limits:
-          cpu: 49m
-          memory: 50M
     sentinel:
       enabled: true
       masterSet: redis-master
       getMasterTimeout: 10
       startupProbe:
-        failureThreshold: 2
+        failureThreshold: 3
       persistence:
         enabled: false
       resources:
         requests:
-          cpu: 49m
-          memory: 24M
-        limits:
           cpu: 49m
           memory: 24M
     metrics:
@@ -71,8 +62,5 @@ spec:
         interval: 1m
       resources:
         requests:
-          cpu: 23m
-          memory: 24M
-        limits:
           cpu: 23m
           memory: 24M
