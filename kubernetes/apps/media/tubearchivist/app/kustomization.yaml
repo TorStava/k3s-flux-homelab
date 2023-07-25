@@ -6,6 +6,7 @@ resources:
   - ./secret.sops.yaml
   - ./elasticsearch
   - ./redis
+  - ./web
 labels:
   - pairs:
       app.kubernetes.io/name: tubearchivist
