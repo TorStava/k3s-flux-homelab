@@ -31,7 +31,7 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: elasticsearch
+      repository: docker.elastic.co/elasticsearch/elasticsearch
       tag: 8.8.2
     env:
       TZ: "${TZ}"
