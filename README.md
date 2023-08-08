@@ -46,3 +46,9 @@ My cluster is [k3s](https://k3s.io/) provisioned on VM's running Ubuntu Server u
 
 ## Virtual Machines
 
+## Networking
+
+### VPN
+
+Sometimes PureVPN will stop working and needs manual updating to get started again (Especially if there's been a network outage, or the VPN's been offline for a while).
+To fix this, login to your PureVPN account, go to "Manual Configuration", find the country you want to use and click "Download". Select "WireGuard" protocol and "Linux" device in the popup, and click "Generate Configuration". Download and view the generated .csv file. Get the secret key and IP address listed under the [Interface] section. Replace the values in the vpn/pod-gateway/downloads/secret.sops.yaml file. Commit and push the updated file. A few minutes later the VPN should be working again. Check the logs.
