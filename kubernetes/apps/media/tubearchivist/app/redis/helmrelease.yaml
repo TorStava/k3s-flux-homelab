@@ -34,7 +34,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/redislabs/rejson
-      tag: 2.6.4
+      tag: 2.6.6
     service:
       main:
         ports:
