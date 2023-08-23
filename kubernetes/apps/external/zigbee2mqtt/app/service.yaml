@@ -8,4 +8,4 @@ spec:
   type: ClusterIP
   ports:
     - name: http
-      port: ${ZIGBEE2MQTT_PORT}
+      port: 8080
