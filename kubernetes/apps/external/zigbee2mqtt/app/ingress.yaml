@@ -41,5 +41,5 @@ subsets:
       - ip: ${ZIGBEE2MQTT_IP}
     ports:
       - name: http
-        port: ${SECRET_DOMAIN}
+        port: 8080
         protocol: TCP
