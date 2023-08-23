@@ -10,3 +10,4 @@ resources:
   - ./plex/ks.yaml
   - ./proxmox/ks.yaml
   - ./truenas/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
