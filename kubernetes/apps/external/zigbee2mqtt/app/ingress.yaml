@@ -9,8 +9,6 @@ metadata:
     gethomepage.dev/icon: zigbee2mqtt.png
     gethomepage.dev/name: zigbee2mqtt
     gethomepage.dev/group: Home
-    gethomepage.dev/widget.type: zigbee2mqtt
-    gethomepage.dev/widget.url: http://zigbee2mqtt.external
     hajimari.io/icon: mdi:zigbee2mqtt
     hajimari.io/enable: "true"
 spec:
