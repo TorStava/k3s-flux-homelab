@@ -6,7 +6,7 @@ metadata:
   namespace: external
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: homeassistant.png
+    gethomepage.dev/icon: home-assistant.png
     gethomepage.dev/name: Home Assistant
     gethomepage.dev/group: Infrastructure
     gethomepage.dev/widget.type: homeassistant
