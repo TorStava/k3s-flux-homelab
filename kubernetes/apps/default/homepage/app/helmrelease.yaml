@@ -27,7 +27,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: ghcr.io/benphelps/homepage
-      tag: v0.6.28
+      tag: v0.6.29
     enableRbac: true
     env:
       TZ: "${TZ}"
