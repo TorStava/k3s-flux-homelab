@@ -73,6 +73,8 @@ spec:
       postgresqlUsername: authentik
       postgresqlDatabase: authentik
       postgresqlPassword: ${SECRET_AUTHENTIK_POSTGRES_PASSWORD}
+      image:
+        tag: 11
 
     redis:
       enabled: true
