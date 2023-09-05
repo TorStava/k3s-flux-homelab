@@ -74,7 +74,7 @@ spec:
       postgresqlDatabase: authentik
       postgresqlPassword: ${SECRET_AUTHENTIK_POSTGRES_PASSWORD}
       image:
-        tag: 11
+        tag: 12
 
     redis:
       enabled: true
