@@ -1,0 +1,42 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: amp
+  namespace: external
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: AMP.png
+    gethomepage.dev/name: AMP
+    gethomepage.dev/group: Home
+    external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: &host "amp.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: amp
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - *host
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: amp
+  namespace: external
+subsets:
+  - addresses:
+      - ip: ${AMP_IP}
+    ports:
+      - name: http
+        port: 80
+        protocol: TCP
