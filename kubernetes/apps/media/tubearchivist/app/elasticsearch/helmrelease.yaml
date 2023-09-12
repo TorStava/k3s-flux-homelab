@@ -42,6 +42,25 @@ spec:
     envFrom:
       - secretRef:
           name: tubearchivist-secret
+    probes:
+      liveness:
+        custom: true
+        spec:
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 30
+      readiness:
+        custom: true
+        spec:
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 30
+      startup:
+        custom: true
+        spec:
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 50
     service:
       main:
         ports:
