@@ -73,8 +73,6 @@ spec:
       postgresqlUsername: authentik
       postgresqlDatabase: authentik
       postgresqlPassword: ${SECRET_AUTHENTIK_POSTGRES_PASSWORD}
-      diagnosticMode:
-        enabled: true
       image:
         tag: 15.2.0-debian-11-r26
 
