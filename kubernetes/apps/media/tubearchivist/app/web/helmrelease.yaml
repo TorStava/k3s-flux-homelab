@@ -53,6 +53,9 @@ spec:
         ports:
           http:
             port: 8000
+    probes:
+      startup:
+        enabled: false
     ingress:
       main:
         enabled: true
