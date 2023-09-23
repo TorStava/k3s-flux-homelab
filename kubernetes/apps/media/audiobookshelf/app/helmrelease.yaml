@@ -32,7 +32,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/advplyr/audiobookshelf
-      tag: 2.4.2
+      tag: 2.4.3
     serviceAccount:
       create: true
     automountServiceAccountToken: false
