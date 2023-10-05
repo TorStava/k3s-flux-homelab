@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: homepage
-      version: 1.2.1
+      version: 1.2.3
       sourceRef:
         kind: HelmRepository
         name: jameswynn
@@ -27,7 +27,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: ghcr.io/benphelps/homepage
-      tag: v0.6.33
+      tag: v0.7.0
     enableRbac: true
     env:
       TZ: "${TZ}"
