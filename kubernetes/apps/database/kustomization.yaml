@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./cloudnative-pg/ks.yaml
-  - ./elasticsearch/ks.yaml
+  - ./eck-operator/ks.yaml
+  # - ./elasticsearch/ks.yaml
   - ./emqx/ks.yaml
   - ./redis/ks.yaml
