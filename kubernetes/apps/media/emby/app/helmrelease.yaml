@@ -30,7 +30,7 @@ spec:
       type: statefulset
     image:
       repository: ghcr.io/onedr0p/emby
-      tag: 4.7.14.0@sha256:cda5a3ed1d15cc0468240dc5758b01548fc3262d0258c8bac93f09c729da6aed
+      tag: 4.7.14.0@sha256:084a2a51836f049aaa2dc3754516c9141f881eb78b09b0ef85b49c964e5719e8
     service:
       main:
         type: LoadBalancer
