@@ -17,7 +17,7 @@ spec:
               service:
                 name: elasticsearch
                 port:
-                  name: 9200
+                  number: 9200
   tls:
     - hosts:
         - *host
