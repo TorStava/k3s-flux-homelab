@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   - ./eck-operator/ks.yaml
   - ./elasticsearch/ks.yaml
+  - ./kibana/ks.yaml
