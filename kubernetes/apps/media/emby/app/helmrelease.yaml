@@ -35,6 +35,7 @@ spec:
       main:
         type: LoadBalancer
         externalTrafficPolicy: Local
+        loadBalancerIP: "${EMBY_METALLB_IP}"
         ports:
           http:
             port: &port 8096
