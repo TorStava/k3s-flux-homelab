@@ -4,6 +4,7 @@ metadata:
   name: elasticsearch
   namespace: elastic-system
   annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: https
     external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
 spec:
   ingressClassName: nginx
