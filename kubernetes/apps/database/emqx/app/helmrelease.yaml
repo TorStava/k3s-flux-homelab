@@ -31,10 +31,9 @@ spec:
       EMQX_DASHBOARD__DEFAULT_PASSWORD: ${SECRET_EMQX_DEAFULT_PASSWORD}
     service:
       type: LoadBalancer
+      loadBalancerIP: "${EMQX_METALLB_IP}"
       annotations:
         external-dns.alpha.kubernetes.io/hostname: "emqx.${SECRET_DOMAIN}"
-      externalIPs:
-        - ${EMQX_METALLB_IP}
       externalTrafficPolicy: Local
     ingress:
       dashboard:
