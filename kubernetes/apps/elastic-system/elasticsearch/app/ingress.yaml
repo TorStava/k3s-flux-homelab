@@ -15,7 +15,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: elasticsearch
+                name: elasticsearch-es-http
                 port:
                   number: 9200
   tls:
