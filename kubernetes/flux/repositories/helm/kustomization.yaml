@@ -8,6 +8,7 @@ resources:
   - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./cloudnative-pg.yaml
+  - ./elastic.yaml
   - ./emqx.yaml
   - ./external-dns.yaml
   - ./fairwinds.yaml
