@@ -32,7 +32,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: docker.elastic.co/elasticsearch/elasticsearch
-      tag: 8.10.4
+      tag: 8.11.1
     env:
       TZ: "${TZ}"
       ES_JAVA_OPTS: -Xms2G -Xmx2G
