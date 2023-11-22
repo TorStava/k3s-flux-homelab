@@ -35,7 +35,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: bbilly1/tubearchivist
-      tag: v0.4.3
+      tag: v0.4.4
     env:
       TZ: "${TZ}"
       HOST_UID: 568
