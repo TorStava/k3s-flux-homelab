@@ -11,4 +11,3 @@ resources:
   - ./microservices
   - ./typesense
   - ./server
-  - ./web
