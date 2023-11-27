@@ -9,7 +9,8 @@ sonarr:
       type: series
     quality_profiles:
       - name: WEB-1080p
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
     custom_formats:
       # Scores from TRaSH json
       - trash_ids:
@@ -57,7 +58,8 @@ radarr:
       type: movie
     quality_profiles:
       - name: HD Bluray + WEB
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
     custom_formats:
       # Scores from TRaSH json
       - trash_ids:
