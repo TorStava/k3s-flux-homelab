@@ -31,7 +31,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/qbittorrent
-      tag: 4.6.1
+      tag: 4.6.2
     env:
       TZ: "${TZ}"
       QBITTORRENT__PORT: &port 8080
