@@ -26,11 +26,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      strategy: RollingUpdate
-    image:
-      repository: docker.io/jmalloc/echo-server
-      tag: 0.3.6
+    controllers:
+      main:
+        strategy: RollingUpdate
+        containers:
+          image:
+            repository: docker.io/jmalloc/echo-server
+            tag: 0.3.6
     service:
       main:
         ports:
@@ -71,5 +73,3 @@ spec:
       requests:
         cpu: 5m
         memory: 10Mi
-      limits:
-        memory: 50Mi
