@@ -53,7 +53,7 @@ spec:
               - path: /
                 pathType: Prefix
             service:
-              name: *app
+              name: main
               port: http
         tls:
           - hosts:
