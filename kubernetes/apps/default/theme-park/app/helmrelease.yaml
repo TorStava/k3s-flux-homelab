@@ -52,6 +52,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+            service:
+              name: *app
+              port: http
         tls:
           - hosts:
               - *host
