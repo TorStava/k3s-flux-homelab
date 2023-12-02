@@ -26,12 +26,15 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      replicas: 2
-      strategy: RollingUpdate
-    image:
-      repository: ghcr.io/onedr0p/theme-park
-      tag: 1.14.1
+    controllers:
+      main:
+        replicas: 2
+        strategy: RollingUpdate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/theme-park
+              tag: 1.14.1
     service:
       main:
         ports:
