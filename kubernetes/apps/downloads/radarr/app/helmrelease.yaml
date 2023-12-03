@@ -26,43 +26,45 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/radarr-develop
-      tag: 5.2.3.8303
-    env:
-      TZ: "${TZ}"
-      RADARR__INSTANCE_NAME: Radarr
-      RADARR__PORT: &port 80
-      RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
-      RADARR__LOG_LEVEL: info
-      RADARR__API_KEY: ${RADARR_TOKEN}
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        image:
+          repository: ghcr.io/onedr0p/radarr-develop
+          tag: 5.2.3.8303
+        env:
+          TZ: "${TZ}"
+          RADARR__INSTANCE_NAME: Radarr
+          RADARR__PORT: &port 80
+          RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+          RADARR__LOG_LEVEL: info
+          RADARR__API_KEY: ${RADARR_TOKEN}
+        probes:
+          liveness: &probes
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /ping
+                port: *port
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 2
+              failureThreshold: 3
+          readiness: *probes
+          startup:
+            enabled: false
+
     service:
       main:
         ports:
           http:
             port: *port
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /ping
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 2
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
+
     ingress:
       main:
-        enabled: true
         ingressClassName: nginx
         annotations:
           gethomepage.dev/enabled: "true"
@@ -82,25 +84,35 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
+
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+
+    persistence:
+      config:
+        enabled: true
+        type: persistantVolumeClaim
         accessMode: ReadWriteOnce
         size: 2Gi
+        mountPath: /config
         storageClass: longhorn
-    persistence:
+
       media:
         enabled: true
         existingClaim: downloads
-        mountPath: /data
+        globalMounts:
+          path: /data
+
     #   add-ons:
     #     enabled: true
     #     type: emptyDir
