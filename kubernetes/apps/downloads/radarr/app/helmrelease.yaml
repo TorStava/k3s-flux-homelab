@@ -103,10 +103,9 @@ spec:
     persistence:
       config:
         enabled: true
-        type: persistantVolumeClaim
-        accessMode: ReadWriteOnce
         size: 2Gi
-        mountPath: /config
+        globalMounts:
+          path: /config
         storageClass: longhorn
 
       media:
