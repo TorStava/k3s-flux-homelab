@@ -74,6 +74,7 @@ spec:
         tls:
           - hosts:
               - *host
+
     defaultPodOptions:
       securityContext:
         runAsUser: 568
@@ -84,10 +85,9 @@ spec:
     persistence:
       config:
         enabled: true
-        type: persistantVolumeClaim
-        accessMode: ReadWriteOnce
         size: 2Gi
-        mountPath: /config
+        globalMounts:
+          path: /config
         storageClass: longhorn
       media:
         enabled: true
