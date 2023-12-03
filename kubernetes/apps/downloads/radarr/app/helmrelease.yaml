@@ -5,7 +5,7 @@ metadata:
   name: radarr
   namespace: downloads
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -16,7 +16,6 @@ spec:
         namespace: flux-system
   maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -28,11 +27,11 @@ spec:
   values:
     controllers:
       main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
-            type: statefulset
-            annotations:
-              reloader.stakater.com/auto: "true"
             image:
               repository: ghcr.io/onedr0p/radarr-develop
               tag: 5.2.3.8303
@@ -58,6 +57,20 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+            pod:
+              securityContext:
+                runAsUser: 568
+                runAsGroup: 568
+                fsGroup: 568
+                fsGroupChangePolicy: OnRootMismatch
+            statefulset:
+              volumeClaimTemplates:
+                - name: config
+                  accessMode: ReadWriteOnce
+                  size: 2Gi
+                  storageClass: longhorn
+                  globalMounts:
+                    path: /config
 
     service:
       main:
@@ -67,7 +80,7 @@ spec:
 
     ingress:
       main:
-        ingressClassName: nginx
+        className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: radarr.png
@@ -85,7 +98,6 @@ spec:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   name: main
                   port: http
@@ -93,21 +105,7 @@ spec:
           - hosts:
               - *host
 
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-
     persistence:
-      config:
-        enabled: true
-        size: 2Gi
-        globalMounts:
-          path: /config
-        storageClass: longhorn
-
       media:
         enabled: true
         existingClaim: downloads
