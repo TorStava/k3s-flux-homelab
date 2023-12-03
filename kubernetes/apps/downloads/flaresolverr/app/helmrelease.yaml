@@ -26,9 +26,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: ghcr.io/flaresolverr/flaresolverr
-      tag: v3.3.10
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/flaresolverr/flaresolverr
+              tag: v3.3.10
     env:
       TZ: "${TZ}"
       LOG_LEVEL: "info"
