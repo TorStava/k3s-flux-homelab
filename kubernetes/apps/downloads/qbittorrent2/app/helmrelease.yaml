@@ -1,0 +1,167 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: qbittorrent2
+  namespace: downloads
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/qbittorrent
+              tag: 4.6.2
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+            env:
+              TZ: "${TZ}"
+
+          gluetun:
+            dependsOn: main
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: latest
+            env:
+              - name: VPN_SERVICE_PROVIDER
+                value: custom
+              - name: VPN_TYPE
+                value: wireguard
+              - name: VPN_INTERFACE
+                value: wg0
+              - name: FIREWALL
+                value: "off"
+              - name: DOT
+                value: "off"
+              - name: VPN_ENDPOINT_IP
+                value: 146.70.170.36
+              - name: VPN_ENDPOINT_PORT
+                value: 51820
+              - name: DNS_ADDRESS
+                value: 45.74.46.3
+              - name: LOG_LEVEL
+                value: debug
+            envFrom:
+              - secretRef:
+                  name: qbitorrent2-secret
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+
+          port-forward:
+            dependsOn: gluetun
+            image:
+              repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
+              tag: 1.0
+            env:
+              - name: QBITTORRENT_SERVER
+                value: localhost
+              - name: QBITTORRENT_PORT
+                value: &port 8080
+              - name: PORT_FORWARDED
+                value: "/tmp/gluetun/forwarded_port"
+
+    service:
+      main:
+        type: ClusterIP
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      main:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: qbittorrent.png
+          gethomepage.dev/name: qBittorrent
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/widget.type: qbittorrent
+          gethomepage.dev/widget.url: http://qbittorrent2.downloads:8080
+          gethomepage.dev/widget.username: ${SECRET_QBITTORRENT_USERNAME}
+          gethomepage.dev/widget.password: ${SECRET_QBITTORRENT_PASSWORD}
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_hide_header "x-webkit-csp";
+            proxy_hide_header "content-security-policy";
+            proxy_hide_header "X-Frame-Options";
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/qbittorrent/nord.css"></head>';
+            sub_filter_once on;
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+          authentik.home.arpa/enabled: "true"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      # Configure the main configuration storage location
+      config:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        mountPath: /config
+
+      # Configure an emptyDir to share the port-forwarding location between containers
+      gluetun-data:
+        type: emptyDir
+        advancedMounts:
+          main:
+            gluetun:
+              - path: /tmp/gluetun
+            port-forward:
+              - path: /tmp/gluetun
+                readOnly: true
+
+      media:
+        enabled: true
+        existingClaim: downloads
+        advancedMounts:
+          main:
+            main:
+              path: /data
+
+    resources:
+      requests:
+        cpu: 25m
+        memory: 1G

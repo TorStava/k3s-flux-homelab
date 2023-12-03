@@ -7,7 +7,8 @@ resources:
   - ./bazarr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./prowlarr/ks.yaml
-  - ./qbittorrent/ks.yaml
+  # - ./qbittorrent/ks.yaml
+  - ./qbittorrent2/ks.yaml
   - ./radarr/ks.yaml
   - ./recyclarr/ks.yaml
   - ./sabnzbd/ks.yaml
