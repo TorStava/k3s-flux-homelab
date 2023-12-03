@@ -28,34 +28,36 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
-        annotations:
-          reloader.stakater.com/auto: "true"
-        image:
-          repository: ghcr.io/onedr0p/radarr-develop
-          tag: 5.2.3.8303
-        env:
-          TZ: "${TZ}"
-          RADARR__INSTANCE_NAME: Radarr
-          RADARR__PORT: &port 80
-          RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
-          RADARR__LOG_LEVEL: info
-          RADARR__API_KEY: ${RADARR_TOKEN}
-        probes:
-          liveness: &probes
-            enabled: true
-            custom: true
-            spec:
-              httpGet:
-                path: /ping
-                port: *port
-              initialDelaySeconds: 0
-              periodSeconds: 10
-              timeoutSeconds: 2
-              failureThreshold: 3
-          readiness: *probes
-          startup:
-            enabled: false
+        containers:
+          main:
+            type: statefulset
+            annotations:
+              reloader.stakater.com/auto: "true"
+            image:
+              repository: ghcr.io/onedr0p/radarr-develop
+              tag: 5.2.3.8303
+            env:
+              TZ: "${TZ}"
+              RADARR__INSTANCE_NAME: Radarr
+              RADARR__PORT: &port 80
+              RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+              RADARR__LOG_LEVEL: info
+              RADARR__API_KEY: ${RADARR_TOKEN}
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 2
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
 
     service:
       main:
