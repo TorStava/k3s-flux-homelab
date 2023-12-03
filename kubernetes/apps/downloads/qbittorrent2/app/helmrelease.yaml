@@ -137,10 +137,11 @@ spec:
       # Configure the main configuration storage location
       config:
         enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
         size: 1Gi
-        mountPath: /config
+        advancedMounts:
+          main:
+            main:
+              path: /config
 
       # Configure an emptyDir to share the port-forwarding location between containers
       gluetun-data:
