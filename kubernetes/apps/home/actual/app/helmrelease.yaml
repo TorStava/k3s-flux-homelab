@@ -31,6 +31,7 @@ spec:
   values:
     controllers:
       main:
+        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -46,6 +47,13 @@ spec:
                 memory: 80M
               limits:
                 memory: 256M
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /data
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
         pod:
           securityContext:
             runAsUser: 568
@@ -79,11 +87,3 @@ spec:
         tls:
           - hosts:
               - *host
-    persistence:
-      config:
-        enabled: true
-        storageClass: longhorn
-        size: 1Gi
-        accessMode: ReadWriteOnce
-        globalMounts:
-          - path: /data
