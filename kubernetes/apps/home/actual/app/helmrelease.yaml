@@ -29,26 +29,15 @@ spec:
     - name: longhorn
       namespace: storage
   values:
-    controllers:
-      main:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
-          image:
-            repository: ghcr.io/actualbudget/actual-server
-            tag: 23.11.0
-          env:
-            GENERIC_TIMEZONE: ${TZ}
-          resources:
-            requests:
-              cpu: 15m
-              memory: 80M
-          pod:
-            securityContext:
-              runAsUser: 568
-              runAsGroup: 568
-              fsGroup: 568
-              fsGroupChangePolicy: OnRootMismatch
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      repository: ghcr.io/actualbudget/actual-server
+      tag: 23.12.0
+    env:
+      GENERIC_TIMEZONE: ${TZ}
     service:
       main:
         ports:
