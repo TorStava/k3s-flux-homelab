@@ -103,13 +103,13 @@ spec:
         accessMode: ReadWriteOnce
         size: 2Gi
         globalMounts:
-          path: /config
+          - path: /config
 
       media:
         enabled: true
         existingClaim: downloads
         globalMounts:
-          path: /data
+          - path: /data
 
     #   add-ons:
     #     enabled: true
