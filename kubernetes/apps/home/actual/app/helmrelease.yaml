@@ -51,7 +51,7 @@ spec:
           volumeClaimTemplates:
             - name: config
               mountPath: /data
-              accessMode: ReadWriteOnce
+              accessMode: "ReadWriteOnce"
               size: 1Gi
               storageClass: longhorn
         pod:
@@ -59,7 +59,7 @@ spec:
             runAsUser: 568
             runAsGroup: 568
             fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
+            fsGroupChangePolicy: "OnRootMismatch"
     service:
       main:
         ports:
