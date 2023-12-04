@@ -85,6 +85,5 @@ spec:
         storageClass: longhorn
         size: 1Gi
         accessMode: ReadWriteOnce
-        advancedMounts:
-          - name: config
-            mountPath: /config
+        globalMounts:
+          path: /data
