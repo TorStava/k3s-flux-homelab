@@ -34,17 +34,18 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          image:
-            repository: ghcr.io/actualbudget/actual-server
-            tag: 23.12.0
-          env:
-            GENERIC_TIMEZONE: ${TZ}
-            resources:
-              requests:
-                cpu: 15m
-                memory: 80M
-              limits:
-                memory: 256M
+          main:
+            image:
+              repository: ghcr.io/actualbudget/actual-server
+              tag: 23.12.0
+            env:
+              GENERIC_TIMEZONE: ${TZ}
+              resources:
+                requests:
+                  cpu: 15m
+                  memory: 80M
+                limits:
+                  memory: 256M
         pod:
           securityContext:
             runAsUser: 568
