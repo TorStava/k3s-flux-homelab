@@ -76,6 +76,7 @@ spec:
 
     ingress:
       main:
+        enabled: true
         className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
