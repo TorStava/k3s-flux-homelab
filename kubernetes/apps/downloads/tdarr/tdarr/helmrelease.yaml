@@ -5,11 +5,12 @@ metadata:
   name: tdarr
   namespace: downloads
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
       version: 2.3.0
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,14 +27,34 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: ghcr.io/haveagitgat/tdarr_acc
-      tag: 2.00.20.1
-    env:
-      TZ: "${TZ}"
-      PUID: "568"
-      PGID: "568"
-      ffmpegPath: "/usr/local/bin/ffmpeg"
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        capabilities:
+          add:
+            - CHOWN
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/haveagitgat/tdarr_acc
+              tag: 2.00.20.1
+            env:
+              TZ: "${TZ}"
+              PUID: "568"
+              PGID: "568"
+              ffmpegPath: "/usr/local/bin/ffmpeg"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+
     service:
       main:
         type: LoadBalancer
@@ -48,6 +69,7 @@ spec:
             enabled: true
             protocol: TCP
             port: 8266
+
     ingress:
       main:
         enabled: true
@@ -67,34 +89,30 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
+
     persistence:
       media:
         enabled: true
         existingClaim: downloads
-        mountPath: /data
+        globalMounts:
+          - path: /data
       server:
         enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        mountPath: /app/server
+        globalMounts:
+          - path: /app/server
       configs:
         enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 1Gi
-        mountPath: /app/configs
-    podSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
-      capabilities:
-        add:
-          - CHOWN
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
+        globalMounts:
+          - path: /app/configs
