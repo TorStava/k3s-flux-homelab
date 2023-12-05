@@ -5,7 +5,7 @@ metadata:
   name: flaresolverr
   namespace: downloads
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -33,17 +33,15 @@ spec:
             image:
               repository: ghcr.io/flaresolverr/flaresolverr
               tag: v3.3.10
-    env:
-      TZ: "${TZ}"
-      LOG_LEVEL: "info"
+            env:
+              TZ: "${TZ}"
+              LOG_LEVEL: "info"
+            resources:
+              requests:
+                memory: 100Mi
+                cpu: 100m
     service:
       main:
         ports:
           http:
             port: 8191
-    resources:
-      requests:
-        memory: 100Mi
-        cpu: 100m
-    podLabels:
-      vpn/ovpn: "true"
