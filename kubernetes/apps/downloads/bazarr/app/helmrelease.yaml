@@ -76,6 +76,7 @@ spec:
             port: 6767
     ingress:
       main:
+        enabled: true
         ingressClassName: nginx
         annotations:
           gethomepage.dev/enabled: "true"
