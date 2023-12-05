@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
         type: statefulset
@@ -42,6 +46,29 @@ spec:
               BAZARR__PORT: &port 80
               BAZARR__LOG_LEVEL: info
               BAZARR__API_KEY: ${BAZARR_TOKEN}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+          subcleaner:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.1.0
+            imagePullPolicy: IfNotPresent
+            args:
+              - --repo=https://github.com/KBlixt/subcleaner.git
+              - --branch=master
+              - --depth=1
+              - --wait=21600 # 6 hours
+              - --root=/add-ons/subcleaner
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+
     service:
       main:
         ports:
@@ -75,18 +102,7 @@ spec:
         tls:
           - hosts:
               - *host
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
+
     persistence:
       media:
         existingClaim: downloads
@@ -96,19 +112,3 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /add-ons
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-    sidecars:
-      subcleaner:
-        image: registry.k8s.io/git-sync/git-sync:v4.1.0
-        imagePullPolicy: IfNotPresent
-        args:
-          - --repo=https://github.com/KBlixt/subcleaner.git
-          - --branch=master
-          - --depth=1
-          - --wait=21600 # 6 hours
-          - --root=/add-ons/subcleaner
-        volumeMounts:
-          - { name: add-ons, mountPath: /add-ons }
