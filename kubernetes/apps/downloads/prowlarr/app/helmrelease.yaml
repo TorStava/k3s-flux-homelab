@@ -26,6 +26,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
         type: statefulset
@@ -59,14 +65,29 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 2Gi
+              storageClass: longhorn
+
     service:
       main:
         ports:
           http:
             port: *port
+
     ingress:
       main:
-        ingressClassName: nginx
+        enabled: true
+        className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: prowlarr.png
@@ -92,19 +113,3 @@ spec:
         tls:
           - hosts:
               - *host
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 2Gi
-        storageClass: longhorn
-    resources:
-      requests:
-        cpu: 10m
-        memory: 100Mi
