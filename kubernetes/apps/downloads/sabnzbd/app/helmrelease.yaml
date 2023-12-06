@@ -48,7 +48,13 @@ spec:
               requests:
                 cpu: 10m
                 memory: 250Mi
-
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: "ReadWriteOnce"
+              size: 2Gi
+              storageClass: longhorn
     service:
       main:
         ports:
@@ -86,12 +92,6 @@ spec:
               - *host
 
     persistence:
-      config:
-        enabled: true
-        size: 2Gi
-        globalMounts:
-          - path: /config
-        storageClass: longhorn
       media:
         enabled: true
         existingClaim: downloads
