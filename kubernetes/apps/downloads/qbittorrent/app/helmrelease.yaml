@@ -31,13 +31,11 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-      hostname: qbittorrent
     controllers:
       main:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-          setGateway: "true"
         containers:
           main:
             image:
@@ -51,6 +49,10 @@ spec:
               requests:
                 cpu: 25m
                 memory: 1G
+            pod:
+              hostname: qbittorrent
+              annotations:
+                setGateway: "true"
         statefulset:
           volumeClaimTemplates:
             - name: config
