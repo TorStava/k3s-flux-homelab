@@ -40,24 +40,25 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          image:
-            repository: ghcr.io/haveagitgat/tdarr_node_acc
-            tag: 2.00.20.1
-          env:
-            TZ: "${TZ}"
-            PUID: "568"
-            PGID: "568"
-            serverIP: tdarr.downloads.svc.cluster.local
-            serverPort: 8266
-            ffmpegPath: "/usr/local/bin/ffmpeg"
-            nodeName:
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
-          resources:
-            requests:
-              cpu: 10m
-              memory: 250Mi
+          main:
+            image:
+              repository: ghcr.io/haveagitgat/tdarr_node_acc
+              tag: 2.00.20.1
+            env:
+              TZ: "${TZ}"
+              PUID: "568"
+              PGID: "568"
+              serverIP: tdarr.downloads.svc.cluster.local
+              serverPort: 8266
+              ffmpegPath: "/usr/local/bin/ffmpeg"
+              nodeName:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
 
     service:
       main:
