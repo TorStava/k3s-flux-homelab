@@ -5,7 +5,7 @@ metadata:
   name: tdarr-node
   namespace: downloads
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -26,22 +26,39 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: daemonset
-    image:
-      repository: ghcr.io/haveagitgat/tdarr_node_acc
-      tag: 2.00.20.1
-    env:
-      TZ: "${TZ}"
-      PUID: "568"
-      PGID: "568"
-      serverIP: tdarr.downloads.svc.cluster.local
-      serverPort: 8266
-      ffmpegPath: "/usr/local/bin/ffmpeg"
-      nodeName:
-        valueFrom:
-          fieldRef:
-            fieldPath: spec.nodeName
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        capabilities:
+          add:
+            - CHOWN
+    controllers:
+      main:
+        type: daemonset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          image:
+            repository: ghcr.io/haveagitgat/tdarr_node_acc
+            tag: 2.00.20.1
+          env:
+            TZ: "${TZ}"
+            PUID: "568"
+            PGID: "568"
+            serverIP: tdarr.downloads.svc.cluster.local
+            serverPort: 8266
+            ffmpegPath: "/usr/local/bin/ffmpeg"
+            nodeName:
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            requests:
+              cpu: 10m
+              memory: 250Mi
+
     service:
       main:
         enabled: false
@@ -49,25 +66,10 @@ spec:
           enabled: false
           http:
             port: 8265
+
     persistence:
       media:
         enabled: true
         existingClaim: downloads
-        mountPath: /data
-      # configs:
-      #   enabled: true
-      #   type: pvc
-      #   accessMode: ReadWriteOnce
-      #   size: 1Gi
-      #   mountPath: /app/configs
-    podSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
-      capabilities:
-        add:
-          - CHOWN
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
+        globalMounts:
+          - path: /data
