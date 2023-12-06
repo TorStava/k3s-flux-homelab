@@ -54,6 +54,18 @@ spec:
               requests:
                 cpu: 10m
                 memory: 250Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: server
+              mountPath: /app/server
+              accessMode: "ReadWriteOnce"
+              size: 5Gi
+              storageClass: longhorn
+            - name: configs
+              mountPath: /app/configs
+              accessMode: "ReadWriteOnce"
+              size: 1Gi
+              storageClass: longhorn
 
     service:
       main:
@@ -102,17 +114,3 @@ spec:
         existingClaim: downloads
         globalMounts:
           - path: /data
-      server:
-        enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        globalMounts:
-          - path: /app/server
-      configs:
-        enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        globalMounts:
-          - path: /app/configs
