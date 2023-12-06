@@ -27,24 +27,39 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        configmap.reloader.stakater.com/reload: &configmap immich-configmap
-        secret.reloader.stakater.com/reload: &secret immich-secret
-    image:
-      repository: docker.io/typesense/typesense
-      tag: 0.25.1
-    envFrom:
-      - configMapRef:
-          name: *configmap
-      - secretRef:
-          name: *secret
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          configmap.reloader.stakater.com/reload: &configmap immich-configmap
+          secret.reloader.stakater.com/reload: &secret immich-secret
+        containers:
+          image:
+            repository: docker.io/typesense/typesense
+            tag: 0.25.1
+          envFrom:
+            - configMapRef:
+                name: *configmap
+            - secretRef:
+                name: *secret
+          resources:
+            requests:
+              cpu: 100m
+              memory: 250Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+
     service:
       main:
         ports:
           http:
             port: &port 8108
+
     # probes:
     #   liveness: &probes
     #     enabled: true
@@ -60,13 +75,3 @@ spec:
     #   readiness: *probes
       # startup:
       #   enabled: false
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
-    resources:
-      requests:
-        cpu: 100m
-        memory: 250Mi
