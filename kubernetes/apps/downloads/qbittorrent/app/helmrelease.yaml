@@ -49,10 +49,10 @@ spec:
               requests:
                 cpu: 25m
                 memory: 1G
-            pod:
-              hostname: qbittorrent
-              annotations:
-                setGateway: "true"
+        pod:
+          hostname: qbittorrent
+          annotations:
+            setGateway: "true"
         statefulset:
           volumeClaimTemplates:
             - name: config
