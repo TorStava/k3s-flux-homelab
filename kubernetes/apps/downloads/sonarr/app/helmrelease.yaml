@@ -26,13 +26,20 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+
     controllers:
       main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
-            type: statefulset
-            annotations:
-              reloader.stakater.com/auto: "true"
             image:
               repository: ghcr.io/onedr0p/sonarr-develop
               tag: 4.0.0.733
@@ -58,6 +65,14 @@ spec:
               startup:
                 enabled: false
 
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: "ReadWriteOnce"
+              size: 2Gi
+              storageClass: longhorn
+
     service:
       main:
         ports:
@@ -66,7 +81,8 @@ spec:
 
     ingress:
       main:
-        ingressClassName: nginx
+        enabled: true
+        className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: sonarr.png
@@ -93,22 +109,9 @@ spec:
           - hosts:
               - *host
 
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-
     persistence:
-      config:
-        enabled: true
-        size: 2Gi
-        globalMounts:
-          path: /config
-        storageClass: longhorn
       media:
         enabled: true
         existingClaim: downloads
         globalMounts:
-          path: /data
+          - path: /data
