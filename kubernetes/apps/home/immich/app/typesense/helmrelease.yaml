@@ -34,18 +34,19 @@ spec:
           configmap.reloader.stakater.com/reload: &configmap immich-configmap
           secret.reloader.stakater.com/reload: &secret immich-secret
         containers:
-          image:
-            repository: docker.io/typesense/typesense
-            tag: 0.25.1
-          envFrom:
-            - configMapRef:
-                name: *configmap
-            - secretRef:
-                name: *secret
-          resources:
-            requests:
-              cpu: 100m
-              memory: 250Mi
+          main:
+            image:
+              repository: docker.io/typesense/typesense
+              tag: 0.25.1
+            envFrom:
+              - configMapRef:
+                  name: *configmap
+              - secretRef:
+                  name: *secret
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
         statefulset:
           volumeClaimTemplates:
             - name: config
