@@ -116,10 +116,10 @@ spec:
         enabled: true
         type: configMap
         name: frigate-configmap
-        readOnly: true
         globalMounts:
-          - path: /config
+          - path: /config/config.yml
             subPath: config.yaml
+            readOnly: true
       cache:
         enabled: true
         type: emptyDir
