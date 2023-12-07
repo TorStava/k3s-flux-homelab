@@ -5,7 +5,7 @@ metadata:
   name: audiobookshelf
   namespace: media
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -39,19 +39,27 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          image:
-            repository: ghcr.io/advplyr/audiobookshelf
-            tag: 2.6.0
-          env:
-            TZ: "${TZ}"
-            AUDIOBOOKSHELF_UID: 568
-            AUDIOBOOKSHELF_GID: 568
-            CONFIG_PATH: /config
-            METADATA_PATH: /config/metadata
-          resources:
-            requests:
-              cpu: 15m
-              memory: 64M
+          main:
+            image:
+              repository: ghcr.io/advplyr/audiobookshelf
+              tag: 2.6.0
+            env:
+              TZ: "${TZ}"
+              AUDIOBOOKSHELF_UID: 568
+              AUDIOBOOKSHELF_GID: 568
+              CONFIG_PATH: /config
+              METADATA_PATH: /config/metadata
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64M
+          statefulset:
+            volumeClaimTemplates:
+              - name: config
+                mountPath: /config
+                accessMode: ReadWriteOnce
+                size: 2Gi
+                storageClass: longhorn
 
     service:
       main:
@@ -82,13 +90,6 @@ spec:
         tls:
           - hosts:
               - *host
-
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 2Gi
-        storageClass: longhorn
 
     persistence:
       media:
