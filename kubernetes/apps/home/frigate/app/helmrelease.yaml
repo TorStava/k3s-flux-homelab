@@ -68,13 +68,13 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-          statefulset:
-            volumeClaimTemplates:
-              - name: config
-                mountPath: /data
-                accessMode: ReadWriteOnce
-                size: 5Gi
-                storageClass: longhorn
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /data
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: longhorn
 
     # envFrom:
     #   - secretRef:
