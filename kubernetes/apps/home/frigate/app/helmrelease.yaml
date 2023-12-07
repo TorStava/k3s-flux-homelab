@@ -26,17 +26,56 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/blakeblackshear/frigate
-      tag: 0.12.1
-    env:
-      TZ: ${TZ}
-      FRIGATE_RTSP_USER: ${SECRET_IMOU_USERNAME}
-      FRIGATE_RTSP_PASSWORD: ${SECRET_IMOU_CAM1_PASSWORD}
+    defaultPodOptions:
+      securityContext:
+        privileged: true
+
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/blakeblackshear/frigate
+              tag: 0.12.1
+            env:
+              TZ: ${TZ}
+              FRIGATE_RTSP_USER: ${SECRET_IMOU_USERNAME}
+              FRIGATE_RTSP_PASSWORD: ${SECRET_IMOU_CAM1_PASSWORD}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 500Mi
+              #   gpu.intel.com/i915: "1"
+              # limits:
+              #   memory: 6000Mi
+              #   gpu.intel.com/i915: "1"
+
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: &port 5000
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+          statefulset:
+            volumeClaimTemplates:
+              - name: config
+                mountPath: /data
+                accessMode: ReadWriteOnce
+                size: 5Gi
+                storageClass: longhorn
+
     # envFrom:
     #   - secretRef:
     #       name: frigate-secret
@@ -44,29 +83,14 @@ spec:
       main:
         ports:
           http:
-            port: &port 5000
+            port: *port
           rtsp:
             enabled: true
             port: 8554
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /api/version
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           authentik.home.arpa/enabled: "true"
           gethomepage.dev/enabled: "true"
@@ -80,41 +104,40 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    securityContext:
-      privileged: true
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /data
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: longhorn
+
     persistence:
       config-file:
         enabled: true
         type: configMap
         name: frigate-configmap
-        subPath: config.yaml
-        mountPath: /config/config.yml
         readOnly: true
-      # media:
-      #   enabled: true
-      #   existingClaim: frigate-nfs
-      #   mountPath: /media
+        globalMounts:
+          - path: /config
+            subPath: config.yaml
       cache:
         enabled: true
         type: emptyDir
         medium: Memory
         sizeLimit: 4Gi
-        mountPath: /dev/shm
-      # usb:
-      #   enabled: true
-      #   type: hostPath
-      #   hostPath: /dev/bus/usb
-      #   hostPathType: Directory
-      #   mountPath: /dev/bus/usb
+        globalMounts:
+          - path: /dev/shm
+
+    #   media:
+    #     enabled: true
+    #     existingClaim: frigate-nfs
+    #     mountPath: /media
+    #   usb:
+    #     enabled: true
+    #     type: hostPath
+    #     hostPath: /dev/bus/usb
+    #     hostPathType: Directory
+    #     mountPath: /dev/bus/usb
     # nodeSelector:
     #   node-role.kubernetes.io/worker: "true"
     #   google.feature.node.kubernetes.io/coral: "true"
@@ -128,11 +151,3 @@ spec:
     #               operator: In
     #               values: ["plex"]
     #         topologyKey: kubernetes.io/hostname
-    resources:
-      requests:
-        cpu: 10m
-        memory: 500Mi
-        # gpu.intel.com/i915: "1"
-      # limits:
-      #   memory: 6000Mi
-        # gpu.intel.com/i915: "1"
