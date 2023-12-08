@@ -26,11 +26,28 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-    image:
-      repository: ghcr.io/onedr0p/emby
-      tag: 4.7.14.0@sha256:084a2a51836f049aaa2dc3754516c9141f881eb78b09b0ef85b49c964e5719e8
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 1234
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/emby
+              tag: 4.7.14.0@sha256:084a2a51836f049aaa2dc3754516c9141f881eb78b09b0ef85b49c964e5719e8
+            resources:
+              requests:
+                cpu: 15m
+                memory: 4G
+
     service:
       main:
         type: LoadBalancer
@@ -39,10 +56,11 @@ spec:
         ports:
           http:
             port: &port 8096
+
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: emby.png
@@ -58,27 +76,23 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 1234
-      fsGroupChangePolicy: "OnRootMismatch"
+
     persistence:
       media:
         enabled: true
-        mountPath: /data
         path: ${SECRET_NFS_DATA}
         server: ${NAS_IP}
         type: nfs
-        readOnly: true
+        globalMounts:
+          - path: /data
+            readOnly: true
       config:
         enabled: true
         storageClass: longhorn
         size: 20Gi
-    resources:
-      requests:
-        cpu: 15m
-        memory: 4G
