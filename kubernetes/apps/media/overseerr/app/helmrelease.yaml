@@ -26,24 +26,47 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/sct/overseerr
-      tag: 1.33.2
-    env:
-      TZ: ${TZ}
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/sct/overseerr
+              tag: 1.33.2
+            env:
+              TZ: ${TZ}
+            resources:
+              requests:
+                cpu: 15m
+                memory: 249M
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /app/config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+
     service:
       main:
         ports:
           http:
             port: 5055
+
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: overseerr.png
@@ -58,21 +81,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /app/config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
-    resources:
-      requests:
-        cpu: 15m
-        memory: 249M
