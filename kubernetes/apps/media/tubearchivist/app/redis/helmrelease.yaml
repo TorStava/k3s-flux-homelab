@@ -28,25 +28,32 @@ spec:
   dependsOn:
     - name: tubearchivist-elasticsearch
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: docker.io/redislabs/rejson
-      tag: 2.6.8
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: docker.io/redislabs/rejson
+              tag: 2.6.8
+            env:
+              TZ: "${TZ}"
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64M
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /data
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+
     service:
       main:
         ports:
           http:
             port: 6379
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /data
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
-    resources:
-      requests:
-        cpu: 15m
-        memory: 64M
