@@ -16,27 +16,40 @@ spec:
         namespace: flux-system
   interval: 30m
   values:
-    controller:
-      type: statefulset
-
-    image:
-      repository: lscr.io/linuxserver/calibre
-      tag: 7.1.0
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: lscr.io/linuxserver/calibre
+              tag: 7.1.0
+            env:
+              TZ: "${TZ}"
+              PUID: "568"
+              PGID: "1234"
+              # PASSWORD: "${SECRET_CALIBRE_PASSWORD}"
+              # CACHE_DIR: /cache
+            resources:
+              requests:
+                cpu: 15m
+                memory: 411M
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
 
     # podSecurityContext:
     #   runAsUser: 568
     #   runAsGroup: 1234
     #   fsGroup: 1234
     #   fsGroupChangePolicy: "OnRootMismatch"
-
     # enableServiceLinks: false
-
-    env:
-      TZ: "${TZ}"
-      PUID: "568"
-      PGID: "1234"
-      # PASSWORD: "${SECRET_CALIBRE_PASSWORD}"
-      # CACHE_DIR: /cache
 
     service:
       main:
@@ -56,6 +69,7 @@ spec:
     ingress:
       main:
         enabled: true
+        className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: calibre.png
@@ -63,12 +77,14 @@ spec:
           gethomepage.dev/group: Media
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           authentik.home.arpa/enabled: "true"
-        ingressClassName: nginx
         hosts:
           - host: &host calibre.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -76,17 +92,11 @@ spec:
     persistence:
       media:
         enabled: true
-        mountPath: /ebooks
         path: ${SECRET_NFS_DATA}/ebooks
         server: ${NAS_IP}
         type: nfs
-
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
+        globalMounts:
+          - path: /ebooks
 
     # probes:
     #   liveness: &probes
@@ -103,8 +113,3 @@ spec:
     #   readiness: *probes
     #   startup:
     #     enabled: false
-
-    resources:
-      requests:
-        cpu: 15m
-        memory: 411M
