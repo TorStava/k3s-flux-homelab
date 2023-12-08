@@ -5,6 +5,7 @@ metadata:
   name: calibre-web
   namespace: media
 spec:
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -14,25 +15,37 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  interval: 30m
   values:
-    controller:
-      type: statefulset
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
 
-    image:
-      repository: ghcr.io/bjw-s/calibre-web
-      tag: 0.6.21@sha256:bca0b47096d1df270f4ad7d640558ef69bbf03a675bf1691bf88d209d2ff7e4a
-
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-
-    enableServiceLinks: false
-
-    env:
-      CACHE_DIR: /cache
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/bjw-s/calibre-web
+              tag: 0.6.21@sha256:bca0b47096d1df270f4ad7d640558ef69bbf03a675bf1691bf88d209d2ff7e4a
+            env:
+              CACHE_DIR: /cache
+            resources:
+              requests:
+                cpu: 15m
+                memory: 145M
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
 
     service:
       main:
@@ -43,6 +56,7 @@ spec:
     ingress:
       main:
         enabled: true
+        className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: calibre.png
@@ -57,11 +71,13 @@ spec:
             sub_filter_once on;
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           authentik.home.arpa/enabled: "true"
-        ingressClassName: nginx
         hosts:
           - host: &host calibre-web.${SECRET_DOMAIN}
             paths:
               - path: /
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -69,23 +85,13 @@ spec:
     persistence:
       media:
         enabled: true
-        mountPath: /data
         path: ${SECRET_NFS_DATA}
         server: ${NAS_IP}
         type: nfs
+        globalMounts:
+          - path: /data
       cache:
         enabled: true
         type: emptyDir
-        mountPath: /cache
-
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
-
-    resources:
-      requests:
-        cpu: 15m
-        memory: 145M
+        globalMounts:
+          - path: /cache
