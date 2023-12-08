@@ -29,39 +29,64 @@ spec:
     - name: tubearchivist-elasticsearch
     - name: tubearchivist-redis
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: bbilly1/tubearchivist
-      tag: v0.4.4
-    env:
-      TZ: "${TZ}"
-      HOST_UID: 568
-      HOST_GID: 1234
-      ES_URL: http://tubearchivist-elasticsearch.media.svc.cluster.local:9200
-      REDIS_HOST: tubearchivist-redis.media.svc.cluster.local
-      TA_HOST: &host tubearchivist.${SECRET_DOMAIN}
-      TA_USERNAME: admin
-      ENABLE_CAST: "true"
-    envFrom:
-      - secretRef:
-          name: tubearchivist-secret
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        capabilities:
+          add:
+            - CHOWN
+
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: bbilly1/tubearchivist
+              tag: v0.4.4
+            env:
+              TZ: "${TZ}"
+              HOST_UID: 568
+              HOST_GID: 1234
+              ES_URL: http://tubearchivist-elasticsearch.media.svc.cluster.local:9200
+              REDIS_HOST: tubearchivist-redis.media.svc.cluster.local
+              TA_HOST: &host tubearchivist.${SECRET_DOMAIN}
+              TA_USERNAME: admin
+              ENABLE_CAST: "true"
+            envFrom:
+              - secretRef:
+                  name: tubearchivist-secret
+            probes:
+              liveness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 15m
+                memory: 711M
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /cache
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+
     service:
       main:
         ports:
           http:
             port: 8000
-    probes:
-      liveness:
-        enabled: false
-      startup:
-        enabled: false
+
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           # authentik.home.arpa/enabled: "true"
           gethomepage.dev/enabled: "true"
@@ -74,30 +99,18 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
-      capabilities:
-        add:
-          - CHOWN
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /cache
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
+
     persistence:
       media:
         enabled: true
-        mountPath: /youtube
         path: ${SECRET_NFS_DATA}/youtube
         server: ${NAS_IP}
         type: nfs
-    resources:
-      requests:
-        cpu: 15m
-        memory: 711M
+        globalMounts:
+          - path: /youtube
