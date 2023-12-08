@@ -30,6 +30,7 @@ spec:
       securityContext:
         runAsUser: 568
         runAsGroup: 568
+        runAsNonRoot: true
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
 
@@ -45,6 +46,10 @@ spec:
               tag: 1.33.2
             env:
               TZ: ${TZ}
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 15m
