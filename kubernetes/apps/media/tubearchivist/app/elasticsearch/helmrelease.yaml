@@ -26,38 +26,45 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: docker.elastic.co/elasticsearch/elasticsearch
-      tag: 8.11.1
-    env:
-      TZ: "${TZ}"
-      ES_JAVA_OPTS: -Xms2G -Xmx2G
-      xpack.security.enabled: "true"
-      discovery.type: single-node
-      path.repo: /usr/share/elasticsearch/data/snapshot
-    envFrom:
-      - secretRef:
-          name: tubearchivist-secret
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 0
+        fsGroup: 0
+
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: docker.elastic.co/elasticsearch/elasticsearch
+              tag: 8.11.1
+            env:
+              TZ: "${TZ}"
+              ES_JAVA_OPTS: -Xms2G -Xmx2G
+              xpack.security.enabled: "true"
+              discovery.type: single-node
+              path.repo: /usr/share/elasticsearch/data/snapshot
+            envFrom:
+              - secretRef:
+                  name: tubearchivist-secret
+            resources:
+              requests:
+                cpu: 22m
+                memory: 760M
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /usr/share/elasticsearch/data
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              storageClass: longhorn
+
     service:
       main:
         ports:
           http:
             port: 9200
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 0
-      fsGroup: 0
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /usr/share/elasticsearch/data
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: longhorn
-    resources:
-      requests:
-        cpu: 22m
-        memory: 760M
