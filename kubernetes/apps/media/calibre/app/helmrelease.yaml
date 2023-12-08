@@ -58,13 +58,15 @@ spec:
             port: &port 8080
       webserver:
         enabled: true
+        controller: main
+        primary: false
+        type: ClusterIP
         ports:
           webserver:
             enabled: true
             port: 8081
             protocol: TCP
             targetPort: 8081
-        type: ClusterIP
 
     ingress:
       main:
