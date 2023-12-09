@@ -26,6 +26,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+
     controllers:
       main:
         type: statefulset
@@ -61,12 +68,7 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-        # pod:
-        #   securityContext:
-        #     runAsUser: 568
-        #     runAsGroup: 568
-        #     fsGroup: 568
-        #     fsGroupChangePolicy: OnRootMismatch
+
         statefulset:
           volumeClaimTemplates:
             - name: config
