@@ -64,9 +64,10 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: config
-              mountPath: /config
               accessMode: ReadWriteOnce
               size: 1Gi
+              globalMounts:
+                - path: /config
               storageClass: longhorn
 
     service:
@@ -74,6 +75,7 @@ spec:
         ports:
           http:
             port: 6767
+
     ingress:
       main:
         enabled: true
