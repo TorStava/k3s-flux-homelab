@@ -57,15 +57,17 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: server
-              mountPath: /app/server
               accessMode: "ReadWriteOnce"
               size: 5Gi
               storageClass: longhorn
+              globalMounts:
+                - path: /app/server
             - name: configs
-              mountPath: /app/configs
               accessMode: "ReadWriteOnce"
               size: 1Gi
               storageClass: longhorn
+              globalMounts:
+                - path: /app/configs
 
     service:
       main:
