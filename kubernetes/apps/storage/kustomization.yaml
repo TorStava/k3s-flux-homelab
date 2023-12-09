@@ -5,4 +5,5 @@ resources:
   - ./namespace.yaml
   - ./storage-pvc.yaml
   - ./longhorn/ks.yaml
+  - ./minio/ks.yaml
   - ./nfs-subdir-external-provisioner/ks.yaml
