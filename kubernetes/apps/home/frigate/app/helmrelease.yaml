@@ -71,10 +71,11 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: config
-              mountPath: /data
               accessMode: ReadWriteOnce
               size: 5Gi
               storageClass: longhorn
+              globalMounts:
+                - path: /data
 
     # envFrom:
     #   - secretRef:
@@ -87,6 +88,7 @@ spec:
           rtsp:
             enabled: true
             port: 8554
+
     ingress:
       main:
         enabled: true
