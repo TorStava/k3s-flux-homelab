@@ -58,10 +58,11 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: config
-              mountPath: /usr/share/elasticsearch/data
               accessMode: ReadWriteOnce
               size: 5Gi
               storageClass: longhorn
+              globalMounts:
+                - path: /usr/share/elasticsearch/data
 
     service:
       main:

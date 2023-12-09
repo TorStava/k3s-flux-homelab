@@ -72,10 +72,11 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: config
-              mountPath: /cache
               accessMode: ReadWriteOnce
               size: 1Gi
               storageClass: longhorn
+              globalMounts:
+                - path: /cache
 
     service:
       main:
