@@ -33,6 +33,16 @@ spec:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          - name: permission-init
+            image: alpine:3.16.0
+            command:
+              - sh
+              - -c
+              - (chown 568:568 /config)
+            volumeMounts:
+              - name: config
+                mountPath: /config
         containers:
           main:
             image:
@@ -58,17 +68,6 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: Always
             # fsGroupChangePolicy: OnRootMismatch
-
-    initContainers:
-      - name: permission-init
-        image: alpine:3.16.0
-        command:
-          - sh
-          - -c
-          - (chown 568:568 /config)
-        volumeMounts:
-          - name: config
-            mountPath: /config
 
     service:
       main:
