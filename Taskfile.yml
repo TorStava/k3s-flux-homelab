@@ -14,7 +14,9 @@ env:
 includes:
   ansible: .taskfiles/AnsibleTasks.yml
   cluster: .taskfiles/ClusterTasks.yml
+  kubernetes: .taskfiles/Kubernetes/Taskfile.yaml
   precommit: .taskfiles/PrecommitTasks.yml
+  volsync: .taskfiles/VolSync/Taskfile.yaml
 
 tasks:
   init:
