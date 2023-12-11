@@ -33,16 +33,6 @@ spec:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          - name: permission-init
-            image: alpine:3.16.0
-            command:
-              - sh
-              - -c
-              - (chown 568:568 /config)
-            volumeMounts:
-              - name: config
-                mountPath: /config
         containers:
           main:
             image:
@@ -63,11 +53,10 @@ spec:
                 memory: 400Mi
         pod:
           securityContext:
-            # runAsUser: 568
-            # runAsGroup: 568
+            runAsUser: 568
+            runAsGroup: 568
             fsGroup: 568
-            fsGroupChangePolicy: Always
-            # fsGroupChangePolicy: OnRootMismatch
+            fsGroupChangePolicy: OnRootMismatch
 
     service:
       main:
