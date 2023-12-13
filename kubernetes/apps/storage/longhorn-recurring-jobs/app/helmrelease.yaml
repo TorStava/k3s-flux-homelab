@@ -34,12 +34,12 @@ spec:
       numberOfReplicas: "1"
       staleReplicaTimeout: "30"
     groups:
-      "Database":
+      "Photos":
         snapshot:
           - interval: 10m
             retain: 6
         backup:
-          - interval: 12h
+          - interval: 24h
             retain: 2
         filesystem-trim:
           - interval: 20m
