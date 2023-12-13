@@ -37,15 +37,6 @@ spec:
             image:
               repository: alpine
               tag: latest
-            probes:
-              liveness: &probes
-                enabled: false
-              readiness: *probes
-              startup: *probes
-              resources:
-                requests:
-                  cpu: 5m
-                  memory: 10Mi
 
         pod:
           securityContext:
@@ -53,10 +44,6 @@ spec:
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
-
-    ingress:
-      main:
-        enabled: false
 
     persistence:
       config:
