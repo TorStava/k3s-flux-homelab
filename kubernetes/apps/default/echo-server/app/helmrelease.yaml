@@ -81,7 +81,7 @@ spec:
           - hosts:
               - *host
 
-  persistence:
-    config:
-      enabled: true
-      size: 1Gi
+    persistence:
+      config:
+        enabled: true
+        size: 1Gi
