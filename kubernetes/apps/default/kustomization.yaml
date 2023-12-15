@@ -6,4 +6,5 @@ resources:
   - ./echo-server/ks.yaml
   - ./hajimari/ks.yaml
   - ./homepage/ks.yaml
+  - ./nginx-test/ks.yaml
   - ./theme-park/ks.yaml
