@@ -68,3 +68,4 @@ spec:
       config2:
         enabled: true
         accessMode: "ReadWriteOnce"
+        size: 1Gi
