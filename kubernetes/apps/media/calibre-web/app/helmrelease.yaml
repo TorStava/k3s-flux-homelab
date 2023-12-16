@@ -2,30 +2,33 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: calibre-web
-  namespace: media
+  name: &app calibre-web
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
       version: 2.3.0
-      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: longhorn
+      namespace: storage
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: "OnRootMismatch"
-
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -39,13 +42,12 @@ spec:
               requests:
                 cpu: 15m
                 memory: 145M
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              mountPath: /config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: longhorn
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
 
     service:
       main:
@@ -62,17 +64,14 @@ spec:
           gethomepage.dev/icon: calibre.png
           gethomepage.dev/name: Calibre Web
           gethomepage.dev/group: Media
-          # nginx.ingress.kubernetes.io/auth-url: https://auth.bjw-s.dev/oauth2/auth?allowed_groups=calibre-web
-          # nginx.ingress.kubernetes.io/auth-signin: https://auth.bjw-s.dev/oauth2/start?rd=$scheme://$best_http_host$request_uri
-          # nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-email, x-auth-request-groups"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.bjw-s.dev/css/base/calibreweb/nord.css"></head>';
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/calibreweb/nord.css"></head>';
             sub_filter_once on;
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           authentik.home.arpa/enabled: "true"
         hosts:
-          - host: &host calibre-web.${SECRET_DOMAIN}
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
@@ -83,15 +82,14 @@ spec:
               - *host
 
     persistence:
-      media:
+      config:
         enabled: true
-        path: ${SECRET_NFS_DATA}
-        server: ${NAS_IP}
-        type: nfs
-        globalMounts:
-          - path: /data
+        existingClaim: *app
       cache:
         enabled: true
         type: emptyDir
-        globalMounts:
-          - path: /cache
+      data:
+        enabled: true
+        type: nfs
+        server: ${NAS_IP}
+        path: ${SECRET_NFS_DATA}
