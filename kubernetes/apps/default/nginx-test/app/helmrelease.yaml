@@ -34,8 +34,8 @@ spec:
 
         statefulset:
           volumeClaimTemplates:
-            - name: config1
-              mountPath: /config
+            - name: run
+              mountPath: /var/run
               accessMode: "ReadWriteOnce"
               size: 1Gi
               storageClass: longhorn
@@ -65,7 +65,9 @@ spec:
               - *host
 
     persistence:
-      config2:
+      cache:
         enabled: true
         accessMode: "ReadWriteOnce"
         size: 1Gi
+        globalMounts:
+          - path: /var/cache/nginx
