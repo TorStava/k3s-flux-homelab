@@ -32,8 +32,7 @@ spec:
       repository: &image ghcr.io/onedr0p/volsync
       tag: &tag 0.8.0
     restic:
-      image:
-        repository: *image
-        tag: *tag
+      repository: *image
+      tag: *tag
     metrics:
       disableAuth: true
