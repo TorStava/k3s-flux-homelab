@@ -6,5 +6,4 @@ resources:
   - ./storage-pvc.yaml
   - ./longhorn/ks.yaml
   - ./longhorn-recurring-jobs/ks.yaml
-  - ./minio/ks.yaml
   - ./nfs-subdir-external-provisioner/ks.yaml
