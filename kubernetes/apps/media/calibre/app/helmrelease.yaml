@@ -37,16 +37,17 @@ spec:
               repository: lscr.io/linuxserver/calibre
               tag: 7.2.0
             env:
-              TZ: "${TZ}"
               PUID: "568"
               PGID: "568"
+              TZ: "${TZ}"
+              DOCKER_MODS: linuxserver/mods:universal-calibre
             resources:
               requests:
                 cpu: 15m
                 memory: 411M
         pod:
           securityContext:
-            runAsUser: 568
+            runAsUser: 0
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
