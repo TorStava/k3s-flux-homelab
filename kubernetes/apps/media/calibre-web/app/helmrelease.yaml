@@ -48,6 +48,14 @@ spec:
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: "ReadWriteOnce"
+              size: 1Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /config-old
 
     service:
       main:
