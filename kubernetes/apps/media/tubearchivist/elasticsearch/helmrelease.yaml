@@ -2,8 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: tubearchivist-elasticsearch
-  namespace: media
+  name: &app tubearchivist-elasticsearch
 spec:
   interval: 30m
   chart:
@@ -16,7 +15,6 @@ spec:
         namespace: flux-system
   maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -25,16 +23,12 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: longhorn
+      namespace: storage
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 0
-        fsGroup: 0
-
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -55,17 +49,21 @@ spec:
               requests:
                 cpu: 22m
                 memory: 760M
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 5Gi
-              storageClass: longhorn
-              globalMounts:
-                - path: /usr/share/elasticsearch/data
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 0
+            fsGroup: 0
 
     service:
       main:
         ports:
           http:
             port: 9200
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /usr/share/elasticsearch/data

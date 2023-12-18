@@ -2,8 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: tubearchivist-redis
-  namespace: media
+  name: &app tubearchivist-redis
 spec:
   interval: 30m
   chart:
@@ -16,7 +15,6 @@ spec:
         namespace: flux-system
   maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -27,10 +25,11 @@ spec:
     keepHistory: false
   dependsOn:
     - name: tubearchivist-elasticsearch
+    - name: longhorn
+      namespace: storage
   values:
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -44,17 +43,14 @@ spec:
               requests:
                 cpu: 15m
                 memory: 64M
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: longhorn
-              globalMounts:
-                - path: /data
 
     service:
       main:
         ports:
           http:
             port: 6379
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: *app

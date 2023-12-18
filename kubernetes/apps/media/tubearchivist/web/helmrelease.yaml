@@ -2,8 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: tubearchivist-web
-  namespace: media
+  name: &app tubearchivist-web
 spec:
   interval: 30m
   chart:
@@ -16,7 +15,6 @@ spec:
         namespace: flux-system
   maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -28,19 +26,11 @@ spec:
   dependsOn:
     - name: tubearchivist-elasticsearch
     - name: tubearchivist-redis
+    - name: longhorn
+      namespace: storage
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
-        capabilities:
-          add:
-            - CHOWN
-
     controllers:
       main:
-        type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -51,7 +41,7 @@ spec:
             env:
               TZ: "${TZ}"
               HOST_UID: 568
-              HOST_GID: 1234
+              HOST_GID: 568
               ES_URL: http://tubearchivist-elasticsearch.media.svc.cluster.local:9200
               REDIS_HOST: tubearchivist-redis.media.svc.cluster.local
               TA_HOST: &host tubearchivist.${SECRET_DOMAIN}
@@ -60,23 +50,10 @@ spec:
             envFrom:
               - secretRef:
                   name: tubearchivist-secret
-            probes:
-              liveness:
-                enabled: false
-              startup:
-                enabled: false
             resources:
               requests:
                 cpu: 15m
                 memory: 711M
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: longhorn
-              globalMounts:
-                - path: /cache
 
     service:
       main:
@@ -89,12 +66,12 @@ spec:
         enabled: true
         className: nginx
         annotations:
-          # authentik.home.arpa/enabled: "true"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: tube-archivist.png
           gethomepage.dev/name: Tube Archivist
           gethomepage.dev/group: Media
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+          # authentik.home.arpa/enabled: "true"
         hosts:
           - host: *host
             paths:
@@ -108,10 +85,11 @@ spec:
               - *host
 
     persistence:
-      media:
+      cache:
         enabled: true
-        path: ${SECRET_NFS_DATA}/youtube
-        server: ${NAS_IP}
+        existingClaim: *app
+      youtube:
+        enabled: true
         type: nfs
-        globalMounts:
-          - path: /youtube
+        server: ${NAS_IP}
+        path: ${SECRET_NFS_DATA}/youtube
