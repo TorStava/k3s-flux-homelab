@@ -44,7 +44,7 @@ spec:
               path.repo: /usr/share/elasticsearch/data/snapshot
             envFrom:
               - secretRef:
-                  name: tubearchivist-secret
+                  name: *app
             resources:
               requests:
                 cpu: 22m
