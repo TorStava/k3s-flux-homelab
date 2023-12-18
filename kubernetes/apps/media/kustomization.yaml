@@ -11,3 +11,4 @@ resources:
   - ./overseerr/ks.yaml
   - ./tautulli/ks.yaml
   - ./tubearchivist/ks-elasticsearch.yaml
+  - ./tubearchivist/ks-redis.yaml
