@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cluster-apps-longhorn
-  path: ./kubernetes/apps/media/tubearchivist/app/elasticsearch
+  path: ./kubernetes/apps/media/tubearchivist/elasticsearch
   prune: true
   sourceRef:
     kind: GitRepository

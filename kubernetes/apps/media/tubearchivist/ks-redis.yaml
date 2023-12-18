@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: tubearchivist-elasticsearch
     - name: cluster-apps-longhorn
-  path: ./kubernetes/apps/media/tubearchivist/app/redis
+  path: ./kubernetes/apps/media/tubearchivist/redis
   prune: true
   sourceRef:
     kind: GitRepository
