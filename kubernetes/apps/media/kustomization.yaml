@@ -12,3 +12,4 @@ resources:
   - ./tautulli/ks.yaml
   - ./tubearchivist/ks-elasticsearch.yaml
   - ./tubearchivist/ks-redis.yaml
+  - ./tubearchivist/ks-web.yaml
