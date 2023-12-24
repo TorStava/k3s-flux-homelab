@@ -7,6 +7,7 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/target: "ingress.tostava.com"
     nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Authorization $http_authorization;
       proxy_pass_header Authorization";
 spec:
   ingressClassName: nginx
