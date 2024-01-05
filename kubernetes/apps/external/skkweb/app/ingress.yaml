@@ -34,7 +34,7 @@ metadata:
   namespace: external
 subsets:
   - addresses:
-      - ip: "192.168.1.71"
+      - ip: "192.168.1.73"
     ports:
       - name: http
         port: 80
