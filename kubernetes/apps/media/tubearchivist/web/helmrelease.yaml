@@ -54,6 +54,14 @@ spec:
               requests:
                 cpu: 15m
                 memory: 711M
+        pod:
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 0
+            capabilities:
+              add:
+                - CHOWN
 
     service:
       main:
