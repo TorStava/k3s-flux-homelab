@@ -33,6 +33,10 @@ spec:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            fsGroup: 1234
+            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           main:
             image:
@@ -41,7 +45,7 @@ spec:
             env:
               TZ: "${TZ}"
               HOST_UID: 568
-              HOST_GID: 568
+              HOST_GID: 1234
               ES_URL: http://tubearchivist-elasticsearch.media.svc.cluster.local:9200
               REDIS_HOST: tubearchivist-redis.media.svc.cluster.local
               TA_HOST: &host tubearchivist.${SECRET_DOMAIN}
@@ -54,14 +58,10 @@ spec:
               requests:
                 cpu: 15m
                 memory: 711M
-        pod:
-          securityContext:
-            runAsUser: 0
-            runAsGroup: 0
-            fsGroup: 0
-            capabilities:
-              add:
-                - CHOWN
+            securityContext:
+              capabilities:
+                add:
+                  - CHOWN
 
     service:
       main:
