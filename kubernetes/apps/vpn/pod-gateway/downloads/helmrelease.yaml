@@ -52,8 +52,6 @@ spec:
             value: wg0
           - name: FIREWALL
             value: "off"
-          - name: DOT
-            value: "off"
           - name: VPN_ENDPOINT_IP
             value: 146.70.170.36
           - name: VPN_ENDPOINT_PORT
