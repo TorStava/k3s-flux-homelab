@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: &host "skkweb.tostava.com"
+    - host: &host "skkweb.${SECRET_DOMAIN}"
       http:
         paths:
           - pathType: Prefix
@@ -33,7 +33,7 @@ metadata:
   namespace: external
 subsets:
   - addresses:
-      - ip: "192.168.1.73"
+      - ip: 192.168.1.73
     ports:
       - name: http
         port: 80
