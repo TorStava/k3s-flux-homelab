@@ -5,6 +5,7 @@ metadata:
   name: skkweb
   namespace: external
   annotations:
+    external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header Authorization $http_authorization;
       proxy_pass_header Authorization;
