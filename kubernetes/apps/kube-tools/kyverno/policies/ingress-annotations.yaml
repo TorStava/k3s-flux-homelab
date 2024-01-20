@@ -25,6 +25,8 @@ spec:
           metadata:
             annotations:
               +(external-dns.alpha.kubernetes.io/target): ingress.${SECRET_DOMAIN}
+              +(ginx.ingress.kubernetes.io/auth-snippet): |-
+                proxy_set_header X-Forwarded-Host $http_host;
     - name: auth
       match:
         any:
