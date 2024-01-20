@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: docker.io/redislabs/rejson
-              tag: 2.6.8
+              tag: 2.6.9
             env:
               TZ: "${TZ}"
             resources:
