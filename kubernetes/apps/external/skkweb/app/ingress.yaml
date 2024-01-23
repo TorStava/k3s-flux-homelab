@@ -18,7 +18,7 @@ spec:
               service:
                 name: skkweb
                 port:
-                  number: 8080
+                  number: 80
   tls:
     - hosts:
         - *host
@@ -34,5 +34,5 @@ subsets:
       - ip: 192.168.1.73
     ports:
       - name: http
-        port: 8080
+        port: 80
         protocol: TCP
