@@ -1,0 +1,39 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: skktest
+  namespace: external
+  annotations:
+    external-dns.home.arpa/enabled: "true"
+    authentik.home.arpa/enabled: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: &host "skktest.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: skktest
+                port:
+                  number: 81
+  tls:
+    - hosts:
+        - *host
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: skktest
+  namespace: external
+subsets:
+  - addresses:
+      - ip: 192.168.1.73
+    ports:
+      - name: http
+        port: 81
+        protocol: TCP
