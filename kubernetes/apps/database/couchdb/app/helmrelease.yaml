@@ -75,5 +75,5 @@ spec:
         globalMounts:
           - path: /opt/couchdb/data
             subPath: data
-          - path: /opt/couchdb/etc
+          - path: /opt/couchdb/etc/local.d
             subPath: etc
