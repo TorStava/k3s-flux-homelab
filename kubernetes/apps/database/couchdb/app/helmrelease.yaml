@@ -74,6 +74,6 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /opt/couchdb/data
-            subPath: /data
+            subPath: data
           - path: /opt/couchdb/etc
-            subPath: /etc
+            subPath: etc
