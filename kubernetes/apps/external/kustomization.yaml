@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./amp/ks.yaml
+  - ./classquiz/ks.yaml
   - ./homeassistant/ks.yaml
   - ./nextcloud/ks.yaml
   - ./pihole/ks.yaml

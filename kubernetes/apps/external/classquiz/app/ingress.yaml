@@ -1,0 +1,41 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: classquiz
+  namespace: external
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: ClassQuiz
+    gethomepage.dev/group: Home
+    external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: &host "classquiz.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: classquiz
+                port:
+                  number: 8000
+  tls:
+    - hosts:
+        - *host
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: classquiz
+  namespace: external
+subsets:
+  - addresses:
+      - ip: ${VPS_IP}
+    ports:
+      - name: http
+        port: 8000
+        protocol: TCP
