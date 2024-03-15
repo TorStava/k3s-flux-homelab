@@ -5,5 +5,5 @@ resources:
   - ./namespace.yaml
   - ./couchdb/ks.yaml
   - ./cloudnative-pg/ks.yaml
-  - ./neo4j/ks.yaml
+  # - ./neo4j/ks.yaml
   - ./redis/ks.yaml
