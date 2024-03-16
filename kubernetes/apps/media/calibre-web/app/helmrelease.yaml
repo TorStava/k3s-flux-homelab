@@ -64,10 +64,6 @@ spec:
           gethomepage.dev/icon: calibre.png
           gethomepage.dev/name: Calibre Web
           gethomepage.dev/group: Media
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/calibreweb/nord.css"></head>';
-            sub_filter_once on;
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           authentik.home.arpa/enabled: "true"
         hosts:
@@ -88,8 +84,8 @@ spec:
       cache:
         enabled: true
         type: emptyDir
-      ebooks:
-        enabled: true
-        type: nfs
-        server: ${NAS_IP}
-        path: ${SECRET_NFS_DATA}/ebooks
+      # ebooks:
+      #   enabled: true
+      #   type: nfs
+      #   server: ${NAS_IP}
+      #   path: ${SECRET_NFS_DATA}/ebooks
