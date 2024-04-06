@@ -69,7 +69,7 @@ spec:
           hajimari.io/icon: mdi:chart-bar
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media
-          gethomepage.dev/name: Calibre
+          gethomepage.dev/name: Calibre Web
           gethomepage.dev/icon: calibre.png
         hosts:
           - host: &host ebooks.${SECRET_DOMAIN}
