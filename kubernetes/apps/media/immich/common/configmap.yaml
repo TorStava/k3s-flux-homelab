@@ -18,6 +18,9 @@ data:
   INIT_POSTGRES_HOST: *dbhost
   INIT_POSTGRES_USER: *app
 
+  POSTGRES_USER: *app
+  POSTGRES_DB: *app
+
   IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:3001
   IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
 
