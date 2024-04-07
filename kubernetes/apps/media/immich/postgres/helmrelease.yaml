@@ -36,8 +36,8 @@ spec:
         containers:
           app:
             image:
-              repository: library/postgres
-              tag: 16
+              repository: tensorchord/pgvecto-rs
+              tag: pg16-v0.2.0
             env:
               - name: POSTGRES_USER
                 value: immich
@@ -67,7 +67,14 @@ spec:
 
     persistence:
       data:
-        enabled: true
         existingClaim: *app
         globalMounts:
           - path: /var/lib/postgresql/data
+            subPath: postgresql
+
+      initdb:
+        type: configMap
+        name: immich-postgres
+        globalMounts:
+          - path: /docker-entrypoint-initdb.d/create-extensions.sql
+            subPath: create-extensions.sql
