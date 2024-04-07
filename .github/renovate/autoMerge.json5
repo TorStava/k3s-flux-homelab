@@ -5,7 +5,7 @@
       "description": "Auto merge non-major updates",
       "automerge": true,
       "matchUpdateTypes": ["minor", "patch"],
-      "excludeCommitPaths": ["kubernetes/apps/storage/longhorn/**"]
+      "excludeCommitPaths": ["kubernetes/apps/storage/longhorn/**", "kubernetes/apps/volsync/volsync/**"]
     },
     {
       "description": "Auto merge GitHub Actions",
