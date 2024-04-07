@@ -2,7 +2,8 @@
 # ref: https://github.com/onedr0p/home-ops/blob/main/kubernetes/apps/default/frigate/app/config/config.yaml
 
 mqtt:
-  enabled: false
+  user: "{FRIGATE_MQTT_USER}"
+  password: "{FRIGATE_MQTT_PASSWORD}"
 
 go2rtc:
   streams:
