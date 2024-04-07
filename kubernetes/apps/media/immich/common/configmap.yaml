@@ -6,11 +6,22 @@ metadata:
   namespace: media
 data:
   TZ: Europe/Oslo
-  DB_PORT: "5432"
   LOG_LEVEL: log
   NODE_ENV: production
-  IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
+
+  DB_PORT: "5432"
+  DB_HOSTNAME: &dbhost immich-postgres.media.svc.cluster.local
+  DB_DATABASE_NAME: &app immich
+  DB_USERNAME: *app
+
+  INIT_POSTGRES_DBNAME: *app
+  INIT_POSTGRES_HOST: *dbhost
+  INIT_POSTGRES_USER: *app
+
   IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:3001
+  IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
+
   REDIS_URL: ioredis://eyJzZW50aW5lbHMiOlt7Imhvc3QiOiJpbW1pY2gtZHJhZ29uZmx5Lm1lZGlhLnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6NjM3OX0sIm5hbWUiOiJyZWRpcy1zZW50aW5lbCJ9
+
   TYPESENSE_HOST: immich-typesense.media.svc.cluster.local
   TYPESENSE_DATA_DIR: /config

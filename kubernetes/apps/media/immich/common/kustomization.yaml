@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: media
 resources:
   - ./configmap.yaml
-  - ./secret.sops.yaml
+  - ./externalsecret.yaml
