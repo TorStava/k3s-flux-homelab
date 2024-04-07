@@ -46,6 +46,7 @@ spec:
               FRIGATE_RTSP_PASSWORD: ${SECRET_IMOU_CAM1_PASSWORD}
               FRIGATE_MQTT_USER: ${FRIGATE_MQTT_USER}
               FRIGATE_MQTT_PASSWORD: ${FRIGATE_MQTT_PASSWORD}
+              MQTT_HOST: ${HASS_IP}
             resources:
               requests:
                 cpu: 10m
