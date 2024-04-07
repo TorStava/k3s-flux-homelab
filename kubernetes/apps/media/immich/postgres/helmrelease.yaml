@@ -33,21 +33,18 @@ spec:
       postgres:
         annotations:
           reloader.stakater.com/auto: "true"
+          configmap.reloader.stakater.com/reload: &configmap immich-configmap
+          secret.reloader.stakater.com/reload: &secret immich-secret
         containers:
           app:
             image:
               repository: tensorchord/pgvecto-rs
-              tag: pg16-v0.2.0
-            env:
-              - name: POSTGRES_USER
-                value: immich
-              - name: POSTGRES_DB
-                value: immich
-              - name: PGDATA
-                value: /var/lib/postgresql/data
+              tag: pg16-v0.2.1
             envFrom:
               - secretRef:
-                  name: *app
+                  name: *secret
+              - configMapRef:
+                  name: *configmap
             probes:
               liveness:
                 enabled: true
@@ -74,7 +71,7 @@ spec:
 
       initdb:
         type: configMap
-        name: immich-postgres
+        name: immich-postgres-extensions
         globalMounts:
           - path: /docker-entrypoint-initdb.d/create-extensions.sql
             subPath: create-extensions.sql

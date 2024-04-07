@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: immich-postgres
+  name: immich-postgres-extensions
 data:
   create-extensions.sql: |
     CREATE EXTENSION IF NOT EXISTS cube;
