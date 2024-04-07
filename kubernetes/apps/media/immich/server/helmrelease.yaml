@@ -37,6 +37,8 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.2
+            env:
+              DB_VECTOR_EXTENSION: pgvector
             envFrom: &envFrom
               - configMapRef:
                   name: *configmap
