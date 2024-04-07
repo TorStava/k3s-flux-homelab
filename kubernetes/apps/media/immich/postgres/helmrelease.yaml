@@ -40,6 +40,12 @@ spec:
             image:
               repository: tensorchord/pgvecto-rs
               tag: pg16-v0.2.1
+            env:
+              - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: *secret
+                    key: INIT_POSTGRES_SUPER_PASS
             envFrom:
               - secretRef:
                   name: *secret
