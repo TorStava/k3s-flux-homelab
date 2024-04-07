@@ -1,0 +1,73 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app immich-postgres
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  values:
+    controllers:
+      postgres:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: library/postgres
+              tag: 16
+            env:
+              - name: POSTGRES_USER
+                value: immich
+              - name: POSTGRES_DB
+                value: immich
+              - name: PGDATA
+                value: /var/lib/postgresql/data
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 5m
+                memory: 249M
+
+    service:
+      app:
+        controller: postgres
+        ports:
+          postgres:
+            port: 5432
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /var/lib/postgresql/data
