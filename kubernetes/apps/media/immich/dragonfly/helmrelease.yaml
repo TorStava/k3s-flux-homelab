@@ -48,7 +48,7 @@ spec:
                 cpu: 5m
                 memory: 249M
             env:
-              - name: DFLY_PASSWORD
+              - name: DFLY_requirepass
                 valueFrom:
                   secretKeyRef:
                     name: *secret
