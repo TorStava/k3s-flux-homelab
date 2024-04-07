@@ -2,6 +2,7 @@
 # ref: https://github.com/onedr0p/home-ops/blob/main/kubernetes/apps/default/frigate/app/config/config.yaml
 
 mqtt:
+  host: "{MQTT_HOST}"
   user: "{FRIGATE_MQTT_USER}"
   password: "{FRIGATE_MQTT_PASSWORD}"
 
