@@ -75,6 +75,5 @@ spec:
         path: ${SECRET_IMMICH_SHARE}
         globalMounts:
           - path: /usr/src/app/upload
-            subPath: test123
       geocode:
         existingClaim: *app
