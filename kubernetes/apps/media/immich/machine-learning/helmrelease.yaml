@@ -36,7 +36,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/immich-app/immich-server
+              repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.101.0
             env:
               - name: MACHINE_LEARNING_CACHE_FOLDER
