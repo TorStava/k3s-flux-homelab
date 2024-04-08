@@ -28,7 +28,6 @@ spec:
   dependsOn:
     - name: longhorn
       namespace: storage
-    - name: immich-common
     - name: immich-dragonfly
     - name: immich-postgres
   values:
