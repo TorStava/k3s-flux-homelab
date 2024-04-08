@@ -44,21 +44,17 @@ spec:
             env:
               REVERSE_GEOCODING_DUMP_DIRECTORY: &dump /geocode
               DB_VECTOR_EXTENSION: pgvector
-              REDIS_HOSTNAME:
-                valueFrom:
-                  configMapKeyRef:
-                    name: *configmap
-                    key: REDIS_HOSTNAME
-              DB_URL:
-                valueFrom:
-                  configMapKeyRef:
-                    name: *configmap
-                    key: DB_HOSTNAME
               REDIS_PASSWORD:
                 valueFrom:
                   secretKeyRef:
                     name: *secret
                     key: DFLY_PASSWORD
+            envFrom:
+              - configMapRef:
+                  name: *configmap
+              - secretRef:
+                  name: *secret
+
             probes:
               liveness:
                 enabled: true
