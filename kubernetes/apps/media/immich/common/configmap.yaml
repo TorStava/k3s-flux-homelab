@@ -20,7 +20,7 @@ data:
   IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:3001
   IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
 
-  REDIS_URL: ioredis://eyJzZW50aW5lbHMiOlt7Imhvc3QiOiJpbW1pY2gtZHJhZ29uZmx5Lm1lZGlhLnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6NjM3OX1dLCJuYW1lIjoicmVkaXMtc2VudGluZWwifQ==
+  REDIS_HOSTNAME: immich-dragonfly.media.svc.cluster.local
 
   TYPESENSE_HOST: immich-typesense.media.svc.cluster.local
   TYPESENSE_DATA_DIR: /config
