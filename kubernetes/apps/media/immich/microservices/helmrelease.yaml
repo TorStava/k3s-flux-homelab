@@ -30,7 +30,6 @@ spec:
       namespace: storage
     - name: immich-dragonfly
     - name: immich-postgres
-    - name: immich-server
   values:
     controllers:
       microservices:
@@ -42,18 +41,12 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.101.0
-            args:
-              - start-microservices.sh
+            command:
+              - start.sh
+              - microservices
             env:
-              - name: REVERSE_GEOCODING_DUMP_DIRECTORY
+              - name: IMMICH_REVERSE_GEOCODING_ROOT
                 value: &dump /geocode
-              - name: DB_VECTOR_EXTENSION
-                value: pgvector
-              - name: REDIS_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: *secret
-                    key: DFLY_PASSWORD
             envFrom:
               - configMapRef:
                   name: *configmap

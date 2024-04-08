@@ -55,7 +55,7 @@ spec:
                 valueFrom:
                   configMapKeyRef:
                     name: *configmap
-                    key: DB_USERNAME
+                    key: DB_DATABASE_NAME
             probes:
               liveness:
                 enabled: true
@@ -79,10 +79,3 @@ spec:
         globalMounts:
           - path: /var/lib/postgresql/data
             subPath: postgresql
-
-      initdb:
-        type: configMap
-        name: immich-postgres-extensions
-        globalMounts:
-          - path: /docker-entrypoint-initdb.d/create-extensions.sql
-            subPath: create-extensions.sql

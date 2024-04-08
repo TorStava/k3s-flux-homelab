@@ -32,7 +32,7 @@ spec:
     controllers:
       dragonfly:
         annotations:
-          secret.reloader.stakater.com/reload: &secret immich-secret
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
@@ -48,11 +48,6 @@ spec:
                 cpu: 5m
                 memory: 249M
             env:
-              - name: DFLY_requirepass
-                valueFrom:
-                  secretKeyRef:
-                    name: *secret
-                    key: DFLY_PASSWORD
               - name: DFLY_default_lua_flags
                 value: allow-undeclared-keys
 
