@@ -51,6 +51,11 @@ spec:
                   configMapKeyRef:
                     name: *configmap
                     key: INIT_POSTGRES_USER
+              - name: POSTGRES_DB
+                valueFrom:
+                  configMapKeyRef:
+                    name: *configmap
+                    key: INIT_POSTGRES_USER
             envFrom:
               - secretRef:
                   name: *secret
