@@ -43,9 +43,6 @@ spec:
               tag: v1.101.0
             args:
               - start-microservices.sh
-            env:
-              - name: IMMICH_REVERSE_GEOCODING_ROOT
-                value: &dump /geocode
             envFrom:
               - configMapRef:
                   name: *configmap
@@ -75,5 +72,3 @@ spec:
         path: ${SECRET_IMMICH_SHARE}
         globalMounts:
           - path: /usr/src/app/upload
-      geocode:
-        existingClaim: *app
