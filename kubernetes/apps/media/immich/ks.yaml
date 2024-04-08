@@ -34,6 +34,7 @@ spec:
   dependsOn:
     - name: volsync
     - name: cluster-apps-longhorn
+    - name: immich-common
   path: ./kubernetes/apps/media/immich/dragonfly
   prune: true
   sourceRef:
@@ -62,6 +63,7 @@ spec:
   dependsOn:
     - name: volsync
     - name: cluster-apps-longhorn
+    - name: immich-common
   path: ./kubernetes/apps/media/immich/postgres
   prune: true
   sourceRef:
@@ -90,6 +92,9 @@ spec:
   dependsOn:
     - name: volsync
     - name: cluster-apps-longhorn
+    - name: immich-common
+    - name: immich-dragonfly
+    - name: immich-postgres
   path: ./kubernetes/apps/media/immich/server
   prune: true
   sourceRef:
