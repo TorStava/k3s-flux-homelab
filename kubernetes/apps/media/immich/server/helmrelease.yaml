@@ -32,19 +32,6 @@ spec:
           configmap.reloader.stakater.com/reload: &configmap immich-configmap
           secret.reloader.stakater.com/reload: &secret immich-secret
 
-        # initContainers:
-        #   init-db:
-        #     image:
-        #       repository: ghcr.io/onedr0p/postgres-init
-        #       tag: 16.2
-        #     env:
-        #       DB_VECTOR_EXTENSION: pgvector
-        #     envFrom: &envFrom
-        #       - configMapRef:
-        #           name: *configmap
-        #       - secretRef:
-        #           name: *secret
-
         containers:
           app:
             image:
@@ -80,7 +67,6 @@ spec:
           http:
             port: 3001
 
-
     ingress:
       main:
         enabled: true
@@ -91,7 +77,6 @@ spec:
           gethomepage.dev/name: Immich
           gethomepage.dev/group: Media
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
-          # authentik.home.arpa/enabled: "true"
         hosts:
           - host: &host photos.${SECRET_DOMAIN}
             paths:
@@ -103,7 +88,6 @@ spec:
         tls:
           - hosts:
               - *host
-
 
     persistence:
       data:

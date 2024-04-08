@@ -45,22 +45,17 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: *secret
-                    key: INIT_POSTGRES_SUPER_PASS
+                    key: DB_PASSWORD
               - name: POSTGRES_USER
                 valueFrom:
                   configMapKeyRef:
                     name: *configmap
-                    key: INIT_POSTGRES_USER
+                    key: DB_USERNAME
               - name: POSTGRES_DB
                 valueFrom:
                   configMapKeyRef:
                     name: *configmap
-                    key: INIT_POSTGRES_USER
-            envFrom:
-              - secretRef:
-                  name: *secret
-              - configMapRef:
-                  name: *configmap
+                    key: DB_USERNAME
             probes:
               liveness:
                 enabled: true

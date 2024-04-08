@@ -10,12 +10,8 @@ data:
   NODE_ENV: production
 
   DB_DATABASE_NAME: &app immich
-  DB_HOSTNAME: &dbhost immich-postgres.media.svc.cluster.local
+  DB_HOSTNAME: immich-postgres.media.svc.cluster.local
   DB_USERNAME: *app
-
-  INIT_POSTGRES_DBNAME: *app
-  INIT_POSTGRES_HOST: *dbhost
-  INIT_POSTGRES_USER: *app
 
   IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:3001
   IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
