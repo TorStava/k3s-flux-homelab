@@ -53,6 +53,8 @@ spec:
                   secretKeyRef:
                     name: *secret
                     key: DFLY_PASSWORD
+              - name: DFLY_default_lua_flags
+                value: allow-undeclared-keys
 
     service:
       app:
