@@ -103,13 +103,3 @@ spec:
         path: ${SECRET_IMMICH_SHARE}
         globalMounts:
           - path: /usr/src/app/upload
-
-      initdb:
-        type: configMap
-        name: immich-postgres-extensions
-        advancedMounts:
-          immich-server:
-            init-db:
-              - path: /docker-entrypoint-initdb.d/create-extensions.sql
-                subPath: create-extensions.sql
-                readOnly: true
