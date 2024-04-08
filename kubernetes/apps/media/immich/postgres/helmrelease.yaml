@@ -28,6 +28,7 @@ spec:
   dependsOn:
     - name: longhorn
       namespace: storage
+    - name: immich-common
   values:
     controllers:
       postgres:

@@ -25,6 +25,12 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+    - name: immich-common
+    - name: immich-dragonfly
+    - name: immich-postgres
   values:
     controllers:
       immich-server:
