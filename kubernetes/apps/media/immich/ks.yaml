@@ -124,6 +124,9 @@ spec:
     - name: volsync
     - name: cluster-apps-longhorn
     - name: immich-common
+    - name: immich-dragonfly
+    - name: immich-postgres
+    - name: immich-server
   path: ./kubernetes/apps/media/immich/microservices
   prune: true
   sourceRef:

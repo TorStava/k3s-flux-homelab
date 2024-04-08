@@ -36,13 +36,16 @@ spec:
         annotations:
           configmap.reloader.stakater.com/reload: &configmap immich-configmap
           secret.reloader.stakater.com/reload: &secret immich-secret
-
         containers:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.101.0
+            args:
+              - start-server.sh
             env:
+              - name: DB_VECTOR_EXTENSION
+                value: pgvector
               - name: REDIS_PASSWORD
                 valueFrom:
                   secretKeyRef:
@@ -53,8 +56,6 @@ spec:
                   name: *configmap
               - secretRef:
                   name: *secret
-
-            args: [start-server.sh]
             probes:
               liveness:
                 enabled: true
