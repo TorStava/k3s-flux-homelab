@@ -89,8 +89,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
-    - name: cluster-apps-longhorn
     - name: immich-common
     - name: immich-dragonfly
     - name: immich-postgres

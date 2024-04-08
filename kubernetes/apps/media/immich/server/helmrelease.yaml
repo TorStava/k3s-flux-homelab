@@ -26,8 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: longhorn
-      namespace: storage
     - name: immich-dragonfly
     - name: immich-postgres
   values:
@@ -88,9 +86,7 @@ spec:
               - *host
 
     persistence:
-      data:
-        existingClaim: *app
-      library:
+      upload:
         type: nfs
         server: ${NAS_IP}
         path: ${SECRET_IMMICH_SHARE}

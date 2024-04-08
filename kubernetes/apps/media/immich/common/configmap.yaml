@@ -9,11 +9,7 @@ data:
   NODE_ENV: production
   LOG_LEVEL: log
 
-  IMMICH_MEDIA_LOCATION: ./upload
   DB_HOSTNAME: immich-postgres
   DB_USERNAME: postgres
   DB_DATABASE_NAME: immich
   REDIS_HOSTNAME: immich-dragonfly
-
-  IMMICH_SERVER_URL: http://immich-server:3001
-  IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003
