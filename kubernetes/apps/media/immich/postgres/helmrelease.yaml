@@ -48,7 +48,7 @@ spec:
                     key: INIT_POSTGRES_SUPER_PASS
               - name: POSTGRES_USER
                 valueFrom:
-                  secretKeyRef:
+                  configMapKeyRef:
                     name: *configmap
                     key: INIT_POSTGRES_USER
             envFrom:
