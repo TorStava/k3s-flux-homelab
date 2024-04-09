@@ -73,7 +73,7 @@ spec:
           gethomepage.dev/name: Immich
           gethomepage.dev/group: Media
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/proxy-body-size: "" # Remove default limit of 100M
+          nginx.ingress.kubernetes.io/proxy-body-size: "0" # Remove default limit of 100M
         hosts:
           - host: &host photos.${SECRET_DOMAIN}
             paths:
