@@ -39,6 +39,9 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.101.0
+            env:
+              - name: MACHINE_LEARNING_MODEL_TTL
+                value: "0"
             envFrom:
               - configMapRef:
                   name: *configmap
