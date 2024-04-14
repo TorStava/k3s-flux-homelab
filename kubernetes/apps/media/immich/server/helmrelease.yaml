@@ -62,6 +62,12 @@ spec:
         ports:
           http:
             port: 3001
+      lb:
+        controller: *app
+        type: LoadBalancer
+        ports:
+          lb:
+            port: 3001
 
     ingress:
       main:
