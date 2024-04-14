@@ -58,12 +58,10 @@ spec:
           hajimari.io/icon: simple-icons:webauthn
           hajimari.io/group: infrastructure
         hosts:
-          - host: &host auth.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
+          - &host auth.${SECRET_DOMAIN}
         tls:
-          - hosts:
+          - secretName: *host
+            hosts:
               - *host
     geoip:
       enabled: false
