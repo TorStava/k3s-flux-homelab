@@ -70,9 +70,9 @@ spec:
       enabled: true
       persistence:
         enabled: true
-      postgresqlUsername: authentik
-      postgresqlDatabase: authentik
-      postgresqlPassword: ${SECRET_AUTHENTIK_POSTGRES_PASSWORD}
+      username: authentik
+      database: authentik
+      password: ${SECRET_AUTHENTIK_POSTGRES_PASSWORD}
       image:
         tag: 15.2.0-debian-11-r26
 
