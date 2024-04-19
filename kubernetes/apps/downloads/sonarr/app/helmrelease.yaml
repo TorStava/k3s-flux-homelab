@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.2.1408
+              tag: 4.0.4.1515
             env:
               TZ: "${TZ}"
               SONARR__INSTANCE_NAME: Sonarr
