@@ -153,6 +153,9 @@ data:
             - timtorChen/homelab:
                 - icon: github.png
                   href: 'https://github.com/timtorChen/homelab'
+            - TorStava/k3s-flux-homelab:
+                - icon: github.png
+                  href: 'https://github.com/TorStava/k3s-flux-homelab'
   docker.yaml: |
     ---
   kubernetes.yaml: |
