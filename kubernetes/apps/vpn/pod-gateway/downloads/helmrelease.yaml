@@ -57,7 +57,7 @@ spec:
           - name: VPN_ENDPOINT_IP
             value: 146.70.170.36
           - name: VPN_ENDPOINT_PORT
-            value: 51820
+            value: 51413
           - name: DNS_ADDRESS
             value: 146.70.170.35
           - name: LOG_LEVEL
@@ -76,7 +76,7 @@ spec:
                 - ipBlock:
                     cidr: 0.0.0.0/0
               ports:
-                - port: 51820
+                - port: 51413
                   protocol: UDP
             - to:
                 - namespaceSelector: {}
@@ -102,7 +102,7 @@ spec:
       VXLAN_ID: "43"
       VXLAN_IP_NETWORK: "172.16.1"
       VPN_BLOCK_OTHER_TRAFFIC: "true"
-      VPN_TRAFFIC_PORT: "51820"
+      VPN_TRAFFIC_PORT: "51413"
       NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.0.0/16"
       VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
 
