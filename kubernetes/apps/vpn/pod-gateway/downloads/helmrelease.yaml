@@ -54,8 +54,6 @@ spec:
             value: "off"
           - name: DOT
             value: "off"
-          - name: VPN_ENDPOINT_IP
-            value: 146.70.170.36
           - name: VPN_ENDPOINT_PORT
             value: 51413
           - name: DNS_ADDRESS
