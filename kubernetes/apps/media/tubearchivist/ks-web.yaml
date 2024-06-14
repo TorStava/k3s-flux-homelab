@@ -5,6 +5,8 @@ kind: Kustomization
 metadata:
   name: &app tubearchivist-web
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: media
   commonMetadata:
@@ -14,6 +16,7 @@ spec:
     - name: tubearchivist-redis
     - name: tubearchivist-elasticsearch
     - name: cluster-apps-longhorn
+    - name: cluster-apps-pod-gateway-downloads
   path: ./kubernetes/apps/media/tubearchivist/web
   prune: true
   sourceRef:
