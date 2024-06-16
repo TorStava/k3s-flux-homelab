@@ -1,15 +1,16 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: bazarr
+  name: &app bazarr
   namespace: downloads
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -25,18 +26,21 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: longhorn
+      namespace: storage
   values:
     defaultPodOptions:
       securityContext:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
     controllers:
-      main:
+      bazarr:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/bazarr
               tag: 1.4.3
@@ -54,7 +58,6 @@ spec:
             image:
               repository: registry.k8s.io/git-sync/git-sync
               tag: v4.2.3
-            imagePullPolicy: IfNotPresent
             args:
               - --repo=https://github.com/KBlixt/subcleaner.git
               - --branch=master
@@ -71,7 +74,8 @@ spec:
               storageClass: longhorn
 
     service:
-      main:
+      app:
+        controller: bazarr
         ports:
           http:
             port: 6767
@@ -79,7 +83,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: bazarr.png
@@ -98,9 +102,8 @@ spec:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
