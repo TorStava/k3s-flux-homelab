@@ -30,10 +30,6 @@ spec:
     - name: longhorn
       namespace: storage
   values:
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
     controllers:
       bazarr:
         type: statefulset
@@ -77,6 +73,12 @@ spec:
               - --depth=1
               - --wait=21600 # 6 hours
               - --root=/add-ons
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
         statefulset:
           volumeClaimTemplates:
             - name: config
