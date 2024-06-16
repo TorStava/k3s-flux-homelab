@@ -50,6 +50,19 @@ spec:
               BAZARR__PORT: &port 80
               BAZARR__LOG_LEVEL: info
               BAZARR__API_KEY: ${BAZARR_TOKEN}
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 6767
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
                 cpu: 10m
@@ -63,7 +76,7 @@ spec:
               - --branch=master
               - --depth=1
               - --wait=21600 # 6 hours
-              - --root=/add-ons/subcleaner
+              - --root=/add-ons
         statefulset:
           volumeClaimTemplates:
             - name: config
