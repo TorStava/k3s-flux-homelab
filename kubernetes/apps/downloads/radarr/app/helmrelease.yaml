@@ -4,17 +4,18 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app radarr
+  namespace: downloads
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -29,12 +30,11 @@ spec:
       namespace: storage
   values:
     controllers:
-      main:
-        type: statefulset
+      radarr:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/radarr-develop
               tag: 5.6.0.8846
@@ -53,23 +53,27 @@ spec:
                   httpGet:
                     path: /ping
                     port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 2
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  timeoutSeconds: 5
                   failureThreshold: 3
               readiness: *probes
               startup:
                 enabled: false
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              mountPath: /config
-              accessMode: "ReadWriteOnce"
-              size: 2Gi
-              storageClass: longhorn
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: radarr
         ports:
           http:
             port: *port
@@ -96,32 +100,18 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
               - *host
 
     persistence:
+      config:
+        enabled: true
+        existingClaim: *app
       media:
         enabled: true
         existingClaim: downloads
         globalMounts:
           - path: /data
-
-    #   add-ons:
-    #     enabled: true
-    #     type: emptyDir
-    #     mountPath: /add-ons
-    # sidecars:
-    #   tdarr-inform:
-    #     image: registry.k8s.io/git-sync/git-sync:v3.6.7
-    #     imagePullPolicy: IfNotPresent
-    #     args:
-    #       - --repo=https://github.com/deathbybandaid/tdarr_inform.git
-    #       - --branch=master
-    #       - --depth=1
-    #       - --wait=21600 # 6 hours
-    #       - --root=/add-ons/tdarr-inform
-    #     volumeMounts:
-    #       - { name: add-ons, mountPath: /add-ons }
