@@ -41,8 +41,6 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.106.4
-            args:
-              - start-server.sh
             envFrom:
               - configMapRef:
                   name: *configmap
@@ -50,9 +48,9 @@ spec:
                   name: *secret
             probes:
               liveness:
-                enabled: false
+                enabled: true
               readiness:
-                enabled: false
+                enabled: true
             resources:
               requests:
                 cpu: 100m
