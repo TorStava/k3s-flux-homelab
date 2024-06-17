@@ -28,6 +28,8 @@ spec:
   dependsOn:
     - name: immich-dragonfly
     - name: immich-postgres
+    - name: longhorn
+      namespace: storage
   values:
     controllers:
       immich-server:
@@ -48,9 +50,9 @@ spec:
                   name: *secret
             probes:
               liveness:
-                enabled: true
+                enabled: false
               readiness:
-                enabled: true
+                enabled: false
             resources:
               requests:
                 cpu: 100m
