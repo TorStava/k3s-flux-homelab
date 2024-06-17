@@ -70,7 +70,7 @@ spec:
               - --repo=https://github.com/KBlixt/subcleaner.git
               - --ref=master
               - --depth=1
-              - --period=21600 # 6 hours
+              - --period=6h
               - --root=/add-ons
         pod:
           securityContext:
