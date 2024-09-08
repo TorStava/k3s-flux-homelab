@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/dragonflydb/dragonfly
-              tag: v1.21.4
+              tag: v1.22.1
             probes:
               liveness:
                 enabled: true
