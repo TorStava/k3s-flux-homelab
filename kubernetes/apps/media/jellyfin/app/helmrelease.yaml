@@ -39,7 +39,7 @@ spec:
               repository: jellyfin/jellyfin
               tag: 10.9.11
             env:
-              JELLYFIN_PublishedServerUrl: &host "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+              JELLYFIN_PublishedServerUrl: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
             probes:
               liveness: &probes
                 enabled: true
@@ -87,7 +87,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           authentik.home.arpa/enabled: "true"
         hosts:
-          - host: *host
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
