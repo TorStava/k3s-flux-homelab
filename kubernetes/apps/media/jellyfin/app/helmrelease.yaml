@@ -36,12 +36,9 @@ spec:
         containers:
           app:
             image:
-              repository: lscr.io/linuxserver/jellyfin
+              repository: jellyfin/jellyfin
               tag: 10.9.11
             env:
-              PUID: "568"
-              PGID: "568"
-              TZ: "${TZ}"
               JELLYFIN_PublishedServerUrl: &host "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
             probes:
               liveness: &probes
@@ -64,7 +61,7 @@ spec:
                 memory: 250Mi
         pod:
           securityContext:
-            runAsUser: 0
+            runAsUser: 568
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: "OnRootMismatch"
