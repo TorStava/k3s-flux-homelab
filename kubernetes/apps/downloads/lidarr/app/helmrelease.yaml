@@ -1,0 +1,101 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app lidarr
+  namespace: downloads
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  values:
+    controllers:
+      lidarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/lidarr-develop
+              tag:
+            env:
+              TZ: "${TZ}"
+              LIDARR__INSTANCE_NAME: Lidarr
+              LIDARR__PORT: &port 80
+              LIDARR__LOG_LEVEL: info
+              LIDARR__API_KEY: ${SECRET_LIDARR_TOKEN}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+
+    service:
+      app:
+        controller: lidarr
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      main:
+        enabled: true
+        className: nginx
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: lidarr.png
+          gethomepage.dev/name: Lidarr
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/widget.type: lidarr
+          gethomepage.dev/widget.url: http://lidarr.downloads
+          hajimari.io/icon: movie-check
+          gethomepage.dev/widget.key: ${SECRET_LIDARR_TOKEN}
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+          authentik.home.arpa/enabled: "true"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+      media:
+        enabled: true
+        existingClaim: downloads
+        globalMounts:
+          - path: /data
