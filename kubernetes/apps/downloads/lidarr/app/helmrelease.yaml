@@ -40,8 +40,8 @@ spec:
               tag: release-2.5.3.4341
             env:
               TZ: "${TZ}"
-              PUID: &puid 568
-              PGID: &pgid 568
+              PUID: 568
+              PGID: 568
               UMASK: "002"
             resources:
               requests:
@@ -49,9 +49,9 @@ spec:
                 memory: 250Mi
         pod:
           securityContext:
-            runAsUser: *puid
-            runAsGroup: *pgid
-            fsGroup: *pgid
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
             fsGroupChangePolicy: "OnRootMismatch"
 
     service:
