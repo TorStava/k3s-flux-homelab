@@ -40,8 +40,8 @@ spec:
               tag: release-2.5.3.4341
             env:
               TZ: "${TZ}"
-              PUID: &puid "568"
-              PGID: &pgid "568"
+              PUID: &puid 568
+              PGID: &pgid 568
               UMASK: "002"
             resources:
               requests:
