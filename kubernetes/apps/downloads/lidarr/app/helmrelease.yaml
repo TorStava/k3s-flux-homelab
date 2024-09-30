@@ -36,23 +36,22 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/lidarr-develop
-              tag: 2.5.2
+              repository: ghcr.io/hotio/lidarr
+              tag: release-2.5.3.4341
             env:
               TZ: "${TZ}"
-              LIDARR__INSTANCE_NAME: Lidarr
-              LIDARR__PORT: &port 80
-              LIDARR__LOG_LEVEL: info
-              LIDARR__API_KEY: ${SECRET_LIDARR_TOKEN}
+              PUID: &puid "568"
+              PGID: &pgid "568"
+              UMASK: "002"
             resources:
               requests:
                 cpu: 10m
                 memory: 250Mi
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
+            runAsUser: *puid
+            runAsGroup: *pgid
+            fsGroup: *pgid
             fsGroupChangePolicy: "OnRootMismatch"
 
     service:
@@ -60,7 +59,7 @@ spec:
         controller: lidarr
         ports:
           http:
-            port: *port
+            port: 8686
 
     ingress:
       main:
