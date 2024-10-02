@@ -5,6 +5,8 @@ metadata:
   name: pihole
   namespace: external
   annotations:
+    external-dns.home.arpa/enabled: "true"
+    authentik.home.arpa/enabled: "true"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: pi-hole.png
     gethomepage.dev/name: Pihole

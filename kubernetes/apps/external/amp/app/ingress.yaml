@@ -5,6 +5,8 @@ metadata:
   name: amp
   namespace: external
   annotations:
+    external-dns.home.arpa/enabled: "true"
+    authentik.home.arpa/enabled: "true"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: AMP.png
     gethomepage.dev/name: AMP

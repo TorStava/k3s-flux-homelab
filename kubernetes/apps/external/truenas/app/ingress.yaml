@@ -5,6 +5,8 @@ metadata:
   name: truenas
   namespace: external
   annotations:
+    external-dns.home.arpa/enabled: "true"
+    authentik.home.arpa/enabled: "true"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: truenas.png
     gethomepage.dev/name: Truenas

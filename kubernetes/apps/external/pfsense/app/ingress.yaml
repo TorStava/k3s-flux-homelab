@@ -6,6 +6,8 @@ metadata:
   namespace: external
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: https
+    external-dns.home.arpa/enabled: "true"
+    authentik.home.arpa/enabled: "true"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: pfsense.png
     gethomepage.dev/name: pfsense
