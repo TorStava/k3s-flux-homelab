@@ -5,6 +5,8 @@ metadata:
   name: zigbee2mqtt
   namespace: external
   annotations:
+    external-dns.home.arpa/enabled: "true"
+    authentik.home.arpa/enabled: "true"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: zigbee2mqtt.png
     gethomepage.dev/name: zigbee2mqtt
