@@ -5,7 +5,3 @@ namespace: downloads
 resources:
   - ./helmrelease.yaml
   - ../../../../templates/volsync
-labels:
-  - pairs:
-      app.kubernetes.io/name: lidarr
-      app.kubernetes.io/instance: lidarr
