@@ -6,7 +6,7 @@ metadata:
   namespace: external
   annotations:
     external-dns.home.arpa/enabled: "true"
-    authentik.home.arpa/enabled: "true"
+    authentik.home.arpa/enabled: "false"
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: home-assistant.png
     gethomepage.dev/name: Home Assistant
