@@ -30,7 +30,7 @@ spec:
       namespace: storage
   values:
     controllers:
-      lidarr:
+      prowlarr:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
