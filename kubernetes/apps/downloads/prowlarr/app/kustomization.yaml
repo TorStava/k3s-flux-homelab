@@ -5,7 +5,3 @@ namespace: downloads
 resources:
   - ./helmrelease.yaml
   - ../../../../templates/volsync
-labels:
-  - pairs:
-      app.kubernetes.io/name: prowlarr
-      app.kubernetes.io/instance: prowlarr
