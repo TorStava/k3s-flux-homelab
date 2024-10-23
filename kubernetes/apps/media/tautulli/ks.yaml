@@ -10,7 +10,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+      app.kubernetes.io/instance: *app
   dependsOn:
+    - name: volsync
     - name: cluster-apps-longhorn
   path: ./kubernetes/apps/media/tautulli/app
   prune: true
