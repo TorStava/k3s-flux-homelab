@@ -46,15 +46,6 @@ spec:
                   name: *configmap
               - secretRef:
                   name: *secret
-            probes:
-              liveness: &probes
-                enabled: true
-                spec:
-                  initialDelaySeconds: 30
-                  periodSeconds: 30
-                  timeoutSeconds: 5
-                  failureThreshold: 3
-              readiness: *probes
             resources:
               requests:
                 cpu: 100m

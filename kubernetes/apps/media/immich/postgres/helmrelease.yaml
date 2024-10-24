@@ -76,20 +76,7 @@ spec:
               runAsUser: 1234
               runAsGroup: 1234
               fsGroup: 1234
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  exec:
-                    command:
-                      - pg_isready
-                      - --dbname='${DB_DATABASE_NAME}' || exit 1; Chksum="$$(psql --dbname='${DB_DATABASE_NAME}' --username='${DB_USERNAME}' --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
-                  initialDelaySeconds: 30
-                  periodSeconds: 300
-                  timeoutSeconds: 5
-                  failureThreshold: 3
-              readiness: *probes
+              fsGroupChangePolicy: "OnRootMismatch"
             resources:
               requests:
                 cpu: 5m
