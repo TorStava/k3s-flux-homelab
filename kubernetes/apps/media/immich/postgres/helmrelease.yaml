@@ -35,6 +35,11 @@ spec:
           reloader.stakater.com/auto: "true"
           configmap.reloader.stakater.com/reload: &configmap immich-configmap
           secret.reloader.stakater.com/reload: &secret immich-secret
+        pod:
+          securityContext:
+            runAsUser: 1234
+            runAsGroup: 1234
+            fsGroup: 1234
         containers:
           app:
             image:
@@ -72,14 +77,6 @@ spec:
                   configMapKeyRef:
                     name: *configmap
                     key: DB_DATABASE_NAME
-            securityContext:
-              runAsUser: 1234
-              runAsGroup: 1234
-              fsGroup: 1234
-              fsGroupChangePolicy: "OnRootMismatch"
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop: ["ALL"]
             probes:
               liveness: &probes
                 enabled: true
