@@ -72,6 +72,14 @@ spec:
                   configMapKeyRef:
                     name: *configmap
                     key: DB_DATABASE_NAME
+            securityContext:
+              runAsUser: 1234
+              runAsGroup: 1234
+              fsGroup: 1234
+              fsGroupChangePolicy: "OnRootMismatch"
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
             probes:
               liveness: &probes
                 enabled: true
