@@ -1,0 +1,149 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: hajimari
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: hajimari
+      version: 2.0.2
+      sourceRef:
+        kind: HelmRepository
+        name: hajimari
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    hajimari:
+      title: Apps
+      darkTheme: espresso
+      alwaysTargetBlank: true
+      showGreeting: true
+      showAppGroups: true
+      showAppStatus: true
+      showAppInfo: true
+      defaultAppIcon: mdi:application
+      showBookmarkGroups: true
+      showGlobalBookmarks: false
+      showAppUrls: false
+      defaultEnable: true
+      defaultSearchProvider: DuckDuckGo
+      namespaceSelector:
+        matchNames:
+          - default
+          - downloads
+          - external
+          - media
+          - monitoring
+          - networking
+          - storage
+          - security
+      searchProviders:
+        - name: Google
+          token: g
+          icon: simple-icons:google
+          searchUrl: https://www.google.com/search?q={query}
+          url: https://www.google.com
+        - name: DuckDuckGo
+          token: d
+          icon: simple-icons:duckduckgo
+          searchUrl: https://duckduckgo.com/?q={query}
+          url: https://duckduckgo.com
+        - name: IMDB
+          token: i
+          icon: simple-icons:imdb
+          searchUrl: https://www.imdb.com/find?q={query}
+          url: https://www.imdb.com
+        - name: Reddit
+          token: r
+          icon: simple-icons:reddit
+          searchUrl: https://www.reddit.com/search?q={query}
+          url: https://www.reddit.com
+        - name: YouTube
+          token: 'y'
+          icon: simple-icons:youtube
+          searchUrl: https://www.youtube.com/results?search_query={query}
+          url: https://www.youtube.com
+        - name: Spotify
+          token: s
+          icon: simple-icons:spotify
+          searchUrl: hhttps://open.spotify.com/search/{query}
+          url: https://open.spotify.com
+      globalBookmarks:
+        - group: Communicate
+          bookmarks:
+            - name: Discord
+              url: 'https://discord.com/app'
+            - name: Gmail
+              url: 'http://gmail.com'
+            - name: Google Calendar
+              url: 'https://calendar.google.com/calendar/u/0/r/week'
+            - name: Outlook
+              url: 'https://outlook.com'
+        - group: Media
+          bookmarks:
+            - name: YouTube
+              url: 'https://youtube.com/feed/subscriptions'
+            - name: Spotify
+              url: 'http://open.spotify.com'
+            - name: Youtube Music
+              url: 'https://music.youtube.com'
+        - group: Reading
+          bookmarks:
+            - name: Reddit
+              url: 'https://reddit.com'
+        - group: Git
+          bookmarks:
+            - name: k3s-flux-homelab
+              url: 'https://github.com/TorStava/k3s-flux-homelab'
+            - name: k8s-at-home-search
+              url: 'https://nanne.dev/k8s-at-home-search/'
+            - name: onedr0p/home-ops
+              url: 'https://github.com/onedr0p/home-ops'
+            - name: LDS/k3s-home-cluster
+              url: 'https://github.com/LilDrunkenSmurf/k3s-home-cluster'
+            - name: szinn/k8s-homelab
+              url: 'https://github.com/szinn/k8s-homelab'
+            - name: haraldkoch/kochhaus-home
+              url: 'https://github.com/haraldkoch/kochhaus-home/tree/main'
+            - name: filipweilid/k3s-homelab
+              url: 'https://github.com/filipweilid/k3s-homelab'
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/enable: "false"
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+          authentik.home.arpa/enabled: "true"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: hajimari-settings
+    persistence:
+      data:
+        enabled: true
+        type: emptyDir
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128M
