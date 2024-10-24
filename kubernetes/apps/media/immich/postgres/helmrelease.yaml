@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.1.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -40,6 +40,22 @@ spec:
             image:
               repository: tensorchord/pgvecto-rs
               tag: pg16-v0.2.1
+            command:
+              [
+                "postgres",
+                "-c",
+                "shared_preload_libraries=vectors.so",
+                "-c",
+                'search_path="$$user", public, vectors',
+                "-c",
+                "logging_collector=on",
+                "-c",
+                "max_wal_size=2GB",
+                "-c",
+                "shared_buffers=512MB",
+                "-c",
+                "wal_compression=on",
+              ]
             env:
               - name: POSTGRES_PASSWORD
                 valueFrom:
@@ -57,10 +73,19 @@ spec:
                     name: *configmap
                     key: DB_DATABASE_NAME
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - pg_isready
+                      - --dbname='${DB_DATABASE_NAME}' || exit 1; Chksum="$$(psql --dbname='${DB_DATABASE_NAME}' --username='${DB_USERNAME}' --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
+                  initialDelaySeconds: 30
+                  periodSeconds: 300
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
                 cpu: 5m
