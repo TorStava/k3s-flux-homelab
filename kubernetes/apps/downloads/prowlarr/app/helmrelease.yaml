@@ -40,11 +40,11 @@ spec:
               tag: 1.25.2.4794@sha256:4ff88b9911a9d8232bc1a0065b9423ea631c591c5fe0959effb3b1c093ef4930
             env:
               TZ: "${TZ}"
-              PROWLARR__INSTANCE_NAME: Prowlarr
-              PROWLARR__PORT: &port 80
-              PROWLARR__LOG_LEVEL: info
-              PROWLARR__AUTHENTICATION_METHOD: External
-              PROWLARR__API_KEY: ${PROWLARR_TOKEN}
+              PROWLARR__APP__INSTANCE_NAME: Prowlarr
+              PROWLARR__SERVER__PORT: &port 80
+              PROWLARR__LOG__LEVEL: info
+              PROWLARR__AUTH__METHOD: External
+              PROWLARR__API__KEY: ${PROWLARR_TOKEN}
             resources:
               requests:
                 cpu: 10m
