@@ -51,7 +51,7 @@ spec:
                 memory: 250Mi
         pod:
           securityContext:
-            runAsUser: 0
+            runAsUser: 568
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: "OnRootMismatch"
@@ -61,7 +61,7 @@ spec:
         controller: lidarr
         ports:
           http:
-            port: 8686
+            port: *port
 
     ingress:
       main:
