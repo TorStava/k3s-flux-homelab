@@ -41,10 +41,10 @@ spec:
             env:
               TZ: "${TZ}"
               PROWLARR__APP__INSTANCE_NAME: Prowlarr
-              PROWLARR__SERVER__PORT: &port 80
-              PROWLARR__LOG__LEVEL: info
               PROWLARR__AUTH__METHOD: External
-              PROWLARR__API__KEY: ${PROWLARR_TOKEN}
+              PROWLARR__AUTH__APIKEY: ${PROWLARR_TOKEN}
+              PROWLARR__LOG__LEVEL: info
+              PROWLARR__SERVER__PORT: &port 80
             resources:
               requests:
                 cpu: 10m
