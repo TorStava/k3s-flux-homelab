@@ -40,6 +40,9 @@ spec:
               tag: release-2.5.3.4341
             env:
               TZ: "${TZ}"
+              PUID: "568"
+              PGID: "568"
+              UMASK: "002"
               LIDARR__APP__INSTANCE_NAME: Lidarr
               LIDARR__AUTH__APIKEY: ${LIDARR_TOKEN}
               LIDARR__AUTH__METHOD: External
