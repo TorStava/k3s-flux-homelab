@@ -5,7 +5,3 @@ namespace: downloads
 resources:
   - ./helmrelease.yaml
   - ../../../../templates/volsync
-labels:
-  - pairs:
-      app.kubernetes.io/name: radarr
-      app.kubernetes.io/instance: radarr

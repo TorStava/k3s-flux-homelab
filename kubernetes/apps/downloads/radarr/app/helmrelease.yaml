@@ -90,7 +90,6 @@ spec:
           gethomepage.dev/group: Downloads
           gethomepage.dev/widget.type: radarr
           gethomepage.dev/widget.url: http://radarr.downloads
-          hajimari.io/icon: movie-check
           gethomepage.dev/widget.key: ${RADARR_TOKEN}
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
