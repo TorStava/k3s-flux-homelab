@@ -45,12 +45,12 @@ spec:
               tag: 4.0.9.2513
             env:
               TZ: "${TZ}"
-              SONARR__APP__INSTANCE_NAME: Sonarr
+              SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
-              SONARR__SERVER__PORT: &port 80
+              SONARR__AUTH__APIKEY: ${SONARR_TOKEN}
               SONARR__LOG__LEVEL: info
-              SONARR__API__KEY: ${SONARR_TOKEN}
-
+              SONARR__SERVER__PORT: &port 80
+              RADARR__SERVER__URLBASE: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
         statefulset:
           volumeClaimTemplates:
             - name: config
