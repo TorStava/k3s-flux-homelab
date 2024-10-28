@@ -17,7 +17,6 @@ spec:
         namespace: flux-system
   maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -31,20 +30,20 @@ spec:
       namespace: storage
   values:
     controllers:
-      bazarr:
+      main:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          main:
             image:
               repository: ghcr.io/onedr0p/bazarr
-              tag: 1.4.5
+              tag: 1.4.5@sha256:c0bf91443c32f3978777b4ddd2732908f51b157bbe00cd3259b23f7716bb4af7
             env:
               TZ: "${TZ}"
-              BAZARR__INSTANCE_NAME: Bazarr
-              BAZARR__PORT: &port 80
-              BAZARR__LOG_LEVEL: info
-              BAZARR__API_KEY: ${BAZARR_TOKEN}
+              BAZARR__APP__INSTANCENAME: Bazarr
+              BAZARR__AUTH__APIKEY: ${BAZARR_TOKEN}
+              BAZARR__LOG__LEVEL: info
+              BAZARR__SERVER__PORT: &port 80
             probes:
               liveness: &probes
                 enabled: true
@@ -80,8 +79,8 @@ spec:
             fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      app:
-        controller: bazarr
+      main:
+        controller: main
         ports:
           http:
             port: *port
@@ -109,7 +108,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: app
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -117,7 +116,6 @@ spec:
 
     persistence:
       config:
-        enabled: true
         existingClaim: *app
       media:
         existingClaim: downloads
