@@ -40,10 +40,7 @@ spec:
               tag: 1.4.5@sha256:c0bf91443c32f3978777b4ddd2732908f51b157bbe00cd3259b23f7716bb4af7
             env:
               TZ: "${TZ}"
-              BAZARR__APP__INSTANCENAME: Bazarr
-              BAZARR__AUTH__APIKEY: ${BAZARR_TOKEN}
-              BAZARR__LOG__LEVEL: info
-              BAZARR__SERVER__PORT: &port 80
+              PLEX_TOKEN: ${PLEX_TOKEN}
             probes:
               liveness: &probes
                 enabled: true
@@ -51,32 +48,47 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: *port
-                  initialDelaySeconds: 30
+                    port: &port 6767
+                  initialDelaySeconds: 0
                   periodSeconds: 10
-                  timeoutSeconds: 5
+                  timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
-                memory: 250Mi
+              limits:
+                memory: 1Gi
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.3.0
+              tag: v4.3.0@sha256:5813a7da0ccd58f6dfb9d5e48480e2877355e6bb3d7d81c8908eb1adc3a23b6e
             args:
               - --repo=https://github.com/KBlixt/subcleaner.git
               - --ref=master
               - --depth=1
-              - --period=6h
+              - --period=24h
               - --root=/add-ons
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: "OnRootMismatch"
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
+            securityContext: *securityContext
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [1234]
+        seccompProfile: { type: RuntimeDefault }
 
     service:
       main:
@@ -123,5 +135,13 @@ spec:
           - path: /data
       add-ons:
         type: emptyDir
+      cache:
+        type: emptyDir
         globalMounts:
-          - path: /add-ons
+          - path: /config/cache
+      log:
+        type: emptyDir
+        globalMounts:
+          - path: /config/log
+      tmp:
+        type: emptyDir
