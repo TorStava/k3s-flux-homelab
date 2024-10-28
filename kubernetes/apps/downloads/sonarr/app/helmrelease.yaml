@@ -37,11 +37,10 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.9.2513
+              tag: 4.0.10.2579@sha256:6b4134faf8a7896a2cd9ec00bc1d98e2953959d12f8840d65bc11e087982aad9
             env:
               TZ: "${TZ}"
               SONARR__APP__INSTANCENAME: Sonarr
-              SONARR__APP__THEME: dark
               SONARR__AUTH__APIKEY: ${SONARR_TOKEN}
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: &port 80
