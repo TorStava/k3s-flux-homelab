@@ -45,7 +45,6 @@ spec:
               RADARR__AUTH__APIKEY: ${RADARR_TOKEN}
               RADARR__LOG__LEVEL: info
               RADARR__SERVER__PORT: &port 80
-              RADARR__SERVER__URLBASE: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
             probes:
               liveness: &probes
                 enabled: true

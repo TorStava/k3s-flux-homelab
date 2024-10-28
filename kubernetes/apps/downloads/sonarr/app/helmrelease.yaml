@@ -45,7 +45,6 @@ spec:
               SONARR__AUTH__APIKEY: ${SONARR_TOKEN}
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: &port 80
-              RADARR__SERVER__URLBASE: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
             probes:
               liveness: &probes
                 enabled: true
