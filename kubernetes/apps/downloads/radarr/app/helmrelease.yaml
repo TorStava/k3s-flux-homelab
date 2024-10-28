@@ -40,11 +40,12 @@ spec:
               tag: 5.12.2.9335
             env:
               TZ: "${TZ}"
-              RADARR__INSTANCE_NAME: Radarr
-              RADARR__PORT: &port 80
-              RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
-              RADARR__LOG_LEVEL: info
-              RADARR__API_KEY: ${RADARR_TOKEN}
+              RADARR__APP__INSTANCENAME: Radarr
+              RADARR__APP__THEME: Dark
+              RADARR__AUTH__APIKEY: ${RADARR_TOKEN}
+              RADARR__LOG__LEVEL: info
+              RADARR__SERVER__PORT: &port 80
+              RADARR__SERVER__URLBASE: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
             probes:
               liveness: &probes
                 enabled: true
