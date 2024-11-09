@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: bbilly1/tubearchivist
-              tag: v0.4.10
+              tag: v0.4.11
             env:
               TZ: "${TZ}"
               HOST_UID: 568
