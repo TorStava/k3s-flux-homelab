@@ -51,9 +51,6 @@ spec:
               TA_HOST: &host tubearchivist.${SECRET_DOMAIN}
               TA_USERNAME: admin
               ENABLE_CAST: "true"
-            envFrom:
-              - secretRef:
-                  name: *app
             resources:
               requests:
                 cpu: 15m
