@@ -26,6 +26,8 @@ spec:
   dependsOn:
     - name: tubearchivist-elasticsearch
     - name: tubearchivist-redis
+    - name: longhorn
+      namespace: storage
   values:
     controllers:
       main:
@@ -51,6 +53,9 @@ spec:
               TA_HOST: &host tubearchivist.${SECRET_DOMAIN}
               TA_USERNAME: admin
               ENABLE_CAST: "true"
+            envFrom:
+              - secretRef:
+                  name: *app
             resources:
               requests:
                 cpu: 15m
@@ -91,8 +96,10 @@ spec:
 
     persistence:
       cache:
+        existingClaim: *app
+      downloads:
         type: emptyDir
-        sizeLimit: 20Gi
+        sizeLimit: 10Gi
       youtube:
         type: nfs
         server: ${NAS_IP}
