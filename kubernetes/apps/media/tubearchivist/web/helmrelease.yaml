@@ -26,8 +26,6 @@ spec:
   dependsOn:
     - name: tubearchivist-elasticsearch
     - name: tubearchivist-redis
-    - name: longhorn
-      namespace: storage
   values:
     controllers:
       main:
@@ -96,10 +94,9 @@ spec:
 
     persistence:
       cache:
-        enabled: true
-        existingClaim: *app
+        type: emptyDir
+        sizeLimit: 20Gi
       youtube:
-        enabled: true
         type: nfs
         server: ${NAS_IP}
         path: ${SECRET_NFS_DATA}/youtube
