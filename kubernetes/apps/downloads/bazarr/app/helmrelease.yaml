@@ -37,7 +37,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/bazarr
-              tag: 1.4.5@sha256:c0bf91443c32f3978777b4ddd2732908f51b157bbe00cd3259b23f7716bb4af7
+              tag: 1.4.5@sha256:a7bceefd6339f906b2955adf66dd8ada7c9d91b363b1389474652af9f7dd5840
             env:
               TZ: "${TZ}"
               PLEX_TOKEN: ${PLEX_TOKEN}
@@ -66,7 +66,7 @@ spec:
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.3.0@sha256:5813a7da0ccd58f6dfb9d5e48480e2877355e6bb3d7d81c8908eb1adc3a23b6e
+              tag: v4.4.0@sha256:0330739a707a2969d617e859f096659ab6d149212658ac0ad7e550b59482ebf0
             args:
               - --repo=https://github.com/KBlixt/subcleaner.git
               - --ref=master
