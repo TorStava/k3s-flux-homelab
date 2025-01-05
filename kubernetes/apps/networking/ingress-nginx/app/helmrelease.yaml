@@ -28,6 +28,7 @@ spec:
   values:
     controller:
       allowSnippetAnnotations: true
+      annotationsRiskLevel: "Critical"
       enableSnippets: true
       extraEnvs:
         - name: TZ
