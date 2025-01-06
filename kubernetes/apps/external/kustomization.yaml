@@ -10,6 +10,5 @@ resources:
   - ./pfsense/ks.yaml
   - ./plex/ks.yaml
   - ./proxmox/ks.yaml
-  - ./skkweb/ks.yaml
   - ./truenas/ks.yaml
   - ./zigbee2mqtt/ks.yaml
