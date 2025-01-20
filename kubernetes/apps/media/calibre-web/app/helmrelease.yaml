@@ -42,9 +42,9 @@ spec:
               CACHE_DIR: /cache
             probes:
               liveness:
-                enabled: true
+                enabled: false
               readiness:
-                enabled: true
+                enabled: false
             resources:
               requests:
                 cpu: 5m
