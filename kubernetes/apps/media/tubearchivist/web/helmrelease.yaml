@@ -52,7 +52,7 @@ spec:
               REDIS_CON: redis://tubearchivist-redis.media.svc.cluster.local:6379
               TA_HOST: &host tubearchivist.${SECRET_DOMAIN}
               TA_USERNAME: admin
-              ENABLE_CAST: "true"
+              DISABLE_STATIC_AUTH: "true"
             envFrom:
               - secretRef:
                   name: *app
