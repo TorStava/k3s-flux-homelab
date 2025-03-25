@@ -43,13 +43,13 @@ spec:
           main:
             image:
               repository: bbilly1/tubearchivist
-              tag: v0.4.13
+              tag: v0.5.0@sha256:d1ff4a9c1665571093e598be409a812d8709eb404d9b4ec1acdb7a4a2909f094
             env:
               TZ: "${TZ}"
               HOST_UID: 568
               HOST_GID: 1234
               ES_URL: http://tubearchivist-elasticsearch.media.svc.cluster.local:9200
-              REDIS_HOST: tubearchivist-redis.media.svc.cluster.local
+              REDIS_CON: redis://tubearchivist-redis.media.svc.cluster.local:6379
               TA_HOST: &host tubearchivist.${SECRET_DOMAIN}
               TA_USERNAME: admin
               ENABLE_CAST: "true"
