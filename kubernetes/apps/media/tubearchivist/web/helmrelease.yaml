@@ -50,7 +50,7 @@ spec:
               HOST_GID: 1234
               ES_URL: http://tubearchivist-elasticsearch.media.svc.cluster.local:9200
               REDIS_CON: redis://tubearchivist-redis.media.svc.cluster.local:6379
-              TA_HOST: &host https://tubearchivist.${SECRET_DOMAIN}
+              TA_HOST: https://tubearchivist.${SECRET_DOMAIN}
               TA_USERNAME: admin
               DISABLE_STATIC_AUTH: "true"
             envFrom:
@@ -83,7 +83,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
           # authentik.home.arpa/enabled: "true"
         hosts:
-          - host: *host
+          - host: &host tubearchivist.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
