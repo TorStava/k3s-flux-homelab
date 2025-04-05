@@ -54,18 +54,18 @@ spec:
               requests:
                 cpu: 10m
                 memory: 250Mi
-          probes:
-            liveness: &probes
-              enabled: true
-              custom: true
-              spec:
-                initialDelaySeconds: 60
-                periodSeconds: 60
-                timeoutSeconds: 10
-                failureThreshold: 5
-            readiness: *probes
-            startup:
-              enabled: false
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  initialDelaySeconds: 60
+                  periodSeconds: 60
+                  timeoutSeconds: 10
+                  failureThreshold: 5
+              readiness: *probes
+              startup:
+                enabled: false
         statefulset:
           volumeClaimTemplates:
             - name: server
