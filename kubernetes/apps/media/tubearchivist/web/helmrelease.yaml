@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: bbilly1/tubearchivist
-              tag: unstable@sha256:f323a0d09555bebf93b422ddc25a0ee2a9e5c336d96b307be787f905669e2376
+              tag: unstable@sha256:56e6e95cba42fa3dc7f1b113433f85d7c7297c9563c7d45d6b57bb977d0c0f46
             env:
               TZ: "${TZ}"
               HOST_UID: 568
