@@ -19,7 +19,7 @@ spec:
     global:
       image:
         repository: ghcr.io/goauthentik/server
-        tag: 2024.12.5
+        tag: 2025.2.4
 
     authentik:
       log_level: debug
