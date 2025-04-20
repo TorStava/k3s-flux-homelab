@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: docker.elastic.co/elasticsearch/elasticsearch
-              tag: 8.17.4
+              tag: 8.18.0
             env:
               TZ: "${TZ}"
               ES_JAVA_OPTS: -Xms2G -Xmx2G
