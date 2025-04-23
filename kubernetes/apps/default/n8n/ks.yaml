@@ -15,9 +15,9 @@ spec:
     - name: volsync
       namespace: flux-system
     - name: external-secrets
-      namespace: kube-system
+      namespace: flux-system
     - name: cluster-apps-longhorn
-      namespace: storage
+      namespace: flux-system
   path: ./kubernetes/apps/default/n8n/app
   prune: true
   sourceRef:
