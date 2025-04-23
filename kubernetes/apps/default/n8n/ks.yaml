@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &appname n8n
+  namespace: &namespace default
+spec:
+  targetNamespace: *namespace
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *appname
+      app.kubernetes.io/instance: *appname
+  dependsOn:
+    - name: volsync
+      namespace: volsync
+    - name: external-secrets
+      namespace: kube-system
+    - name: cluster-apps-longhorn
+      namespace: storage
+  path: ./kubernetes/apps/default/n8n/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+    namespace: flux-system
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  components:
+    - ../../../../templates/volsync
+  postBuild:
+    substitute:
+      APP: *appname
+      APP_UID: "568"
+      APP_GID: "568"
+      VOLSYNC_CAPACITY: 5Gi
