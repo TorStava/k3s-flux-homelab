@@ -4,20 +4,17 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &appname n8n
-  namespace: &namespace default
+  namespace: flux-system
 spec:
-  targetNamespace: *namespace
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
       app.kubernetes.io/instance: *appname
   dependsOn:
     - name: volsync
-      namespace: flux-system
     - name: external-secrets
-      namespace: flux-system
     - name: cluster-apps-longhorn
-      namespace: flux-system
   path: ./kubernetes/apps/default/n8n/app
   prune: true
   sourceRef:
