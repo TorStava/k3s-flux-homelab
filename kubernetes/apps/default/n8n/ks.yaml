@@ -13,7 +13,7 @@ spec:
       app.kubernetes.io/instance: *appname
   dependsOn:
     - name: volsync
-      namespace: volsync
+      namespace: flux-system
     - name: external-secrets
       namespace: kube-system
     - name: cluster-apps-longhorn
