@@ -44,6 +44,7 @@ spec:
               EXECUTIONS_DATA_MAX_AGE: 7
               EXECUTIONS_DATA_PRUNE_MAX_COUNT: 50000
               GENERIC_TIMEZONE: "Europe/Oslo"
+              WEBHOOK_URL: https://n8n.${SECRET_DOMAIN}/
               N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: false
               N8N_PROTOCOL: "https"
               N8N_PORT: &port 8080
@@ -76,6 +77,28 @@ spec:
           http:
             port: *port
 
+    ingress:
+      main:
+        enabled: true
+        className: nginx
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: n8n.png
+          gethomepage.dev/name: n8n
+          gethomepage.dev/group: Home
+          external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
+        hosts:
+          - host: &host "n8n.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
     persistence:
       data:
         existingClaim: *app
@@ -83,30 +106,3 @@ spec:
           main:
             main:
               - path: /home/node/.n8n
-
-    route:
-      app:
-        hostnames:
-          - *hostName
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: main
-                port: *port
-      webhooks:
-        hostnames:
-          - n8n-webhook.${SECRET_DOMAIN}
-        parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - matches:
-              - path:
-                  value: /webhook
-            backendRefs:
-              - name: main
-                port: *port
