@@ -61,7 +61,7 @@ spec:
       main:
         ports:
           http:
-            port: &port
+            port: *port
 
     ingress:
       main:
