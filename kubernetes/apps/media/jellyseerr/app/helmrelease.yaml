@@ -86,12 +86,12 @@ spec:
         className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: overseerr.png
-          gethomepage.dev/name: Overseerr
+          gethomepage.dev/icon: jellyseerr.png
+          gethomepage.dev/name: Jellyseerr
           gethomepage.dev/group: Media
-          gethomepage.dev/widget.type: overseerr
-          gethomepage.dev/widget.url: http://request.media:5055
-          gethomepage.dev/widget.key: ${OVERSEERR_TOKEN}
+          gethomepage.dev/widget.type: jellyseerr
+          gethomepage.dev/widget.url: http://request.media:80
+          gethomepage.dev/widget.key: ${JELLYSEERR_TOKEN}
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
         hosts:
           - host: &host "request.${SECRET_DOMAIN}"
