@@ -41,6 +41,7 @@ spec:
               tag: 25.4.0
             env:
               GENERIC_TIMEZONE: ${TZ}
+              ACTUAL_PORT: &port 5006
             resources:
               requests:
                 cpu: 15m
@@ -60,7 +61,7 @@ spec:
       main:
         ports:
           http:
-            port: 5006
+            port: &port
 
     ingress:
       main:
