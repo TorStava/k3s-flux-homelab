@@ -8,18 +8,11 @@ spec:
   chart:
     spec:
       chart: snapshot-controller
-      version: v3.0.3
+      version: v4.0.2
       sourceRef:
         kind: HelmRepository
         name: piraeus
         namespace: flux-system
-  values:
-    controller:
-      image:
-        tag: v3.0.3
-    webhook:
-      image:
-        tag: v3.0.3
   maxHistory: 2
   install:
     crds: CreateReplace
