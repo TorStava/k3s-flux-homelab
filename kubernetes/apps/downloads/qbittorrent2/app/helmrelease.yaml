@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/qbittorrent
-              tag: 4.6.7
+              tag: 5.0.4
             securityContext:
               runAsUser: 568
               runAsGroup: 568
