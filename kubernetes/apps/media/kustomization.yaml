@@ -8,7 +8,6 @@ resources:
   - ./calibre-web/ks.yaml
   - ./immich/ks.yaml
   - ./jellyseerr/ks.yaml
-  - ./overseerr/ks.yaml
   - ./tautulli/ks.yaml
   - ./tubearchivist/ks-elasticsearch.yaml
   - ./tubearchivist/ks-redis.yaml
