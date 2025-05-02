@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./actual/ks.yaml
-  - ./actual-new/ks.yaml
   - ./frigate/ks.yaml
