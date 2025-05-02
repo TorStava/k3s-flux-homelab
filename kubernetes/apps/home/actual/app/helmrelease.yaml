@@ -60,8 +60,9 @@ spec:
         className: nginx
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: actual.png
-          gethomepage.dev/name: Actual
+          gethomepage.dev/name: Actual Budget
+          gethomepage.dev/description: Personal finance manager
+          gethomepage.dev/icon: actual-budget.svg
           gethomepage.dev/group: Home
           external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
         hosts:
