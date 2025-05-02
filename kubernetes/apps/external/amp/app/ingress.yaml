@@ -8,8 +8,9 @@ metadata:
     external-dns.home.arpa/enabled: "true"
     authentik.home.arpa/enabled: "true"
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: AMP.png
+    gethomepage.dev/icon: amp.png
     gethomepage.dev/name: AMP
+    gethomepage.dev/description: "AMP is a web-based application for managing and monitoring your game server."
     gethomepage.dev/group: Home
     external-dns.alpha.kubernetes.io/target: "ingress.${SECRET_DOMAIN}"
 spec:
