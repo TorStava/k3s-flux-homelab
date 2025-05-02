@@ -48,19 +48,24 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /ping
+                    path: /api/v2/app/version
                     port: *port
-                  initialDelaySeconds: 30
-                  periodSeconds: 30
-                  timeoutSeconds: 5
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
               startup:
-                enabled: false
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
             resources:
               requests:
-                cpu: 25m
+                cpu: 100m
                 memory: 250Mi
+              limits:
+                memory: 8Gi
         pod:
           hostname: qbittorrent
           annotations:
@@ -76,7 +81,12 @@ spec:
         controller: main
         ports:
           http:
+            primary: true
             port: *port
+          bt:
+            enabled: true
+            port: *port-bt
+            protocol: TCP
 
     ingress:
       main:
