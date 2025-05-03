@@ -44,7 +44,7 @@ spec:
               QBT_TORRENTING_PORT: &port-bt "${SECRET_VPN_FORWARDED_PORT_1}"
             probes:
               liveness: &probes
-                enabled: true
+                enabled: false
               readiness: *probes
               startup:
                 enabled: true
