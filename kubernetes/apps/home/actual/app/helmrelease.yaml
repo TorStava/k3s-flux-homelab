@@ -37,7 +37,7 @@ spec:
           main:
             image:
               repository: ghcr.io/actualbudget/actual-server
-              tag: 25.4.0
+              tag: 25.5.0
             env:
               GENERIC_TIMEZONE: ${TZ}
             resources:
