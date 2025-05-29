@@ -51,7 +51,8 @@ spec:
               # limits:
               #   memory: 6000Mi
               #   gpu.intel.com/i915: "1"
-
+            securityContext:
+              privileged: true
             probes:
               liveness: &probes
                 enabled: true
@@ -75,8 +76,6 @@ spec:
               storageClass: longhorn
               globalMounts:
                 - path: /data
-          securityContext:
-            privileged: true
     # envFrom:
     #   - secretRef:
     #       name: frigate-secret
