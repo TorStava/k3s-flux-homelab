@@ -27,14 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 568
-        capabilities:
-          add:
-            - CHOWN
     controllers:
       main:
         type: statefulset
@@ -75,7 +67,14 @@ spec:
               storageClass: longhorn
               globalMounts:
                 - path: /app/configs
-
+        pod:
+          securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+          fsGroup: 568
+          capabilities:
+            add:
+              - CHOWN
     service:
       main:
         type: LoadBalancer
