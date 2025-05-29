@@ -44,7 +44,9 @@ spec:
                 spec:
                   exec:
                     command: ["sh", "-c", "curl -X POST -s http://127.0.0.1:8087/sync | jq -e '.success == true'"]
+                  delay: 10
                   timeoutSeconds: 5
+                  period: 30
               readiness:
                 enabled: false
             resources:
@@ -58,3 +60,9 @@ spec:
         ports:
           http:
             port: 8087
+
+    persistence:
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /.config
