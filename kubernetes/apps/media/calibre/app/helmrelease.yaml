@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.7.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: lscr.io/linuxserver/calibre
-              tag: 8.3.0
+              tag: 8.4.0
             env:
               PUID: "568"
               PGID: "568"

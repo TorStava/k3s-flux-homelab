@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: authentik
-      version: 2025.2.4
+      version: 2025.4.1
       sourceRef:
         kind: HelmRepository
         name: authentik
@@ -19,7 +19,7 @@ spec:
     global:
       image:
         repository: ghcr.io/goauthentik/server
-        tag: 2025.2.4
+        tag: 2025.4.1
 
     authentik:
       log_level: debug

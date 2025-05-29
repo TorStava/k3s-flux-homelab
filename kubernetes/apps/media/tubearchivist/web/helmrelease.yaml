@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.7.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: bbilly1/tubearchivist
-              tag: v0.5.1@sha256:9a57c7f1c4f3028c701c73bdd8a3064d2054ef825d7236d06a0cf63212cc4705
+              tag: v0.5.2@sha256:5227db874cf3c81f9e57a64bf05191d2811fefa9c25549620a1f0ddc5e85595f
             env:
               TZ: "${TZ}"
               HOST_UID: 568
