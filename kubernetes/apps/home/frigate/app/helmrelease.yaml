@@ -26,10 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    defaultPodOptions:
-      securityContext:
-        privileged: true
-
     controllers:
       main:
         type: statefulset
@@ -79,7 +75,8 @@ spec:
               storageClass: longhorn
               globalMounts:
                 - path: /data
-
+          securityContext:
+            privileged: true
     # envFrom:
     #   - secretRef:
     #       name: frigate-secret
