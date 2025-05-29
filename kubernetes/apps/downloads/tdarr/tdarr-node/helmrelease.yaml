@@ -59,16 +59,11 @@ spec:
                 add:
                   - CHOWN
             probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  initialDelaySeconds: 60
-                  periodSeconds: 60
-                  timeoutSeconds: 10
-                  failureThreshold: 5
-              readiness: *probes
               startup:
+                enabled: false
+              liveness:
+                enabled: false
+              readiness:
                 enabled: false
     service:
       main:
