@@ -44,9 +44,10 @@ spec:
                 spec:
                   exec:
                     command: ["sh", "-c", "curl -X POST -s http://127.0.0.1:8087/sync | jq -e '.success == true'"]
-                  delay: 10
+                  initialDelaySeconds: 10
+                  periodSeconds: 30
                   timeoutSeconds: 5
-                  period: 30
+                  failureThreshold: 5
               readiness:
                 enabled: false
             resources:
