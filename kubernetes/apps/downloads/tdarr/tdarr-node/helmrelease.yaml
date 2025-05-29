@@ -58,25 +58,25 @@ spec:
               capabilities:
                 add:
                   - CHOWN
-        probes:
-          liveness: &probes
-            enabled: true
-            custom: true
-            spec:
-              initialDelaySeconds: 60
-              periodSeconds: 60
-              timeoutSeconds: 10
-              failureThreshold: 5
-          readiness: *probes
-          startup:
-            enabled: false
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  initialDelaySeconds: 60
+                  periodSeconds: 60
+                  timeoutSeconds: 10
+                  failureThreshold: 5
+              readiness: *probes
+              startup:
+                enabled: false
     service:
       main:
         controller: main
         enabled: false
         ports:
-          enabled: false
           http:
+            enabled: false
             port: 8265
 
     persistence:
