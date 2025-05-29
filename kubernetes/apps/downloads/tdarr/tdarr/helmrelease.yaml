@@ -69,12 +69,12 @@ spec:
                 - path: /app/configs
         pod:
           securityContext:
-          runAsUser: 0
-          runAsGroup: 0
-          fsGroup: 568
-          capabilities:
-            add:
-              - CHOWN
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 568
+            capabilities:
+              add:
+                - CHOWN
     service:
       main:
         controller: main
