@@ -6,6 +6,7 @@ metadata:
   namespace: storage
 spec:
   interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: longhorn
@@ -16,10 +17,12 @@ spec:
         namespace: flux-system
   maxHistory: 3
   install:
+    crds: CreateReplace
     createNamespace: true
     remediation:
       retries: 3
   upgrade:
+    crds: CreateReplace
     cleanupOnFail: true
     remediation:
       retries: 3
