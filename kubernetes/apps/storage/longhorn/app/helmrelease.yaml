@@ -17,6 +17,7 @@ spec:
         namespace: flux-system
   maxHistory: 3
   install:
+    replace: true
     crds: Create
     createNamespace: true
     remediation:
@@ -26,6 +27,7 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+      remediateLastFailure: true
   uninstall:
     keepHistory: false
   values:
