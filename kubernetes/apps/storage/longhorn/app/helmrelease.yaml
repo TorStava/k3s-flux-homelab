@@ -37,3 +37,5 @@ spec:
     monitoring:
       enabled: true
       createPrometheusRules: true
+    defaultSettings:
+      deleting-confirmation-flag: true
