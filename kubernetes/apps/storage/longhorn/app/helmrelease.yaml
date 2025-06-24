@@ -20,8 +20,10 @@ spec:
     replace: true
     crds: Create
     createNamespace: true
+    disableWait: false
     remediation:
       retries: 3
+      remediateLastFailure: true
   upgrade:
     crds: CreateReplace
     cleanupOnFail: true
