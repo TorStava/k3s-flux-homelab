@@ -21,7 +21,6 @@ spec:
     crds: Create
     createNamespace: true
     disableWait: false
-    force: true
     remediation:
       retries: 3
       remediateLastFailure: true
