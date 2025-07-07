@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: redis
-              tag: 7.4.4@sha256:7b5ee51c14cf5febd4adde3a4b6cced72efdf154df7e9a0383163b13e16e9091
+              tag: 8.0.3@sha256:a1e0a3b3a6cedd74d8ba44805b2497b93851a296f08a44962fedc03f1c490b47
             env:
               TZ: "${TZ}"
             resources:
